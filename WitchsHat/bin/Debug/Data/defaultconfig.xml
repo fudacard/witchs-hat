@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<witchshatconfig>
+	<projectspath></projectspath>
+	<encoding>utf-8</encoding>
+	<server>on</server>
+	<serverport>9090</serverport>
+	<browser>iexplore</browser>
+	<runbrowser>iexplore</runbrowser>
+	<tempproject>on</tempproject>
+	<enchantjsbuild>https://github.com/uei/enchant.js-builds/archive/v0.8.1.zip</enchantjsbuild>
+	<enchantjsreference>http://enchantjs.com/ja/tutorial/lets-start-enchant-js/</enchantjsreference>
+	<enchantjsdocs>http://wise9.github.io/enchant.js/doc/plugins/ja/index.html</enchantjsdocs>
+</witchshatconfig>
