@@ -29,20 +29,20 @@
         private void InitializeComponent()
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.ファイルFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.プロジェクトToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ファイルToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.フォルダToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CreateProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CreateFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CreateFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.名前を付けて保存ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.SaveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.閉じるToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.プロジェクトを閉じるToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CloseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CloseProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.終了ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EndToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.UndoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RedoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -83,7 +83,7 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ファイルFToolStripMenuItem,
+            this.FileToolStripMenuItem,
             this.toolStripMenuItem1,
             this.toolStripMenuItem2,
             this.実行ToolStripMenuItem,
@@ -95,51 +95,54 @@
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
-            // ファイルFToolStripMenuItem
+            // FileToolStripMenuItem
             // 
-            this.ファイルFToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewProjectToolStripMenuItem,
             this.OpenProjectToolStripMenuItem,
             this.toolStripSeparator2,
-            this.保存ToolStripMenuItem,
-            this.名前を付けて保存ToolStripMenuItem,
+            this.SaveToolStripMenuItem,
+            this.SaveAsToolStripMenuItem,
             this.toolStripSeparator3,
-            this.閉じるToolStripMenuItem,
-            this.プロジェクトを閉じるToolStripMenuItem,
+            this.CloseToolStripMenuItem,
+            this.CloseProjectToolStripMenuItem,
             this.toolStripSeparator1,
-            this.終了ToolStripMenuItem});
-            this.ファイルFToolStripMenuItem.Name = "ファイルFToolStripMenuItem";
-            this.ファイルFToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
-            this.ファイルFToolStripMenuItem.Text = "ファイル(&F)";
+            this.EndToolStripMenuItem});
+            this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(70, 20);
+            this.FileToolStripMenuItem.Text = "ファイル(&F)";
+            this.FileToolStripMenuItem.DropDownOpening += new System.EventHandler(this.FileToolStripMenuItem_DropDownOpening);
             // 
             // NewProjectToolStripMenuItem
             // 
             this.NewProjectToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.プロジェクトToolStripMenuItem,
-            this.ファイルToolStripMenuItem,
-            this.フォルダToolStripMenuItem});
+            this.CreateProjectToolStripMenuItem,
+            this.CreateFileToolStripMenuItem,
+            this.CreateFolderToolStripMenuItem});
             this.NewProjectToolStripMenuItem.Name = "NewProjectToolStripMenuItem";
             this.NewProjectToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.NewProjectToolStripMenuItem.Text = "新規作成";
-            this.NewProjectToolStripMenuItem.Click += new System.EventHandler(this.NewProjectToolStripMenuItem_Click);
             // 
-            // プロジェクトToolStripMenuItem
+            // CreateProjectToolStripMenuItem
             // 
-            this.プロジェクトToolStripMenuItem.Name = "プロジェクトToolStripMenuItem";
-            this.プロジェクトToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-            this.プロジェクトToolStripMenuItem.Text = "プロジェクト";
+            this.CreateProjectToolStripMenuItem.Name = "CreateProjectToolStripMenuItem";
+            this.CreateProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CreateProjectToolStripMenuItem.Text = "プロジェクト";
+            this.CreateProjectToolStripMenuItem.Click += new System.EventHandler(this.CreateProjectToolStripMenuItem_Click);
             // 
-            // ファイルToolStripMenuItem
+            // CreateFileToolStripMenuItem
             // 
-            this.ファイルToolStripMenuItem.Name = "ファイルToolStripMenuItem";
-            this.ファイルToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-            this.ファイルToolStripMenuItem.Text = "ファイル";
+            this.CreateFileToolStripMenuItem.Name = "CreateFileToolStripMenuItem";
+            this.CreateFileToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CreateFileToolStripMenuItem.Text = "ファイル";
+            this.CreateFileToolStripMenuItem.Click += new System.EventHandler(this.CreateFileToolStripMenuItem_Click);
             // 
-            // フォルダToolStripMenuItem
+            // CreateFolderToolStripMenuItem
             // 
-            this.フォルダToolStripMenuItem.Name = "フォルダToolStripMenuItem";
-            this.フォルダToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
-            this.フォルダToolStripMenuItem.Text = "フォルダ";
+            this.CreateFolderToolStripMenuItem.Name = "CreateFolderToolStripMenuItem";
+            this.CreateFolderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CreateFolderToolStripMenuItem.Text = "フォルダ";
+            this.CreateFolderToolStripMenuItem.Click += new System.EventHandler(this.CreateFolderToolStripMenuItem_Click);
             // 
             // OpenProjectToolStripMenuItem
             // 
@@ -153,45 +156,49 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(161, 6);
             // 
-            // 保存ToolStripMenuItem
+            // SaveToolStripMenuItem
             // 
-            this.保存ToolStripMenuItem.Name = "保存ToolStripMenuItem";
-            this.保存ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.保存ToolStripMenuItem.Text = "保存";
+            this.SaveToolStripMenuItem.Name = "SaveToolStripMenuItem";
+            this.SaveToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.SaveToolStripMenuItem.Text = "保存";
             // 
-            // 名前を付けて保存ToolStripMenuItem
+            // SaveAsToolStripMenuItem
             // 
-            this.名前を付けて保存ToolStripMenuItem.Name = "名前を付けて保存ToolStripMenuItem";
-            this.名前を付けて保存ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.名前を付けて保存ToolStripMenuItem.Text = "名前を付けて保存";
+            this.SaveAsToolStripMenuItem.Name = "SaveAsToolStripMenuItem";
+            this.SaveAsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.SaveAsToolStripMenuItem.Text = "名前を付けて保存";
+            this.SaveAsToolStripMenuItem.Click += new System.EventHandler(this.SaveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(161, 6);
             // 
-            // 閉じるToolStripMenuItem
+            // CloseToolStripMenuItem
             // 
-            this.閉じるToolStripMenuItem.Name = "閉じるToolStripMenuItem";
-            this.閉じるToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.閉じるToolStripMenuItem.Text = "閉じる";
+            this.CloseToolStripMenuItem.Name = "CloseToolStripMenuItem";
+            this.CloseToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.CloseToolStripMenuItem.Text = "閉じる";
+            this.CloseToolStripMenuItem.Click += new System.EventHandler(this.CloseToolStripMenuItem_Click);
             // 
-            // プロジェクトを閉じるToolStripMenuItem
+            // CloseProjectToolStripMenuItem
             // 
-            this.プロジェクトを閉じるToolStripMenuItem.Name = "プロジェクトを閉じるToolStripMenuItem";
-            this.プロジェクトを閉じるToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.プロジェクトを閉じるToolStripMenuItem.Text = "プロジェクトを閉じる";
+            this.CloseProjectToolStripMenuItem.Name = "CloseProjectToolStripMenuItem";
+            this.CloseProjectToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.CloseProjectToolStripMenuItem.Text = "プロジェクトを閉じる";
+            this.CloseProjectToolStripMenuItem.Click += new System.EventHandler(this.CloseProjectToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(161, 6);
             // 
-            // 終了ToolStripMenuItem
+            // EndToolStripMenuItem
             // 
-            this.終了ToolStripMenuItem.Name = "終了ToolStripMenuItem";
-            this.終了ToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
-            this.終了ToolStripMenuItem.Text = "終了(Q)";
+            this.EndToolStripMenuItem.Name = "EndToolStripMenuItem";
+            this.EndToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.EndToolStripMenuItem.Text = "終了(Q)";
+            this.EndToolStripMenuItem.Click += new System.EventHandler(this.EndToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -216,77 +223,77 @@
             // UndoToolStripMenuItem
             // 
             this.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem";
-            this.UndoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.UndoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.UndoToolStripMenuItem.Text = "元に戻す";
             this.UndoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItem_Click);
             // 
             // RedoToolStripMenuItem
             // 
             this.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem";
-            this.RedoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.RedoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.RedoToolStripMenuItem.Text = "やり直し";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(124, 6);
             // 
             // CutToolStripMenuItem
             // 
             this.CutToolStripMenuItem.Name = "CutToolStripMenuItem";
-            this.CutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CutToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.CutToolStripMenuItem.Text = "切り取り";
             this.CutToolStripMenuItem.Click += new System.EventHandler(this.CutToolStripMenuItem_Click);
             // 
             // CopyToolStripMenuItem
             // 
             this.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
-            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.CopyToolStripMenuItem.Text = "コピー";
             this.CopyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
             // 
             // PasteToolStripMenuItem
             // 
             this.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem";
-            this.PasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.PasteToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.PasteToolStripMenuItem.Text = "貼り付け";
             this.PasteToolStripMenuItem.Click += new System.EventHandler(this.PasteToolStripMenuItem_Click);
             // 
             // DeleteToolStripMenuItem
             // 
             this.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
-            this.DeleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.DeleteToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.DeleteToolStripMenuItem.Text = "削除";
             this.DeleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(124, 6);
             // 
             // SelectAllToolStripMenuItem
             // 
             this.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem";
-            this.SelectAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.SelectAllToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.SelectAllToolStripMenuItem.Text = "すべて選択";
             this.SelectAllToolStripMenuItem.Click += new System.EventHandler(this.SelectAllToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(124, 6);
             // 
             // FindToolStripMenuItem
             // 
             this.FindToolStripMenuItem.Name = "FindToolStripMenuItem";
-            this.FindToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.FindToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.FindToolStripMenuItem.Text = "検索";
             this.FindToolStripMenuItem.Click += new System.EventHandler(this.FindToolStripMenuItem_Click);
             // 
             // ReplaceToolStripMenuItem
             // 
             this.ReplaceToolStripMenuItem.Name = "ReplaceToolStripMenuItem";
-            this.ReplaceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ReplaceToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.ReplaceToolStripMenuItem.Text = "置換";
             this.ReplaceToolStripMenuItem.Click += new System.EventHandler(this.ReplaceToolStripMenuItem_Click);
             // 
@@ -330,7 +337,7 @@
             // オプションOToolStripMenuItem
             // 
             this.オプションOToolStripMenuItem.Name = "オプションOToolStripMenuItem";
-            this.オプションOToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.オプションOToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.オプションOToolStripMenuItem.Text = "オプション(O)";
             this.オプションOToolStripMenuItem.Click += new System.EventHandler(this.OpenOptionToolStripMenuItem_Click);
             // 
@@ -386,7 +393,9 @@
             // treeView1
             // 
             this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.treeView1.FullRowSelect = true;
+            this.treeView1.HideSelection = false;
             this.treeView1.Location = new System.Drawing.Point(0, 0);
             this.treeView1.Name = "treeView1";
             this.treeView1.ShowLines = false;
@@ -456,7 +465,7 @@
         #endregion
 
         private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem ファイルFToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem FileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem NewProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem OpenProjectToolStripMenuItem;
@@ -467,7 +476,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem オプションOToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem 終了ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EndToolStripMenuItem;
         private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
@@ -475,14 +484,14 @@
         private System.Windows.Forms.ToolStripMenuItem ヘルプHToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem バージョン情報AToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem のプロパティToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem プロジェクトToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ファイルToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem フォルダToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 保存ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 名前を付けて保存ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CreateProjectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CreateFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CreateFolderToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SaveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem SaveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem 閉じるToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem プロジェクトを閉じるToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CloseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CloseProjectToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem UndoToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem RedoToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;

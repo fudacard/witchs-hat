@@ -8,10 +8,11 @@ namespace WitchsHat
 {
     class TabInfo
     {
-        public  const int TabTypeAzuki = 0;
-        public  const int TabTypeImage = 1;
-        public  const int TabTypeBrowser = 2;
+        public const int TabTypeAzuki = 0;
+        public const int TabTypeImage = 1;
+        public const int TabTypeBrowser = 2;
         public int Type { get; set; }
         public string Uri { get; set; }
+        public bool Modify { get; set; }
     }
 }

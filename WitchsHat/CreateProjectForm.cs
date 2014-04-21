@@ -14,8 +14,10 @@ namespace WitchsHat
 {
     public partial class CreateProjectForm : Form
     {
-        public delegate void RefreshEventHandler(object sender, ProjectEventArgs e);
-        public event RefreshEventHandler RefreshEvent;
+
+        public delegate void OkEventHandler(string projectName, string projectDir, int projectTemplate);
+        public OkEventHandler OkClicked;
+
         public CreateProjectForm()
         {
             InitializeComponent();
@@ -38,39 +40,20 @@ namespace WitchsHat
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string ProjectName = this.textBox1.Text;
-            var path = this.textBox2.Text + "\\" + ProjectName;
-            System.IO.DirectoryInfo di = System.IO.Directory.CreateDirectory(path);
-            // プロジェクトテンプレートコピー
-            if (this.listBox1.GetSelected(0))
+            string projectName = this.textBox1.Text;
+            var projectDir = this.textBox2.Text + "\\" + projectName;
+            int projectTemplate = 0;
+            for (int i = 0; i < listBox1.Items.Count; i++ )
             {
-                // enchant.jsプロジェクト
-                string sourceDirName = @"Data\Templates\EnchantProject";
-                string[] files = System.IO.Directory.GetFiles(sourceDirName);
-                foreach (string file in files)
+                if (this.listBox1.GetSelected(i))
                 {
-                    Console.WriteLine(file);
-                    System.IO.File.Copy(file,
-                       path + "\\" + System.IO.Path.GetFileName(file), true);
-
+                    projectTemplate = i;
+                    break;
                 }
             }
-            else
-            {
-                // 空のプロジェクト
-            }
+            
+            OkClicked(projectName, projectDir, projectTemplate);
 
-            var p = new ProjectEventArgs();
-            p.ProjectName = ProjectName;
-            p.ProjectDir = path;
-            this.RefreshEvent(this, p);
-
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            XmlWriter writer = XmlWriter.Create(path + "\\" + ProjectName + ".whprj", settings);
-            writer.WriteElementString("ProjectName", ProjectName);
-            writer.Flush();
-            writer.Close();
 
             this.Close();
         }

@@ -12,6 +12,10 @@ namespace WitchsHat
 {
     public partial class SettingForm : Form
     {
+        public delegate void OkEventHandler();
+        public OkEventHandler OkClicked;
+        public EnvironmentSettings settings;
+
         public SettingForm()
         {
             InitializeComponent();
@@ -24,7 +28,9 @@ namespace WitchsHat
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            settings.TempProjectEnable = TempProjectCheckBox.Checked;
+            OkClicked();
+            this.Close();
         }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -43,7 +49,7 @@ namespace WitchsHat
 
         private void SettingForm_Load(object sender, EventArgs e)
         {
-
+            TempProjectCheckBox.Checked = settings.TempProjectEnable;
             panel1.Visible = true;
             panel2.Visible = false;
             treeView1.ExpandAll();

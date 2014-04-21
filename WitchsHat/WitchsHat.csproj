@@ -63,6 +63,18 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateFileForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateFileForm.Designer.cs">
+      <DependentUpon>CreateFileForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CreateFolderForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateFolderForm.Designer.cs">
+      <DependentUpon>CreateFolderForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateProjectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -75,6 +87,7 @@
     <Compile Include="EnchantjsDownloadForm.Designer.cs">
       <DependentUpon>EnchantjsDownloadForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EnvironmentSettings.cs" />
     <Compile Include="FindForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +122,12 @@
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
     <Compile Include="TabInfo.cs" />
+    <EmbeddedResource Include="CreateFileForm.resx">
+      <DependentUpon>CreateFileForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateFolderForm.resx">
+      <DependentUpon>CreateFolderForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateProjectForm.resx">
       <DependentUpon>CreateProjectForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -117,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FindForm.resx">
       <DependentUpon>FindForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
