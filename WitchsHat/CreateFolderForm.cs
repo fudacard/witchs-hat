@@ -91,5 +91,13 @@ namespace WitchsHat
         {
             treeView1.SelectedNode = rootNode;
         }
+
+        private void treeView1_BeforeSelect(object sender, TreeViewCancelEventArgs e)
+        {
+            if (System.IO.File.Exists(e.Node.Name))
+            {
+                e.Cancel = true;
+            }
+        }
     }
 }

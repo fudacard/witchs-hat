@@ -40,8 +40,8 @@ namespace WitchsHat
             Uri u = new Uri(enchantjsUrl);
 
             //ダウンロードしたファイルの保存先
-            outputdir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WitchsHat");
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "WitchsHat", u.ToString().Substring(u.ToString().LastIndexOf('/') + 1));
+            outputdir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Witchs Hat");
+            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Witchs Hat", u.ToString().Substring(u.ToString().LastIndexOf('/') + 1));
             running = true;
             this.progressBar1.Maximum = 100;
             filepath = path;

@@ -18,6 +18,8 @@ namespace WitchsHat
         public delegate void OkEventHandler(string projectName, string projectDir, int projectTemplate);
         public OkEventHandler OkClicked;
 
+        public string ProjectsPath { get; set; }
+
         public CreateProjectForm()
         {
             InitializeComponent();
@@ -26,7 +28,6 @@ namespace WitchsHat
         private void CreateProjectForm_Load(object sender, EventArgs e)
         {
             int number = 1;
-            string ProjectsPath = System.Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "\\WitchsHatProject";
             if (System.IO.Directory.Exists(ProjectsPath))
             {
                 string[] dirs = System.IO.Directory.GetDirectories(ProjectsPath);
