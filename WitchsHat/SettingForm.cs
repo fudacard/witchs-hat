@@ -56,28 +56,47 @@ namespace WitchsHat
         {
             if (e.Node.Text == "全般" || e.Node.Text == "動作")
             {
+                TitleLabel.Text = "動作";
                 panel1.Visible = true;
                 panel2.Visible = false;
+                panel3.Visible = false;
             }
             else if (e.Node.Text == "ブラウザー")
             {
+                TitleLabel.Text = "ブラウザー";
                 panel1.Visible = false;
                 panel2.Visible = true;
+                panel3.Visible = false;
+            }
+            else if (e.Node.Text == "エディタ" || e.Node.Text == "フォント")
+            {
+                TitleLabel.Text = "フォント";
+                panel1.Visible = false;
+                panel2.Visible = false;
+                panel3.Visible = true;
             }
         }
 
         private void SettingForm_Load(object sender, EventArgs e)
         {
+            panel1.Visible = true;
+            panel2.Visible = false;
+            panel3.Visible = false;
+            treeView1.ExpandAll();
+            // 動作
             EncodingComboBox.Text = settings.Encoding;
             ProjectsPathTextBox.Text = settings.ProjectsPath;
             TempProjectCheckBox.Checked = settings.TempProjectEnable;
             ServerCheckBox.Checked = settings.ServerEnable;
             ServerPortTextBox.Text = settings.ServerPort.ToString();
+            // ブラウザー
             BrowserComboBox.SelectedValue = settings.Browser;
             RunBrowserComboBox.SelectedValue = settings.RunBrowser;
-            panel1.Visible = true;
-            panel2.Visible = false;
-            treeView1.ExpandAll();
+            // フォント
+            TitleLabel.Text = "動作";
+            FontPreviewTextBox.Font = new Font(settings.FontName, settings.FontSize);
+            FontNameLabel.Text = "フォント名 " + settings.FontName;
+            FontSizeLabel.Text = "フォントサイズ " + settings.FontSize;
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -94,6 +113,25 @@ namespace WitchsHat
             {
                 Console.WriteLine(ofd.FileName);
                 ProjectsPathTextBox.Text = ofd.FileName;
+            }
+        }
+
+        private void FontSelectButton_Click(object sender, EventArgs e)
+        {
+            FontDialog f = new FontDialog();
+            f.Font = new Font(settings.FontName, settings.FontSize);
+            DialogResult result = f.ShowDialog(this);
+            if (result == DialogResult.OK)
+            {
+                Console.WriteLine(f.Font.Name);
+                Console.WriteLine("Unit: " + f.Font.Unit);
+                Console.WriteLine("Size: " + f.Font.Size);
+                Console.WriteLine("Size: " + f.Font.SizeInPoints);
+                settings.FontName = f.Font.Name;
+                settings.FontSize = f.Font.Size;
+                FontPreviewTextBox.Font = f.Font;
+                FontNameLabel.Text = "フォント名 " + settings.FontName;
+                FontSizeLabel.Text = "フォントサイズ " + settings.FontSize;
             }
         }
     }

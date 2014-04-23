@@ -28,7 +28,7 @@ namespace WitchsHat
         bool tempproject;
         // テンポラリプロジェクトを遅延生成するフラグ
         bool CreateLater;
-        bool projectModify;
+        bool tempprojectModify;
         EnvironmentSettings settings;
         WHServer server;
         ProjectProperty CurrentProject;
@@ -164,13 +164,7 @@ namespace WitchsHat
             else if (cmds.Length > 1)
             {
                 string filePath = cmds[1];
-                if (filePath.EndsWith(".whprj"))
-                {
-                    CurrentProject = ProjectProperty.ReadProjectProperty(filePath);
-                    this.Text = CurrentProject.Name + " - Witch's Hat";
-
-                    loadProject();
-                }
+                OpenFile(filePath);
             }
 
             // AddStartpage();
@@ -181,7 +175,7 @@ namespace WitchsHat
             TabPage tabPage = new TabPage();
             WebBrowser webbrowser = new WebBrowser();
             webbrowser.Dock = DockStyle.Fill;
-            string path = Path.Combine(System.Environment.CurrentDirectory, @"Data\Pages\startpage.html");
+            string path = Path.Combine(Application.StartupPath, @"Data\Pages\startpage.html");
             webbrowser.Navigate(path);
             Console.WriteLine(path);
             tabPage.Controls.Add(webbrowser);
@@ -192,7 +186,18 @@ namespace WitchsHat
 
         private void CreateProject(string projectName, string projectDir, int projectTemplate)
         {
-            string sourceDirName = @"Data\Templates\HelloWorldProject";
+            bool create = true;
+
+            create = NewProjectCheck();
+            if (create)
+            {
+                CloseAllTab();
+            }
+            else
+            {
+                return;
+            }
+            string sourceDirName = Path.Combine(Application.StartupPath, @"Data\Templates\HelloWorldProject");
             string[] extra = { };
 
             System.IO.Directory.CreateDirectory(projectDir);
@@ -202,13 +207,13 @@ namespace WitchsHat
                 case 0:
                     extra = new string[1];
                     extra[0] = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Witchs Hat", "enchant.js", "images", "chara1.png");
-                    sourceDirName = @"Data\Templates\EnchantProject";
+                    sourceDirName = Path.Combine(Application.StartupPath, @"Data\Templates\EnchantProject");
                     break;
                 case 1:
-                    sourceDirName = @"Data\Templates\BlankProject";
+                    sourceDirName = Path.Combine(Application.StartupPath, @"Data\Templates\BlankProject");
                     break;
                 case 2:
-                    sourceDirName = @"Data\Templates\HelloWorldProject";
+                    sourceDirName = Path.Combine(Application.StartupPath, @"Data\Templates\HelloWorldProject");
                     break;
             }
 
@@ -236,13 +241,80 @@ namespace WitchsHat
 
             CurrentProject = pp;
 
-            loadProject();
+            UpdateFileTree();
 
             // main.jsを開く
             if (File.Exists(Path.Combine(CurrentProject.Dir, "main.js")))
             {
                 OpenTab(Path.Combine(CurrentProject.Dir, "main.js"));
             }
+        }
+
+        /// <summary>
+        /// ファイルの変更を確認し保存と処理の続行の可否を返す
+        /// </summary>
+        /// <returns></returns>
+        private bool NewProjectCheck()
+        {
+            bool continueFlag = true;
+
+
+            if (tempproject && tempprojectModify)
+            {
+
+                DialogResult result = MessageBox.Show("プロジェクトが変更されています。\r\nプロジェクトを保存しますか？", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+                if (result == DialogResult.Yes)
+                {
+                    // 保存ダイアログ表示
+                    continueFlag = false;
+                    SaveProjectFromTemp f = new SaveProjectFromTemp();
+                    f.OkClicked += delegate(string projectName, string projectDir)
+                    {
+                        // 保存する
+                        SaveTempProject(projectName, projectDir);
+                        this.Close();
+                    };
+                    f.ShowDialog(this);
+
+                }
+                else if (result == DialogResult.Cancel)
+                {
+                    continueFlag = false;
+                }
+
+            }
+            else
+            {
+                bool modify = false;
+                foreach (var pair in tabInfos)
+                {
+                    if (pair.Value.Modify)
+                    {
+                        modify = true;
+                        break;
+                    }
+                }
+                if (modify)
+                {
+                    DialogResult result = MessageBox.Show("ファイルが変更されています。\r\n保存しますか？", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
+                    if (result == DialogResult.Yes)
+                    {
+                        foreach (var pair in tabInfos)
+                        {
+                            Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0];
+                            StreamWriter writer = new StreamWriter(pair.Value.Uri);
+                            writer.Write(azuki.Text);
+                            writer.Close();
+                        }
+                    }
+                    else if (result == DialogResult.Cancel)
+                    {
+                        continueFlag = false;
+                    }
+                }
+            }
+
+            return continueFlag;
         }
 
         private void CreateTemporaryProject()
@@ -262,7 +334,7 @@ namespace WitchsHat
         {
 
             // 環境設定ファイル読み込み
-            settings = EnvironmentSettings.ReadEnvironmentSettings("Data\\defaultsettings.xml");
+            settings = EnvironmentSettings.ReadEnvironmentSettings(Path.Combine(Application.StartupPath, "Data\\defaultsettings.xml"));
             if (settings.ProjectsPath == "")
             {
                 settings.ProjectsPath = Path.Combine(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal), "Witchs Hat Projects");
@@ -281,7 +353,11 @@ namespace WitchsHat
             this.Activate();
             string[] args = (string[])parameters[0];
 
-            MessageBox.Show("既に起動しています。引数1の数：" + args.Length.ToString());
+            //MessageBox.Show("既に起動しています。引数1の数：" + args.Length.ToString());
+            if (parameters.Length > 1)
+            {
+                OpenFile((string)parameters[1]);
+            }
         }
 
 
@@ -296,23 +372,35 @@ namespace WitchsHat
             ofd.Filter = "プロジェクト ファイル (*.whprj)|*.whprj|javascriptファイル(*.js)|*.js|htmlファイル(*.html;*.html)|*.html;*.htm|画像ファイル(*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif|テキストファイル(*.txt)|*.txt|すべてのファイル(*.*)|*.*";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
-                if (ofd.FileName.EndsWith(".whprj"))
-                {
-                    // プロジェクト設定ファイル読み込み
-                    CurrentProject = ProjectProperty.ReadProjectProperty(ofd.FileName);
-                    this.Text = CurrentProject.Name + " - Witch's Hat";
-
-                    loadProject();
-                }
-                else
-                {
-                    OpenTab(ofd.FileName);
-                    this.tabControl1.SelectedTab = tabInfos.FirstOrDefault(x => x.Value.Uri == ofd.FileName).Key;
-                }
+                OpenFile(ofd.FileName);
             }
         }
 
-        private void loadProject()
+        private void OpenFile(string filePath)
+        {
+            if (filePath.EndsWith(".whprj"))
+            {
+                bool open = true;
+                open = NewProjectCheck();
+                if (open)
+                {
+                    CloseAllTab();
+
+                    // プロジェクト設定ファイル読み込み
+                    CurrentProject = ProjectProperty.ReadProjectProperty(filePath);
+                    this.Text = CurrentProject.Name + " - Witch's Hat";
+
+                    UpdateFileTree();
+                }
+            }
+            else
+            {
+                OpenTab(filePath);
+                this.tabControl1.SelectedTab = tabInfos.FirstOrDefault(x => x.Value.Uri == filePath).Key;
+            }
+        }
+
+        private void UpdateFileTree()
         {
             this.Text = CurrentProject.Name + " - Witch's Hat";
             if (server != null)
@@ -415,7 +503,7 @@ namespace WitchsHat
             {
                 if (pathlower.EndsWith(".js") || pathlower.EndsWith(".txt") || pathlower.EndsWith(".html") || pathlower.EndsWith(".htm"))
                 {
-                    StreamReader sr = new StreamReader(fullpath, Encoding.GetEncoding(CurrentProject.Encoding));
+                    StreamReader sr = new StreamReader(fullpath);
                     string text = sr.ReadToEnd();
                     sr.Close();
 
@@ -425,7 +513,9 @@ namespace WitchsHat
                     azuki.Text = text;
                     azuki.ClearHistory();
                     azuki.TabWidth = 4;
+                    azuki.AutoIndentHook = Sgry.Azuki.AutoIndentHooks.CHook;
                     azuki.Dock = DockStyle.Fill;
+                    azuki.Font = new Font(settings.FontName, settings.FontSize);
                     if (fullpath.EndsWith(".js"))
                     {
                         azuki.Highlighter = Sgry.Azuki.Highlighter.Highlighters.JavaScript;
@@ -435,8 +525,6 @@ namespace WitchsHat
                         azuki.Highlighter = Sgry.Azuki.Highlighter.Highlighters.Xml;
                     }
 
-                    //azuki.Font = new Font("Courier New", 10);
-                    azuki.Font = new Font("ＭＳ ゴシック", 10);
                     Console.WriteLine(azuki.Font.SizeInPoints);
                     azuki.SetKeyBind(Keys.F | Keys.Control, delegate
                     {
@@ -446,6 +534,10 @@ namespace WitchsHat
                     {
                         ReplaceToolStripMenuItem_Click(null, null);
                     });
+                    azuki.SetKeyBind(Keys.S | Keys.Control, delegate
+                    {
+                        SaveToolStripMenuItem_Click(null, null);
+                    });
                     tabPage.Controls.Add(azuki);
                     azuki.TextChanged += delegate
                     {
@@ -453,7 +545,7 @@ namespace WitchsHat
                         tabInfos[tabPage].Modify = true;
                         if (tempproject)
                         {
-                            projectModify = true;
+                            tempprojectModify = true;
                         }
                     };
                     this.tabControl1.TabPages.Add(tabPage);
@@ -511,7 +603,7 @@ namespace WitchsHat
                         picturebox.Height = (int)(picturebox.Image.Height * scale);
                     };
 
-                    picturebox.BackgroundImage = System.Drawing.Image.FromFile(Path.Combine(System.Environment.CurrentDirectory, @"Data\Resources\transback.png"));
+                    picturebox.BackgroundImage = System.Drawing.Image.FromFile(Path.Combine(Application.StartupPath, @"Data\Resources\transback.png"));
                     tabPage.Controls.Add(picturebox);
                     this.tabControl1.TabPages.Add(tabPage);
                     this.tabInfos[tabPage] = new TabInfo();
@@ -562,7 +654,7 @@ namespace WitchsHat
                 }
             }
 
-            if (projectModify)
+            if (tempprojectModify)
             {
                 DialogResult result = MessageBox.Show("プロジェクトが変更されています。\r\nプロジェクトを保存しますか？", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
                 if (result == DialogResult.Yes)
@@ -571,57 +663,10 @@ namespace WitchsHat
                     e.Cancel = true;
                     close = false;
                     SaveProjectFromTemp f = new SaveProjectFromTemp();
-                    f.OkClicked += delegate()
+                    f.OkClicked += delegate(string projectName, string projectDir)
                     {
-                        // ファイルをすべて保存する
-                        foreach (var pair in tabInfos)
-                        {
-                            if (pair.Value.Type == TabInfo.TabTypeAzuki) {
-                                Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0];
-                                StreamWriter writer = new StreamWriter(pair.Value.Uri);
-                                writer.Write(azuki.Text);
-                                writer.Close();
-                            }
-                        }
-
-                        // プロジェクトをコピー
-                        System.IO.Directory.CreateDirectory(f.ProjectDir);
-                        // ファイルコピー
-                        string sourceDirName = CurrentProject.Dir;
-                        string[] files = System.IO.Directory.GetFiles(sourceDirName);
-                        foreach (string file in files)
-                        {
-                            Console.WriteLine(file);
-                            string filename = System.IO.Path.GetFileName(file);
-                            if (System.IO.Path.GetFileName(file) == CurrentProject.Name + ".whprj")
-                            {
-                                //                                filename = f.ProjectName + ".whprj";
-                                CurrentProject.Name = f.ProjectName;
-                                CurrentProject.Dir = f.ProjectDir;
-                                ProjectProperty.WriteProjectProperty(CurrentProject);
-                            }
-                            else
-                            {
-                                System.IO.File.Copy(file,
-                                   f.ProjectDir + "\\" + filename, true);
-                            }
-
-                        }
-                        if (!File.Exists(Path.Combine(f.ProjectDir, f.ProjectName + ".whprj")))
-                        {
-                            // プロジェクト設定ファイル生成
-                            CurrentProject.Name = f.ProjectName;
-                            CurrentProject.Dir = f.ProjectDir;
-                            ProjectProperty.WriteProjectProperty(CurrentProject);
-                        }
-
-                        projectModify = false;
-                        if (tempproject)
-                        {
-                            Directory.Delete(CurrentProject.Dir, true);
-                        }
-                        tempproject = false;
-
+                        // 保存する
+                        SaveTempProject(projectName, projectDir);
                         this.Close();
                     };
                     f.ShowDialog(this);
@@ -667,6 +712,59 @@ namespace WitchsHat
                 Program.mutex.ReleaseMutex();
             }
 
+        }
+
+        private void SaveTempProject(string projectName, string projectDir)
+        {
+            // ファイルをすべて保存する
+            foreach (var pair in tabInfos)
+            {
+                if (pair.Value.Type == TabInfo.TabTypeAzuki)
+                {
+                    Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0];
+                    StreamWriter writer = new StreamWriter(pair.Value.Uri);
+                    writer.Write(azuki.Text);
+                    writer.Close();
+                }
+            }
+
+            // プロジェクトをコピー
+            System.IO.Directory.CreateDirectory(projectDir);
+            // ファイルコピー
+            string sourceDirName = CurrentProject.Dir;
+            string[] files = System.IO.Directory.GetFiles(sourceDirName);
+            foreach (string file in files)
+            {
+                Console.WriteLine(file);
+                string filename = System.IO.Path.GetFileName(file);
+                if (System.IO.Path.GetFileName(file) == CurrentProject.Name + ".whprj")
+                {
+                    //                                filename = f.ProjectName + ".whprj";
+                    CurrentProject.Name = projectName;
+                    CurrentProject.Dir = projectDir;
+                    ProjectProperty.WriteProjectProperty(CurrentProject);
+                }
+                else
+                {
+                    System.IO.File.Copy(file,
+                       projectDir + "\\" + filename, true);
+                }
+
+            }
+            if (!File.Exists(Path.Combine(projectDir, projectName + ".whprj")))
+            {
+                // プロジェクト設定ファイル生成
+                CurrentProject.Name = projectName;
+                CurrentProject.Dir = projectDir;
+                ProjectProperty.WriteProjectProperty(CurrentProject);
+            }
+
+            tempprojectModify = false;
+            if (tempproject)
+            {
+                Directory.Delete(CurrentProject.Dir, true);
+            }
+            tempproject = false;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -739,6 +837,15 @@ namespace WitchsHat
                     // ポート変更
                     server.Start(settings.ServerPort);
                 }
+                // フォント変更
+                Font font = new Font(settings.FontName, settings.FontSize);
+                foreach (var pair in tabInfos)
+                {
+                    if (pair.Value.Type == TabInfo.TabTypeAzuki)
+                    {
+                        ((Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0]).Font = font;
+                    }
+                }
             };
             f.ShowDialog(this);
         }
@@ -767,11 +874,6 @@ namespace WitchsHat
             }
         }
 
-        private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
-            azuki.Undo();
-        }
 
         private void toolStripMenuItem1_DropDownOpening(object sender, EventArgs e)
         {
@@ -790,22 +892,49 @@ namespace WitchsHat
             SelectAllToolStripMenuItem.Enabled = (azuki != null);
         }
 
+        private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            {
+                Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
+                azuki.Undo();
+            }
+        }
+
+        private void RedoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            {
+                Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
+                azuki.Redo();
+            }
+        }
+
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
-            azuki.Cut();
+            if (tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            {
+                Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
+                azuki.Cut();
+            }
         }
 
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
-            azuki.Copy();
+            if (tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            {
+                Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
+                azuki.Copy();
+            }
         }
 
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
-            azuki.Paste();
+            if (tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            {
+                Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
+                azuki.Paste();
+            }
         }
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
@@ -859,7 +988,7 @@ namespace WitchsHat
                 CurrentProject.Dir = projectDir;
                 CurrentProject.HtmlPath = "index.html";
                 CurrentProject.Encoding = settings.Encoding;
-                loadProject();
+                UpdateFileTree();
             };
             f.ShowDialog(this);
         }
@@ -879,8 +1008,8 @@ namespace WitchsHat
                 }
                 OpenTab(filepath);
                 this.tabControl1.SelectedTab = tabInfos.FirstOrDefault(x => x.Value.Uri == filepath).Key;
-                projectModify = true;
-                loadProject();
+                tempprojectModify = true;
+                UpdateFileTree();
             };
             f.ShowDialog(this);
         }
@@ -892,8 +1021,8 @@ namespace WitchsHat
             f.OkClicked = delegate(string folderpath)
             {
                 Directory.CreateDirectory(folderpath);
-                projectModify = true;
-                loadProject();
+                tempprojectModify = true;
+                UpdateFileTree();
             };
             f.ShowDialog(this);
         }
@@ -929,10 +1058,14 @@ namespace WitchsHat
             }
             if (CurrentProject != null)
             {
+                CreateFileToolStripMenuItem.Enabled = true;
+                CreateFolderToolStripMenuItem.Enabled = true;
                 CloseProjectToolStripMenuItem.Enabled = true;
             }
             else
             {
+                CreateFileToolStripMenuItem.Enabled = false;
+                CreateFolderToolStripMenuItem.Enabled = false;
                 CloseProjectToolStripMenuItem.Enabled = false;
             }
         }
@@ -979,27 +1112,33 @@ namespace WitchsHat
 
         private void CloseProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.Text = "Witch's Hat";
+            bool close = true;
 
+            close = NewProjectCheck();
 
-            treeView1.Nodes.Clear();
+            if (close)
+            {
 
+                this.Text = "Witch's Hat";
+                treeView1.Nodes.Clear();
+                CloseAllTab();
+
+                CurrentProject = null;
+                if (tempproject)
+                {
+                    tempproject = false;
+                }
+            }
+        }
+
+        private void CloseAllTab()
+        {
             foreach (var pair in tabInfos)
             {
                 if (pair.Value.Uri.StartsWith(CurrentProject.Dir))
                 {
                     tabControl1.TabPages.Remove(pair.Key);
                 }
-            }
-            CurrentProject = null;
-
-            if (tempproject)
-            {
-                if (projectModify)
-                {
-
-                }
-                tempproject = false;
             }
         }
 
@@ -1050,10 +1189,12 @@ namespace WitchsHat
         {
             if (CurrentProject != null)
             {
+                ImportFileToolStripMenuItem.Enabled = true;
                 ProjectPropertyToolStripMenuItem.Enabled = true;
             }
             else
             {
+                ImportFileToolStripMenuItem.Enabled = false;
                 ProjectPropertyToolStripMenuItem.Enabled = false;
             }
         }
@@ -1133,7 +1274,8 @@ namespace WitchsHat
                 else
                 {
                     Directory.Delete(filepath, true);
-                    foreach(var pair in tabInfos) {
+                    foreach (var pair in tabInfos)
+                    {
                         if (pair.Value.Uri.StartsWith(filepath))
                         {
                             tabControl1.TabPages.Remove(pair.Key);
@@ -1141,10 +1283,10 @@ namespace WitchsHat
                         }
                     }
                 }
-                loadProject();
+                UpdateFileTree();
                 if (tempproject)
                 {
-                    projectModify = true;
+                    tempprojectModify = true;
                 }
             }
         }
@@ -1177,10 +1319,10 @@ namespace WitchsHat
                 var tabPage = tabInfos.FirstOrDefault(x => x.Value.Uri == oldFilePath).Key;
                 tabInfos[tabPage].Uri = newFilePath;
                 tabPage.Text = newFileName;
-                loadProject();
+                UpdateFileTree();
                 if (tempproject)
                 {
-                    projectModify = true;
+                    tempprojectModify = true;
                 }
             };
             f.ShowDialog(this);
@@ -1197,14 +1339,81 @@ namespace WitchsHat
             f.OkClicked = delegate(string folderName)
             {
                 Directory.CreateDirectory(Path.Combine(treeView1.SelectedNode.Name, folderName));
-                loadProject();
+                UpdateFileTree();
                 if (tempproject)
                 {
-                    projectModify = true;
+                    tempprojectModify = true;
                 }
             };
             f.ShowDialog(this);
         }
+
+        private void ImportFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "javascriptファイル(*.js)|*.js|htmlファイル(*.html;*.html)|*.html;*.htm|画像ファイル(*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif|テキストファイル(*.txt)|*.txt|すべてのファイル(*.*)|*.*";
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                string destFileName = Path.Combine(CurrentProject.Dir, Path.GetFileName(ofd.FileName));
+                File.Copy(ofd.FileName, destFileName);
+                OpenFile(destFileName);
+                UpdateFileTree();
+                if (tempproject)
+                {
+                    tempprojectModify = true;
+                }
+            }
+        }
+
+
+        private void toolStripButton9_Click(object sender, EventArgs e)
+        {
+            if (CurrentProject != null)
+            {
+                RunOnBrowserToolStripMenuItem_Click(sender, e);
+            }
+        }
+
+        private void CreateProjectToolBarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateProjectToolStripMenuItem_Click(sender, e);
+        }
+
+        private void CreateFileToolBarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateFileToolStripMenuItem_Click(sender, e);
+        }
+
+        private void CreateFolderToolBarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateFolderToolStripMenuItem_Click(sender, e);
+        }
+
+        private void CutToolBartoolStripButton3_Click(object sender, EventArgs e)
+        {
+            CutToolStripMenuItem_Click(sender, e);
+        }
+
+        private void CopyToolBartoolStripButton4_Click(object sender, EventArgs e)
+        {
+            CopyToolStripMenuItem_Click(sender, e);
+        }
+
+        private void PasteToolBartoolStripButton5_Click(object sender, EventArgs e)
+        {
+            PasteToolStripMenuItem_Click(sender, e);
+        }
+
+        private void UndoToolBartoolStripButton6_Click(object sender, EventArgs e)
+        {
+            UndoToolStripMenuItem_Click(sender, e);
+        }
+
+        private void RedoToolBartoolStripButton7_Click(object sender, EventArgs e)
+        {
+            RedoToolStripMenuItem_Click(sender, e);
+        }
+
     }
 
 }

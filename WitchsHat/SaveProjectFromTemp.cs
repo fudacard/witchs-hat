@@ -14,7 +14,7 @@ namespace WitchsHat
 {
     public partial class SaveProjectFromTemp : Form
     {
-        public delegate void OkEventHandler();
+        public delegate void OkEventHandler(string projectName, string projectDir);
         public OkEventHandler OkClicked;
 
         public string ProjectName;
@@ -43,7 +43,7 @@ namespace WitchsHat
                 ProjectName = textBox1.Text;
                 ProjectDir = Path.Combine(textBox2.Text, ProjectName);
                 this.Close();
-                OkClicked();
+                OkClicked(ProjectName, ProjectDir);
             }
         }
 

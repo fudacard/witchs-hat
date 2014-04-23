@@ -16,6 +16,8 @@ namespace WitchsHat
         public string EnchantjsUrl { get; set; }
         public string Browser { get; set; }
         public string Encoding { get; set; }
+        public string FontName { get; set; }
+        public float FontSize { get; set; }
 
         public static EnvironmentSettings ReadEnvironmentSettings(string path)
         {
@@ -81,6 +83,16 @@ namespace WitchsHat
                                 string encoding = reader.ReadString();
                                 Console.WriteLine("[" + encoding + "]");
                                 settings.Encoding = encoding;
+                                break;
+                            case "FontName":
+                                string fontName = reader.ReadString();
+                                Console.WriteLine("[" + fontName + "]");
+                                settings.FontName = fontName;
+                                break;
+                            case "FontSize":
+                                string fontSize = reader.ReadString();
+                                Console.WriteLine("[" + fontSize + "]");
+                                settings.FontSize = float.Parse(fontSize);
                                 break;
                         }
                     }
@@ -177,6 +189,22 @@ namespace WitchsHat
 
                                 }
                                 break;
+                            case "FontName":
+                                string fontName = reader.ReadString();
+                                Console.WriteLine("[" + fontName + "]");
+                                if (fontName != "")
+                                {
+                                    this.FontName = fontName;
+                                }
+                                break;
+                            case "FontSize":
+                                string fontSize = reader.ReadString();
+                                Console.WriteLine("[" + fontSize + "]");
+                                if (fontSize != "")
+                                {
+                                    this.FontSize = float.Parse(fontSize);
+                                }
+                                break;
                         }
                     }
                 }
@@ -196,6 +224,8 @@ namespace WitchsHat
             writer.WriteElementString("Encoding", this.Encoding);
             writer.WriteElementString("Browser", this.Browser);
             writer.WriteElementString("RunBrowser", this.RunBrowser);
+            writer.WriteElementString("FontName", this.FontName);
+            writer.WriteElementString("FontSize", this.FontSize.ToString());
             writer.WriteEndElement();
             writer.Flush();
             writer.Close();

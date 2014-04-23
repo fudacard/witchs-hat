@@ -80,7 +80,6 @@ namespace WitchsHat
             bool matchCase = checkBox1.Checked;
             int begin, end;
             azuki.GetSelection(out begin, out end);
-            Sgry.Azuki.SearchResult result = null;
             Console.WriteLine("[" + azuki.GetSelectedText() + "]");
 
             if (azuki.GetSelectedText() == textBox1.Text || (!matchCase && azuki.GetSelectedText().ToLower() == textBox1.Text.ToLower()))

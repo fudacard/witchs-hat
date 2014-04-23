@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.FileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.NewProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -58,6 +59,8 @@
             this.FindToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReplaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ProjecttoolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ImportFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
             this.ProjectPropertyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunOnBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,6 +77,22 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.CreateToolBartoolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.CreateProjectToolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CreateFileToolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CreateFolderToolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.CutToolBartoolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.CopyToolBartoolStripButton4 = new System.Windows.Forms.ToolStripButton();
+            this.PasteToolBartoolStripButton5 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
+            this.UndoToolBartoolStripButton6 = new System.Windows.Forms.ToolStripButton();
+            this.RedoToolBartoolStripButton7 = new System.Windows.Forms.ToolStripButton();
+            this.FindToolBartoolStripButton8 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.HtmlContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.OpenContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ブラウザで開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,6 +105,8 @@
             this.DeleteContextToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.名前の変更ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.ProjectContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.CreateFolderContextToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.PropertyContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TextContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.開くToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -97,13 +118,12 @@
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.削除ToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.名前の変更ToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
-            this.CreateFolderContextToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.toolStrip1.SuspendLayout();
             this.HtmlContextMenuStrip.SuspendLayout();
             this.ImageContextMenuStrip.SuspendLayout();
             this.ProjectContextMenuStrip.SuspendLayout();
@@ -262,8 +282,9 @@
             // RedoToolStripMenuItem
             // 
             this.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem";
-            this.RedoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.RedoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.RedoToolStripMenuItem.Text = "やり直し";
+            this.RedoToolStripMenuItem.Click += new System.EventHandler(this.RedoToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
@@ -332,11 +353,25 @@
             // ProjecttoolStripMenuItem2
             // 
             this.ProjecttoolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ImportFileToolStripMenuItem,
+            this.toolStripSeparator14,
             this.ProjectPropertyToolStripMenuItem});
             this.ProjecttoolStripMenuItem2.Name = "ProjecttoolStripMenuItem2";
             this.ProjecttoolStripMenuItem2.Size = new System.Drawing.Size(87, 20);
             this.ProjecttoolStripMenuItem2.Text = "プロジェクト(&P)";
             this.ProjecttoolStripMenuItem2.DropDownOpening += new System.EventHandler(this.ProjecttoolStripMenuItem2_DropDownOpening);
+            // 
+            // ImportFileToolStripMenuItem
+            // 
+            this.ImportFileToolStripMenuItem.Name = "ImportFileToolStripMenuItem";
+            this.ImportFileToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.ImportFileToolStripMenuItem.Text = "既存項目の追加";
+            this.ImportFileToolStripMenuItem.Click += new System.EventHandler(this.ImportFileToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator14
+            // 
+            this.toolStripSeparator14.Name = "toolStripSeparator14";
+            this.toolStripSeparator14.Size = new System.Drawing.Size(176, 6);
             // 
             // ProjectPropertyToolStripMenuItem
             // 
@@ -467,11 +502,171 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CreateToolBartoolStripDropDownButton1,
+            this.toolStripButton1,
+            this.toolStripButton2,
+            this.toolStripSeparator15,
+            this.CutToolBartoolStripButton3,
+            this.CopyToolBartoolStripButton4,
+            this.PasteToolBartoolStripButton5,
+            this.toolStripSeparator16,
+            this.UndoToolBartoolStripButton6,
+            this.RedoToolBartoolStripButton7,
+            this.FindToolBartoolStripButton8,
+            this.toolStripSeparator17,
+            this.toolStripButton9});
             this.toolStrip1.Location = new System.Drawing.Point(0, 24);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(800, 25);
             this.toolStrip1.TabIndex = 3;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // CreateToolBartoolStripDropDownButton1
+            // 
+            this.CreateToolBartoolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CreateToolBartoolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CreateProjectToolBarToolStripMenuItem,
+            this.CreateFileToolBarToolStripMenuItem,
+            this.CreateFolderToolBarToolStripMenuItem});
+            this.CreateToolBartoolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("CreateToolBartoolStripDropDownButton1.Image")));
+            this.CreateToolBartoolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CreateToolBartoolStripDropDownButton1.Name = "CreateToolBartoolStripDropDownButton1";
+            this.CreateToolBartoolStripDropDownButton1.Size = new System.Drawing.Size(29, 22);
+            this.CreateToolBartoolStripDropDownButton1.Text = "toolStripDropDownButton1";
+            this.CreateToolBartoolStripDropDownButton1.ToolTipText = "新規";
+            // 
+            // CreateProjectToolBarToolStripMenuItem
+            // 
+            this.CreateProjectToolBarToolStripMenuItem.Name = "CreateProjectToolBarToolStripMenuItem";
+            this.CreateProjectToolBarToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.CreateProjectToolBarToolStripMenuItem.Text = "プロジェクト";
+            this.CreateProjectToolBarToolStripMenuItem.Click += new System.EventHandler(this.CreateProjectToolBarToolStripMenuItem_Click);
+            // 
+            // CreateFileToolBarToolStripMenuItem
+            // 
+            this.CreateFileToolBarToolStripMenuItem.Name = "CreateFileToolBarToolStripMenuItem";
+            this.CreateFileToolBarToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.CreateFileToolBarToolStripMenuItem.Text = "ファイル";
+            this.CreateFileToolBarToolStripMenuItem.Click += new System.EventHandler(this.CreateFileToolBarToolStripMenuItem_Click);
+            // 
+            // CreateFolderToolBarToolStripMenuItem
+            // 
+            this.CreateFolderToolBarToolStripMenuItem.Name = "CreateFolderToolBarToolStripMenuItem";
+            this.CreateFolderToolBarToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.CreateFolderToolBarToolStripMenuItem.Text = "フォルダー";
+            this.CreateFolderToolBarToolStripMenuItem.Click += new System.EventHandler(this.CreateFolderToolBarToolStripMenuItem_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "toolStripButton1";
+            this.toolStripButton1.ToolTipText = "開く";
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "toolStripButton2";
+            this.toolStripButton2.ToolTipText = "保存";
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(6, 25);
+            // 
+            // CutToolBartoolStripButton3
+            // 
+            this.CutToolBartoolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CutToolBartoolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("CutToolBartoolStripButton3.Image")));
+            this.CutToolBartoolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CutToolBartoolStripButton3.Name = "CutToolBartoolStripButton3";
+            this.CutToolBartoolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.CutToolBartoolStripButton3.Text = "toolStripButton3";
+            this.CutToolBartoolStripButton3.ToolTipText = "切り取り";
+            this.CutToolBartoolStripButton3.Click += new System.EventHandler(this.CutToolBartoolStripButton3_Click);
+            // 
+            // CopyToolBartoolStripButton4
+            // 
+            this.CopyToolBartoolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.CopyToolBartoolStripButton4.Image = ((System.Drawing.Image)(resources.GetObject("CopyToolBartoolStripButton4.Image")));
+            this.CopyToolBartoolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.CopyToolBartoolStripButton4.Name = "CopyToolBartoolStripButton4";
+            this.CopyToolBartoolStripButton4.Size = new System.Drawing.Size(23, 22);
+            this.CopyToolBartoolStripButton4.Text = "toolStripButton4";
+            this.CopyToolBartoolStripButton4.ToolTipText = "コピー";
+            this.CopyToolBartoolStripButton4.Click += new System.EventHandler(this.CopyToolBartoolStripButton4_Click);
+            // 
+            // PasteToolBartoolStripButton5
+            // 
+            this.PasteToolBartoolStripButton5.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.PasteToolBartoolStripButton5.Image = ((System.Drawing.Image)(resources.GetObject("PasteToolBartoolStripButton5.Image")));
+            this.PasteToolBartoolStripButton5.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.PasteToolBartoolStripButton5.Name = "PasteToolBartoolStripButton5";
+            this.PasteToolBartoolStripButton5.Size = new System.Drawing.Size(23, 22);
+            this.PasteToolBartoolStripButton5.Text = "toolStripButton5";
+            this.PasteToolBartoolStripButton5.ToolTipText = "貼り付け";
+            this.PasteToolBartoolStripButton5.Click += new System.EventHandler(this.PasteToolBartoolStripButton5_Click);
+            // 
+            // toolStripSeparator16
+            // 
+            this.toolStripSeparator16.Name = "toolStripSeparator16";
+            this.toolStripSeparator16.Size = new System.Drawing.Size(6, 25);
+            // 
+            // UndoToolBartoolStripButton6
+            // 
+            this.UndoToolBartoolStripButton6.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.UndoToolBartoolStripButton6.Image = ((System.Drawing.Image)(resources.GetObject("UndoToolBartoolStripButton6.Image")));
+            this.UndoToolBartoolStripButton6.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.UndoToolBartoolStripButton6.Name = "UndoToolBartoolStripButton6";
+            this.UndoToolBartoolStripButton6.Size = new System.Drawing.Size(23, 22);
+            this.UndoToolBartoolStripButton6.Text = "toolStripButton6";
+            this.UndoToolBartoolStripButton6.ToolTipText = "元に戻す";
+            this.UndoToolBartoolStripButton6.Click += new System.EventHandler(this.UndoToolBartoolStripButton6_Click);
+            // 
+            // RedoToolBartoolStripButton7
+            // 
+            this.RedoToolBartoolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.RedoToolBartoolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("RedoToolBartoolStripButton7.Image")));
+            this.RedoToolBartoolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.RedoToolBartoolStripButton7.Name = "RedoToolBartoolStripButton7";
+            this.RedoToolBartoolStripButton7.Size = new System.Drawing.Size(23, 22);
+            this.RedoToolBartoolStripButton7.Text = "toolStripButton7";
+            this.RedoToolBartoolStripButton7.ToolTipText = "やり直し";
+            this.RedoToolBartoolStripButton7.Click += new System.EventHandler(this.RedoToolBartoolStripButton7_Click);
+            // 
+            // FindToolBartoolStripButton8
+            // 
+            this.FindToolBartoolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.FindToolBartoolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("FindToolBartoolStripButton8.Image")));
+            this.FindToolBartoolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.FindToolBartoolStripButton8.Name = "FindToolBartoolStripButton8";
+            this.FindToolBartoolStripButton8.Size = new System.Drawing.Size(23, 22);
+            this.FindToolBartoolStripButton8.Text = "toolStripButton8";
+            this.FindToolBartoolStripButton8.ToolTipText = "検索";
+            // 
+            // toolStripSeparator17
+            // 
+            this.toolStripSeparator17.Name = "toolStripSeparator17";
+            this.toolStripSeparator17.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton9
+            // 
+            this.toolStripButton9.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton9.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton9.Image")));
+            this.toolStripButton9.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton9.Name = "toolStripButton9";
+            this.toolStripButton9.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton9.Text = "toolStripButton9";
+            this.toolStripButton9.ToolTipText = "ブラウザで実行";
+            this.toolStripButton9.Click += new System.EventHandler(this.toolStripButton9_Click);
             // 
             // HtmlContextMenuStrip
             // 
@@ -561,10 +756,22 @@
             this.ProjectContextMenuStrip.Name = "ProjectContextMenuStrip";
             this.ProjectContextMenuStrip.Size = new System.Drawing.Size(151, 54);
             // 
+            // CreateFolderContextToolStripMenuItem1
+            // 
+            this.CreateFolderContextToolStripMenuItem1.Name = "CreateFolderContextToolStripMenuItem1";
+            this.CreateFolderContextToolStripMenuItem1.Size = new System.Drawing.Size(150, 22);
+            this.CreateFolderContextToolStripMenuItem1.Text = "新しいフォルダー";
+            this.CreateFolderContextToolStripMenuItem1.Click += new System.EventHandler(this.CreateFolderContextToolStripMenuItem1_Click);
+            // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(147, 6);
+            // 
             // PropertyContextToolStripMenuItem
             // 
             this.PropertyContextToolStripMenuItem.Name = "PropertyContextToolStripMenuItem";
-            this.PropertyContextToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.PropertyContextToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
             this.PropertyContextToolStripMenuItem.Text = "プロパティ";
             this.PropertyContextToolStripMenuItem.Click += new System.EventHandler(this.PropertyContextToolStripMenuItem_Click);
             // 
@@ -640,18 +847,6 @@
             this.名前の変更ToolStripMenuItem3.Text = "名前の変更";
             this.名前の変更ToolStripMenuItem3.Click += new System.EventHandler(this.RenameContextToolStripMenuItem_Click);
             // 
-            // toolStripSeparator13
-            // 
-            this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(149, 6);
-            // 
-            // CreateFolderContextToolStripMenuItem1
-            // 
-            this.CreateFolderContextToolStripMenuItem1.Name = "CreateFolderContextToolStripMenuItem1";
-            this.CreateFolderContextToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.CreateFolderContextToolStripMenuItem1.Text = "新しいフォルダー";
-            this.CreateFolderContextToolStripMenuItem1.Click += new System.EventHandler(this.CreateFolderContextToolStripMenuItem1_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -672,6 +867,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.toolStrip1.ResumeLayout(false);
+            this.toolStrip1.PerformLayout();
             this.HtmlContextMenuStrip.ResumeLayout(false);
             this.ImageContextMenuStrip.ResumeLayout(false);
             this.ProjectContextMenuStrip.ResumeLayout(false);
@@ -754,6 +951,24 @@
         private System.Windows.Forms.ToolStripMenuItem 名前の変更ToolStripMenuItem3;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
         private System.Windows.Forms.ToolStripMenuItem CreateFolderContextToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem ImportFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        private System.Windows.Forms.ToolStripButton CutToolBartoolStripButton3;
+        private System.Windows.Forms.ToolStripButton CopyToolBartoolStripButton4;
+        private System.Windows.Forms.ToolStripButton PasteToolBartoolStripButton5;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
+        private System.Windows.Forms.ToolStripButton UndoToolBartoolStripButton6;
+        private System.Windows.Forms.ToolStripButton RedoToolBartoolStripButton7;
+        private System.Windows.Forms.ToolStripButton FindToolBartoolStripButton8;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
+        private System.Windows.Forms.ToolStripButton toolStripButton9;
+        private System.Windows.Forms.ToolStripDropDownButton CreateToolBartoolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem CreateProjectToolBarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CreateFileToolBarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem CreateFolderToolBarToolStripMenuItem;
     }
 }
 
