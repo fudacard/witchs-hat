@@ -37,6 +37,12 @@ namespace WitchsHat
                 return;
             }
 
+            if (filename.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                MessageBox.Show("ファイル名に使用できない文字が含まれています。");
+                return;
+            }
+
             string filepath = Path.Combine(treeView1.SelectedNode.Name, filename);
 
             if (File.Exists(filepath)) {

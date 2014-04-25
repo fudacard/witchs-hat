@@ -451,11 +451,15 @@ namespace WitchsHat
         private void RunOnBrowserToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string path = Path.Combine(CurrentProject.Dir, CurrentProject.HtmlPath);
+            RunOnBrowser(path);
+        }
+
+        private void RunOnBrowser(string path)
+        {
             if (File.Exists(path))
             {
                 try
                 {
-
                     if (settings.ServerEnable)
                     {
                         Process.Start(settings.RunBrowser, "http://localhost:" + settings.ServerPort + "/" + CurrentProject.HtmlPath);
@@ -463,7 +467,7 @@ namespace WitchsHat
                     }
                     else
                     {
-                        Process.Start(settings.RunBrowser, path);
+                        Process.Start(settings.RunBrowser, "\"" + path + "\"");
                     }
                 }
                 catch (Exception e1)
@@ -894,7 +898,7 @@ namespace WitchsHat
 
         private void UndoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            if (CurrentProject != null && tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
             {
                 Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
                 azuki.Undo();
@@ -903,7 +907,7 @@ namespace WitchsHat
 
         private void RedoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            if (CurrentProject != null && tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
             {
                 Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
                 azuki.Redo();
@@ -912,7 +916,7 @@ namespace WitchsHat
 
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            if (CurrentProject != null && tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
             {
                 Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
                 azuki.Cut();
@@ -921,7 +925,7 @@ namespace WitchsHat
 
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            if (CurrentProject != null && tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
             {
                 Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
                 azuki.Copy();
@@ -930,7 +934,7 @@ namespace WitchsHat
 
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            if (CurrentProject != null && tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
             {
                 Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
                 azuki.Paste();
@@ -939,8 +943,11 @@ namespace WitchsHat
 
         private void DeleteToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
-            azuki.Delete();
+            if (CurrentProject != null && tabInfos[tabControl1.SelectedTab].Type == TabInfo.TabTypeAzuki)
+            {
+                Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
+                azuki.Delete();
+            }
         }
 
         private void SelectAllToolStripMenuItem_Click(object sender, EventArgs e)
@@ -976,11 +983,24 @@ namespace WitchsHat
         {
             CreateProjectForm f = new CreateProjectForm();
             f.ProjectsPath = settings.ProjectsPath;
-            f.OkClicked = delegate(string projectName, string projectDir, int projectTemplate)
+            f.OkClicked = delegate(string projectName, string projectDir, int projectTemplate, string newProjectsPath)
             {
                 CloseProjectToolStripMenuItem_Click(sender, e);
 
+                if (projectTemplate == 0 && !HasEnchantjs())
+                {
+                    projectTemplate = 2;
+                }
                 CreateProject(projectName, projectDir, projectTemplate);
+
+                if (newProjectsPath != null)
+                {
+                    settings.ProjectsPath = newProjectsPath;
+                    // 設定保存
+                    string outputdir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Witchs Hat");
+                    Directory.CreateDirectory(outputdir);
+                    settings.WriteEnvironmentSettings(Path.Combine(outputdir, "settings.xml"));
+                }
 
                 this.Text = projectName + " - Witch's Hat";
                 CurrentProject = new ProjectProperty();
@@ -995,36 +1015,42 @@ namespace WitchsHat
 
         private void CreateFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CreateFileForm f = new CreateFileForm();
-            f.ProjectDir = CurrentProject.Dir;
-            f.OkClicked = delegate(string filepath)
+            if (CurrentProject != null)
             {
-                using (System.IO.FileStream hStream = System.IO.File.Create(filepath))
+                CreateFileForm f = new CreateFileForm();
+                f.ProjectDir = CurrentProject.Dir;
+                f.OkClicked = delegate(string filepath)
                 {
-                    if (hStream != null)
+                    using (System.IO.FileStream hStream = System.IO.File.Create(filepath))
                     {
-                        hStream.Close();
+                        if (hStream != null)
+                        {
+                            hStream.Close();
+                        }
                     }
-                }
-                OpenTab(filepath);
-                this.tabControl1.SelectedTab = tabInfos.FirstOrDefault(x => x.Value.Uri == filepath).Key;
-                tempprojectModify = true;
-                UpdateFileTree();
-            };
-            f.ShowDialog(this);
+                    OpenTab(filepath);
+                    this.tabControl1.SelectedTab = tabInfos.FirstOrDefault(x => x.Value.Uri == filepath).Key;
+                    tempprojectModify = true;
+                    UpdateFileTree();
+                };
+                f.ShowDialog(this);
+            }
         }
 
         private void CreateFolderToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            CreateFolderForm f = new CreateFolderForm();
-            f.ProjectDir = CurrentProject.Dir;
-            f.OkClicked = delegate(string folderpath)
+            if (CurrentProject != null)
             {
-                Directory.CreateDirectory(folderpath);
-                tempprojectModify = true;
-                UpdateFileTree();
-            };
-            f.ShowDialog(this);
+                CreateFolderForm f = new CreateFolderForm();
+                f.ProjectDir = CurrentProject.Dir;
+                f.OkClicked = delegate(string folderpath)
+                {
+                    Directory.CreateDirectory(folderpath);
+                    tempprojectModify = true;
+                    UpdateFileTree();
+                };
+                f.ShowDialog(this);
+            }
         }
 
         private void EndToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1133,12 +1159,18 @@ namespace WitchsHat
 
         private void CloseAllTab()
         {
+            List<TabPage> removes = new List<TabPage>();
             foreach (var pair in tabInfos)
             {
                 if (pair.Value.Uri.StartsWith(CurrentProject.Dir))
                 {
                     tabControl1.TabPages.Remove(pair.Key);
+                    removes.Add(pair.Key);
                 }
+            }
+            foreach (TabPage removePage in removes)
+            {
+                tabInfos.Remove(removePage);
             }
         }
 
@@ -1336,6 +1368,7 @@ namespace WitchsHat
         private void CreateFolderContextToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             CreateFolderForm2 f = new CreateFolderForm2();
+            f.Dir = treeView1.SelectedNode.Name;
             f.OkClicked = delegate(string folderName)
             {
                 Directory.CreateDirectory(Path.Combine(treeView1.SelectedNode.Name, folderName));
@@ -1412,6 +1445,31 @@ namespace WitchsHat
         private void RedoToolBartoolStripButton7_Click(object sender, EventArgs e)
         {
             RedoToolStripMenuItem_Click(sender, e);
+        }
+
+        private void CreateToolBartoolStripDropDownButton1_DropDownOpening(object sender, EventArgs e)
+        {
+            if (CurrentProject != null)
+            {
+                CreateFileToolBarToolStripMenuItem.Enabled = true;
+                CreateFolderToolBarToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                CreateFileToolBarToolStripMenuItem.Enabled = false;
+                CreateFolderToolBarToolStripMenuItem.Enabled = false;
+                CreateFileToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        private void RunOnBrowserContextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RunOnBrowser(treeView1.SelectedNode.Name);
+        }
+
+        private void OpenExplorerContextToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start("EXPLORER.EXE", @"/e, " + treeView1.SelectedNode.Name);
         }
 
     }

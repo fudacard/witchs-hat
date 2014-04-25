@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace WitchsHat
     public partial class CreateProjectForm : Form
     {
 
-        public delegate void OkEventHandler(string projectName, string projectDir, int projectTemplate);
+        public delegate void OkEventHandler(string projectName, string projectDir, int projectTemplate, string newProjectsPath);
         public OkEventHandler OkClicked;
 
         public string ProjectsPath { get; set; }
@@ -42,9 +43,27 @@ namespace WitchsHat
         private void button1_Click(object sender, EventArgs e)
         {
             string projectName = this.textBox1.Text;
-            var projectDir = this.textBox2.Text + "\\" + projectName;
+
+            if (projectName == "")
+            {
+                MessageBox.Show("プロジェクト名を入力してください。");
+                return;
+            }
+
+            if (projectName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                MessageBox.Show("プロジェクト名に使用できない文字が含まれています。");
+                return;
+            }
+
+            var projectDir = Path.Combine(this.textBox2.Text, projectName);
+            if (Directory.Exists(projectDir))
+            {
+                MessageBox.Show("同名のプロジェクトがすでにあります。");
+                return;
+            }
             int projectTemplate = 0;
-            for (int i = 0; i < listBox1.Items.Count; i++ )
+            for (int i = 0; i < listBox1.Items.Count; i++)
             {
                 if (this.listBox1.GetSelected(i))
                 {
@@ -52,9 +71,15 @@ namespace WitchsHat
                     break;
                 }
             }
-            
-            OkClicked(projectName, projectDir, projectTemplate);
 
+            if (checkBox1.Checked)
+            {
+                OkClicked(projectName, projectDir, projectTemplate, this.textBox2.Text);
+            }
+            else
+            {
+                OkClicked(projectName, projectDir, projectTemplate, null);
+            }
 
             this.Close();
         }
@@ -72,6 +97,28 @@ namespace WitchsHat
             {
                 Console.WriteLine(ofd.FileName);
                 this.textBox2.Text = ofd.FileName;
+            }
+        }
+
+        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int projectTemplate = 0;
+            for (int i = 0; i < listBox1.Items.Count; i++)
+            {
+                if (this.listBox1.GetSelected(i))
+                {
+                    projectTemplate = i;
+                    break;
+                }
+            }
+            switch (projectTemplate)
+            {
+                case 0:
+                    label3.Text = "enchant.js本体、表示用HTML、実行用初期コードが含まれたプロジェクトを作成します。";
+                    break;
+                case 1:
+                    label3.Text = "何もファイルが含まれていない空のプロジェクトを作成します。";
+                    break;
             }
         }
 

@@ -39,7 +39,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Location = new System.Drawing.Point(15, 25);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(29, 12);
             this.label1.TabIndex = 0;
@@ -58,7 +58,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(13, 192);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(234, 19);
+            this.textBox1.Size = new System.Drawing.Size(250, 19);
             this.textBox1.TabIndex = 2;
             // 
             // treeView1

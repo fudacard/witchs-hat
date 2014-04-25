@@ -60,6 +60,7 @@ namespace WitchsHat
                 panel1.Visible = true;
                 panel2.Visible = false;
                 panel3.Visible = false;
+                panel4.Visible = false;
             }
             else if (e.Node.Text == "ブラウザー")
             {
@@ -67,6 +68,7 @@ namespace WitchsHat
                 panel1.Visible = false;
                 panel2.Visible = true;
                 panel3.Visible = false;
+                panel4.Visible = false;
             }
             else if (e.Node.Text == "エディタ" || e.Node.Text == "フォント")
             {
@@ -74,6 +76,15 @@ namespace WitchsHat
                 panel1.Visible = false;
                 panel2.Visible = false;
                 panel3.Visible = true;
+                panel4.Visible = false;
+            }
+            else if (e.Node.Text == "上級者設定")
+            {
+                TitleLabel.Text = "上級者設定";
+                panel1.Visible = false;
+                panel2.Visible = false;
+                panel3.Visible = false;
+                panel4.Visible = true;
             }
         }
 
@@ -82,6 +93,7 @@ namespace WitchsHat
             panel1.Visible = true;
             panel2.Visible = false;
             panel3.Visible = false;
+            panel4.Visible = false;
             treeView1.ExpandAll();
             // 動作
             EncodingComboBox.Text = settings.Encoding;
@@ -133,6 +145,11 @@ namespace WitchsHat
                 FontNameLabel.Text = "フォント名 " + settings.FontName;
                 FontSizeLabel.Text = "フォントサイズ " + settings.FontSize;
             }
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
         }
     }
 

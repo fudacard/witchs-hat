@@ -70,6 +70,12 @@ namespace WitchsHat
                 return;
             }
 
+            if (foldername.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                MessageBox.Show("フォルダ名に使用できない文字が含まれています。");
+                return;
+            }
+
             string folderpath = Path.Combine(treeView1.SelectedNode.Name, foldername);
 
             if (Directory.Exists(folderpath))

@@ -92,7 +92,7 @@
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.button1);
             this.Name = "EnchantjsDownloadForm";
-            this.Text = "EnchantjsDownloadForm";
+            this.Text = "enchant.js のダウンロード";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EnchantjsDownloadForm_FormClosing);
             this.Load += new System.EventHandler(this.EnchantjsDownloadForm_Load);
             this.ResumeLayout(false);

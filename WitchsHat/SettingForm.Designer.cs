@@ -28,21 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("動作");
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("ブラウザー");
-            System.Windows.Forms.TreeNode treeNode13 = new System.Windows.Forms.TreeNode("全般", new System.Windows.Forms.TreeNode[] {
-            treeNode11,
-            treeNode12});
-            System.Windows.Forms.TreeNode treeNode14 = new System.Windows.Forms.TreeNode("フォント");
-            System.Windows.Forms.TreeNode treeNode15 = new System.Windows.Forms.TreeNode("エディタ", new System.Windows.Forms.TreeNode[] {
-            treeNode14});
+            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("動作");
+            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("ブラウザー");
+            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("全般", new System.Windows.Forms.TreeNode[] {
+            treeNode7,
+            treeNode8});
+            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("フォント");
+            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("エディタ", new System.Windows.Forms.TreeNode[] {
+            treeNode10});
+            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("上級者設定");
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.ServerPortTextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.ServerCheckBox = new System.Windows.Forms.CheckBox();
             this.TempProjectCheckBox = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
             this.ProjectsPathTextBox = new System.Windows.Forms.TextBox();
@@ -55,14 +53,19 @@
             this.label4 = new System.Windows.Forms.Label();
             this.RunBrowserComboBox = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.TitleLabel = new System.Windows.Forms.Label();
-            this.FontSelectButton = new System.Windows.Forms.Button();
-            this.FontPreviewTextBox = new System.Windows.Forms.TextBox();
-            this.FontNameLabel = new System.Windows.Forms.Label();
             this.FontSizeLabel = new System.Windows.Forms.Label();
+            this.FontNameLabel = new System.Windows.Forms.Label();
+            this.FontPreviewTextBox = new System.Windows.Forms.TextBox();
+            this.FontSelectButton = new System.Windows.Forms.Button();
+            this.TitleLabel = new System.Windows.Forms.Label();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.ServerPortTextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.ServerCheckBox = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -90,19 +93,22 @@
             this.treeView1.FullRowSelect = true;
             this.treeView1.Location = new System.Drawing.Point(13, 13);
             this.treeView1.Name = "treeView1";
-            treeNode11.Name = "ノード1";
-            treeNode11.Text = "動作";
-            treeNode12.Name = "ノード2";
-            treeNode12.Text = "ブラウザー";
-            treeNode13.Name = "ノード0";
-            treeNode13.Text = "全般";
-            treeNode14.Name = "ノード4";
-            treeNode14.Text = "フォント";
-            treeNode15.Name = "ノード3";
-            treeNode15.Text = "エディタ";
+            treeNode7.Name = "ノード1";
+            treeNode7.Text = "動作";
+            treeNode8.Name = "ノード2";
+            treeNode8.Text = "ブラウザー";
+            treeNode9.Name = "ノード0";
+            treeNode9.Text = "全般";
+            treeNode10.Name = "ノード4";
+            treeNode10.Text = "フォント";
+            treeNode11.Name = "ノード3";
+            treeNode11.Text = "エディタ";
+            treeNode12.Name = "ノード0";
+            treeNode12.Text = "上級者設定";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode13,
-            treeNode15});
+            treeNode9,
+            treeNode11,
+            treeNode12});
             this.treeView1.ShowLines = false;
             this.treeView1.ShowRootLines = false;
             this.treeView1.Size = new System.Drawing.Size(145, 364);
@@ -111,9 +117,6 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.ServerPortTextBox);
-            this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.ServerCheckBox);
             this.panel1.Controls.Add(this.TempProjectCheckBox);
             this.panel1.Controls.Add(this.button3);
             this.panel1.Controls.Add(this.ProjectsPathTextBox);
@@ -124,33 +127,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(479, 302);
             this.panel1.TabIndex = 3;
-            // 
-            // ServerPortTextBox
-            // 
-            this.ServerPortTextBox.Location = new System.Drawing.Point(68, 187);
-            this.ServerPortTextBox.Name = "ServerPortTextBox";
-            this.ServerPortTextBox.Size = new System.Drawing.Size(100, 19);
-            this.ServerPortTextBox.TabIndex = 8;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(5, 190);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(57, 12);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "ポート番号";
-            // 
-            // ServerCheckBox
-            // 
-            this.ServerCheckBox.AutoSize = true;
-            this.ServerCheckBox.Location = new System.Drawing.Point(7, 167);
-            this.ServerCheckBox.Name = "ServerCheckBox";
-            this.ServerCheckBox.Size = new System.Drawing.Size(140, 16);
-            this.ServerCheckBox.TabIndex = 6;
-            this.ServerCheckBox.Text = "内部サーバーを起動する";
-            this.ServerCheckBox.UseVisualStyleBackColor = true;
-            this.ServerCheckBox.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
             // 
             // TempProjectCheckBox
             // 
@@ -264,25 +240,23 @@
             this.panel3.Size = new System.Drawing.Size(479, 302);
             this.panel3.TabIndex = 6;
             // 
-            // TitleLabel
+            // FontSizeLabel
             // 
-            this.TitleLabel.AutoSize = true;
-            this.TitleLabel.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.TitleLabel.Location = new System.Drawing.Point(185, 13);
-            this.TitleLabel.Name = "TitleLabel";
-            this.TitleLabel.Size = new System.Drawing.Size(46, 16);
-            this.TitleLabel.TabIndex = 7;
-            this.TitleLabel.Text = "label2";
+            this.FontSizeLabel.AutoSize = true;
+            this.FontSizeLabel.Location = new System.Drawing.Point(9, 28);
+            this.FontSizeLabel.Name = "FontSizeLabel";
+            this.FontSizeLabel.Size = new System.Drawing.Size(35, 12);
+            this.FontSizeLabel.TabIndex = 3;
+            this.FontSizeLabel.Text = "label7";
             // 
-            // FontSelectButton
+            // FontNameLabel
             // 
-            this.FontSelectButton.Location = new System.Drawing.Point(227, 24);
-            this.FontSelectButton.Name = "FontSelectButton";
-            this.FontSelectButton.Size = new System.Drawing.Size(75, 23);
-            this.FontSelectButton.TabIndex = 0;
-            this.FontSelectButton.Text = "変更";
-            this.FontSelectButton.UseVisualStyleBackColor = true;
-            this.FontSelectButton.Click += new System.EventHandler(this.FontSelectButton_Click);
+            this.FontNameLabel.AutoSize = true;
+            this.FontNameLabel.Location = new System.Drawing.Point(7, 4);
+            this.FontNameLabel.Name = "FontNameLabel";
+            this.FontNameLabel.Size = new System.Drawing.Size(35, 12);
+            this.FontNameLabel.TabIndex = 2;
+            this.FontNameLabel.Text = "label2";
             // 
             // FontPreviewTextBox
             // 
@@ -295,23 +269,61 @@
             this.FontPreviewTextBox.TabIndex = 1;
             this.FontPreviewTextBox.Text = "enchant.jsでゲーム製作";
             // 
-            // FontNameLabel
+            // FontSelectButton
             // 
-            this.FontNameLabel.AutoSize = true;
-            this.FontNameLabel.Location = new System.Drawing.Point(7, 4);
-            this.FontNameLabel.Name = "FontNameLabel";
-            this.FontNameLabel.Size = new System.Drawing.Size(35, 12);
-            this.FontNameLabel.TabIndex = 2;
-            this.FontNameLabel.Text = "label2";
+            this.FontSelectButton.Location = new System.Drawing.Point(227, 24);
+            this.FontSelectButton.Name = "FontSelectButton";
+            this.FontSelectButton.Size = new System.Drawing.Size(75, 23);
+            this.FontSelectButton.TabIndex = 0;
+            this.FontSelectButton.Text = "変更";
+            this.FontSelectButton.UseVisualStyleBackColor = true;
+            this.FontSelectButton.Click += new System.EventHandler(this.FontSelectButton_Click);
             // 
-            // FontSizeLabel
+            // TitleLabel
             // 
-            this.FontSizeLabel.AutoSize = true;
-            this.FontSizeLabel.Location = new System.Drawing.Point(9, 28);
-            this.FontSizeLabel.Name = "FontSizeLabel";
-            this.FontSizeLabel.Size = new System.Drawing.Size(35, 12);
-            this.FontSizeLabel.TabIndex = 3;
-            this.FontSizeLabel.Text = "label7";
+            this.TitleLabel.AutoSize = true;
+            this.TitleLabel.Font = new System.Drawing.Font("MS UI Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.TitleLabel.Location = new System.Drawing.Point(185, 13);
+            this.TitleLabel.Name = "TitleLabel";
+            this.TitleLabel.Size = new System.Drawing.Size(46, 16);
+            this.TitleLabel.TabIndex = 7;
+            this.TitleLabel.Text = "label2";
+            // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.ServerPortTextBox);
+            this.panel4.Controls.Add(this.label6);
+            this.panel4.Controls.Add(this.ServerCheckBox);
+            this.panel4.Location = new System.Drawing.Point(185, 46);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(480, 302);
+            this.panel4.TabIndex = 8;
+            // 
+            // ServerPortTextBox
+            // 
+            this.ServerPortTextBox.Location = new System.Drawing.Point(79, 33);
+            this.ServerPortTextBox.Name = "ServerPortTextBox";
+            this.ServerPortTextBox.Size = new System.Drawing.Size(100, 19);
+            this.ServerPortTextBox.TabIndex = 11;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(16, 36);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(57, 12);
+            this.label6.TabIndex = 10;
+            this.label6.Text = "ポート番号";
+            // 
+            // ServerCheckBox
+            // 
+            this.ServerCheckBox.AutoSize = true;
+            this.ServerCheckBox.Location = new System.Drawing.Point(18, 13);
+            this.ServerCheckBox.Name = "ServerCheckBox";
+            this.ServerCheckBox.Size = new System.Drawing.Size(140, 16);
+            this.ServerCheckBox.TabIndex = 9;
+            this.ServerCheckBox.Text = "内部サーバーを起動する";
+            this.ServerCheckBox.UseVisualStyleBackColor = true;
             // 
             // SettingForm
             // 
@@ -322,6 +334,7 @@
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
@@ -334,6 +347,8 @@
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            this.panel4.ResumeLayout(false);
+            this.panel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -355,9 +370,6 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox RunBrowserComboBox;
-        private System.Windows.Forms.TextBox ServerPortTextBox;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.CheckBox ServerCheckBox;
         private System.Windows.Forms.CheckBox TempProjectCheckBox;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Label TitleLabel;
@@ -365,5 +377,9 @@
         private System.Windows.Forms.Button FontSelectButton;
         private System.Windows.Forms.Label FontSizeLabel;
         private System.Windows.Forms.Label FontNameLabel;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.TextBox ServerPortTextBox;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox ServerCheckBox;
     }
 }
