@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+	<ProjectsPath></ProjectsPath>
+	<Encoding>utf-8</Encoding>
+	<Server>on</Server>
+	<ServerPort>9090</ServerPort>
+	<Browser>iexplore</Browser>
+	<RunBrowser>iexplore</RunBrowser>
+	<TempProject>on</TempProject>
+	<EnchantjsBuild>https://github.com/uei/enchant.js-builds/archive/v0.8.1.zip</EnchantjsBuild>
+	<EnchantjsReference>http://enchantjs.com/ja/tutorial/lets-start-enchant-js/</EnchantjsReference>
+	<EnchantjsDocs>http://wise9.github.io/enchant.js/doc/plugins/ja/index.html</EnchantjsDocs>
+	<FontName>ＭＳ ゴシック</FontName>
+	<FontSize>9.75</FontSize>
+</Settings>
