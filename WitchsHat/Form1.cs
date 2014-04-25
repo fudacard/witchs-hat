@@ -1349,8 +1349,11 @@ namespace WitchsHat
                     }
                 }
                 var tabPage = tabInfos.FirstOrDefault(x => x.Value.Uri == oldFilePath).Key;
-                tabInfos[tabPage].Uri = newFilePath;
-                tabPage.Text = newFileName;
+                if (tabPage != null)
+                {
+                    tabInfos[tabPage].Uri = newFilePath;
+                    tabPage.Text = newFileName;
+                }
                 UpdateFileTree();
                 if (tempproject)
                 {
