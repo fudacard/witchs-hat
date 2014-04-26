@@ -1075,9 +1075,12 @@ namespace WitchsHat
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
+            if (CurrentProject != null)
+            {
+                sfd.InitialDirectory = CurrentProject.Dir;
+            }
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-
                 Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
                 StreamWriter writer = new StreamWriter(sfd.FileName);
                 writer.Write(azuki.Text);

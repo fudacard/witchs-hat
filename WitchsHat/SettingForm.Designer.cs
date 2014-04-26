@@ -28,15 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.TreeNode treeNode7 = new System.Windows.Forms.TreeNode("動作");
-            System.Windows.Forms.TreeNode treeNode8 = new System.Windows.Forms.TreeNode("ブラウザー");
-            System.Windows.Forms.TreeNode treeNode9 = new System.Windows.Forms.TreeNode("全般", new System.Windows.Forms.TreeNode[] {
-            treeNode7,
-            treeNode8});
-            System.Windows.Forms.TreeNode treeNode10 = new System.Windows.Forms.TreeNode("フォント");
-            System.Windows.Forms.TreeNode treeNode11 = new System.Windows.Forms.TreeNode("エディタ", new System.Windows.Forms.TreeNode[] {
-            treeNode10});
-            System.Windows.Forms.TreeNode treeNode12 = new System.Windows.Forms.TreeNode("上級者設定");
+            System.Windows.Forms.TreeNode treeNode1 = new System.Windows.Forms.TreeNode("動作");
+            System.Windows.Forms.TreeNode treeNode2 = new System.Windows.Forms.TreeNode("ブラウザー");
+            System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("全般", new System.Windows.Forms.TreeNode[] {
+            treeNode1,
+            treeNode2});
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("フォント");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("エディタ", new System.Windows.Forms.TreeNode[] {
+            treeNode4});
+            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("上級者設定");
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -93,22 +93,22 @@
             this.treeView1.FullRowSelect = true;
             this.treeView1.Location = new System.Drawing.Point(13, 13);
             this.treeView1.Name = "treeView1";
-            treeNode7.Name = "ノード1";
-            treeNode7.Text = "動作";
-            treeNode8.Name = "ノード2";
-            treeNode8.Text = "ブラウザー";
-            treeNode9.Name = "ノード0";
-            treeNode9.Text = "全般";
-            treeNode10.Name = "ノード4";
-            treeNode10.Text = "フォント";
-            treeNode11.Name = "ノード3";
-            treeNode11.Text = "エディタ";
-            treeNode12.Name = "ノード0";
-            treeNode12.Text = "上級者設定";
+            treeNode1.Name = "ノード1";
+            treeNode1.Text = "動作";
+            treeNode2.Name = "ノード2";
+            treeNode2.Text = "ブラウザー";
+            treeNode3.Name = "ノード0";
+            treeNode3.Text = "全般";
+            treeNode4.Name = "ノード4";
+            treeNode4.Text = "フォント";
+            treeNode5.Name = "ノード3";
+            treeNode5.Text = "エディタ";
+            treeNode6.Name = "ノード0";
+            treeNode6.Text = "上級者設定";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
-            treeNode9,
-            treeNode11,
-            treeNode12});
+            treeNode3,
+            treeNode5,
+            treeNode6});
             this.treeView1.ShowLines = false;
             this.treeView1.ShowRootLines = false;
             this.treeView1.Size = new System.Drawing.Size(145, 364);
@@ -334,10 +334,10 @@
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.panel4);
-            this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel4);
+            this.Controls.Add(this.panel3);
             this.Name = "SettingForm";
             this.Text = "オプション";
             this.Load += new System.EventHandler(this.SettingForm_Load);

@@ -29,6 +29,7 @@ namespace WitchsHat
         private void button1_Click(object sender, EventArgs e)
         {
             CommonOpenFileDialog ofd = new CommonOpenFileDialog();
+            ofd.InitialDirectory = ProjectsPath;
             ofd.IsFolderPicker = true;
             if (ofd.ShowDialog(this.Handle) == CommonFileDialogResult.Ok)
             {
