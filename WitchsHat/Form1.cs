@@ -651,61 +651,7 @@ namespace WitchsHat
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             bool close = true;
-            bool fileModify = false;
-            foreach (var tabInfo in tabInfos)
-            {
-                if (tabInfo.Value.Modify)
-                {
-                    fileModify = true;
-                    break;
-                }
-            }
-
-            if (tempprojectModify)
-            {
-                DialogResult result = MessageBox.Show("プロジェクトが変更されています。\r\nプロジェクトを保存しますか？", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-                if (result == DialogResult.Yes)
-                {
-                    // 保存ダイアログ表示
-                    e.Cancel = true;
-                    close = false;
-                    SaveProjectFromTemp f = new SaveProjectFromTemp();
-                    f.OkClicked += delegate(string projectName, string projectDir)
-                    {
-                        // 保存する
-                        SaveTempProject(projectName, projectDir);
-                        this.Close();
-                    };
-                    f.ShowDialog(this);
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                    close = false;
-                }
-            }
-            else if (fileModify)
-            {
-                DialogResult result = MessageBox.Show("ファイルが変更されています。\r\nファイルを保存しますか？", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-                if (result == DialogResult.Yes)
-                {
-                    foreach (var pair in tabInfos)
-                    {
-                        if (pair.Value.Modify)
-                        {
-                            Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0];
-                            StreamWriter writer = new StreamWriter(pair.Value.Uri);
-                            writer.Write(azuki.Text);
-                            writer.Close();
-                        }
-                    }
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                    close = false;
-                }
-            }
+            close = NewProjectCheck();
             if (close)
             {
                 if (server != null && server.IsRunning())
@@ -1162,6 +1108,7 @@ namespace WitchsHat
             if (tempproject)
             {
                 tempproject = false;
+                tempprojectModify = false;
             }
         }
 
@@ -1171,10 +1118,7 @@ namespace WitchsHat
             foreach (var pair in tabInfos)
             {
                 tabControl1.TabPages.Remove(pair.Key);
-                if (pair.Value.Uri.StartsWith(CurrentProject.Dir))
-                {
-                    removes.Add(pair.Key);
-                }
+                removes.Add(pair.Key);
             }
             foreach (TabPage removePage in removes)
             {

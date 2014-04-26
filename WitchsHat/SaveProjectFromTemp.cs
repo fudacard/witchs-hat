@@ -63,7 +63,7 @@ namespace WitchsHat
             {
                 MessageBox.Show("ディレクトリが見つかりません。");
                 return;
-           }
+            }
 
             var projectDir = Path.Combine(this.textBox2.Text, ProjectName);
             if (Directory.Exists(projectDir))
