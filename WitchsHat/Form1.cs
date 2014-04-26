@@ -732,6 +732,7 @@ namespace WitchsHat
                 }
             }
 
+            string tempprojectDir = CurrentProject.Dir;
             // プロジェクトをコピー
             System.IO.Directory.CreateDirectory(projectDir);
             // ファイルコピー
@@ -766,7 +767,7 @@ namespace WitchsHat
             tempprojectModify = false;
             if (tempproject)
             {
-                Directory.Delete(CurrentProject.Dir, true);
+                Directory.Delete(tempprojectDir, true);
             }
             tempproject = false;
         }
