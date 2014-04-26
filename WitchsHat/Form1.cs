@@ -371,6 +371,7 @@ namespace WitchsHat
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "プロジェクト ファイル (*.whprj)|*.whprj|javascriptファイル(*.js)|*.js|htmlファイル(*.html;*.html)|*.html;*.htm|画像ファイル(*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif|テキストファイル(*.txt)|*.txt|すべてのファイル(*.*)|*.*";
+            ofd.FilterIndex = 6;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 OpenFile(ofd.FileName);
@@ -1394,6 +1395,7 @@ namespace WitchsHat
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "javascriptファイル(*.js)|*.js|htmlファイル(*.html;*.html)|*.html;*.htm|画像ファイル(*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif|テキストファイル(*.txt)|*.txt|すべてのファイル(*.*)|*.*";
+            ofd.FilterIndex = 5;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 string destFileName = Path.Combine(CurrentProject.Dir, Path.GetFileName(ofd.FileName));
@@ -1479,6 +1481,11 @@ namespace WitchsHat
         private void OpenExplorerContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("EXPLORER.EXE", @"/e, " + treeView1.SelectedNode.Name);
+        }
+
+        private void OpenToolBartoolStripButton1_Click(object sender, EventArgs e)
+        {
+            OpenProjectOrFileToolStripMenuItem_Click(sender, e);
         }
 
     }
