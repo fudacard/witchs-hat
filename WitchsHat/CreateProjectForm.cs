@@ -92,6 +92,7 @@ namespace WitchsHat
         private void button3_Click(object sender, EventArgs e)
         {
             CommonOpenFileDialog ofd = new CommonOpenFileDialog();
+            ofd.InitialDirectory = textBox2.Text;
             ofd.IsFolderPicker = true;
             if (ofd.ShowDialog(this.Handle) == CommonFileDialogResult.Ok)
             {

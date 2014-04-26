@@ -38,6 +38,7 @@ namespace WitchsHat
         public Form1()
         {
             InitializeComponent();
+            treeView1.form1 = this;
             this.tabControl1.MouseDown += delegate(object sender, MouseEventArgs e)
             {
                 this.clickedTabPage = null;
@@ -268,11 +269,13 @@ namespace WitchsHat
                     // 保存ダイアログ表示
                     continueFlag = false;
                     SaveProjectFromTemp f = new SaveProjectFromTemp();
+                    f.ProjectsPath = settings.ProjectsPath;
                     f.OkClicked += delegate(string projectName, string projectDir)
                     {
                         // 保存する
                         SaveTempProject(projectName, projectDir);
-                        this.Close();
+
+                        CloseProject();
                     };
                     f.ShowDialog(this);
 
@@ -370,6 +373,7 @@ namespace WitchsHat
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "プロジェクト ファイル (*.whprj)|*.whprj|javascriptファイル(*.js)|*.js|htmlファイル(*.html;*.html)|*.html;*.htm|画像ファイル(*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif|テキストファイル(*.txt)|*.txt|すべてのファイル(*.*)|*.*";
+            ofd.FilterIndex = 6;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 OpenFile(ofd.FileName);
@@ -400,7 +404,7 @@ namespace WitchsHat
             }
         }
 
-        private void UpdateFileTree()
+        public void UpdateFileTree()
         {
             this.Text = CurrentProject.Name + " - Witch's Hat";
             if (server != null)
@@ -648,61 +652,7 @@ namespace WitchsHat
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             bool close = true;
-            bool fileModify = false;
-            foreach (var tabInfo in tabInfos)
-            {
-                if (tabInfo.Value.Modify)
-                {
-                    fileModify = true;
-                    break;
-                }
-            }
-
-            if (tempprojectModify)
-            {
-                DialogResult result = MessageBox.Show("プロジェクトが変更されています。\r\nプロジェクトを保存しますか？", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-                if (result == DialogResult.Yes)
-                {
-                    // 保存ダイアログ表示
-                    e.Cancel = true;
-                    close = false;
-                    SaveProjectFromTemp f = new SaveProjectFromTemp();
-                    f.OkClicked += delegate(string projectName, string projectDir)
-                    {
-                        // 保存する
-                        SaveTempProject(projectName, projectDir);
-                        this.Close();
-                    };
-                    f.ShowDialog(this);
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                    close = false;
-                }
-            }
-            else if (fileModify)
-            {
-                DialogResult result = MessageBox.Show("ファイルが変更されています。\r\nファイルを保存しますか？", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
-                if (result == DialogResult.Yes)
-                {
-                    foreach (var pair in tabInfos)
-                    {
-                        if (pair.Value.Modify)
-                        {
-                            Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0];
-                            StreamWriter writer = new StreamWriter(pair.Value.Uri);
-                            writer.Write(azuki.Text);
-                            writer.Close();
-                        }
-                    }
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    e.Cancel = true;
-                    close = false;
-                }
-            }
+            close = NewProjectCheck();
             if (close)
             {
                 if (server != null && server.IsRunning())
@@ -732,6 +682,7 @@ namespace WitchsHat
                 }
             }
 
+            string tempprojectDir = CurrentProject.Dir;
             // プロジェクトをコピー
             System.IO.Directory.CreateDirectory(projectDir);
             // ファイルコピー
@@ -766,7 +717,7 @@ namespace WitchsHat
             tempprojectModify = false;
             if (tempproject)
             {
-                Directory.Delete(CurrentProject.Dir, true);
+                Directory.Delete(tempprojectDir, true);
             }
             tempproject = false;
         }
@@ -1125,9 +1076,12 @@ namespace WitchsHat
         private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog sfd = new SaveFileDialog();
+            if (CurrentProject != null)
+            {
+                sfd.InitialDirectory = CurrentProject.Dir;
+            }
             if (sfd.ShowDialog() == DialogResult.OK)
             {
-
                 Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabControl1.SelectedTab.Controls[0];
                 StreamWriter writer = new StreamWriter(sfd.FileName);
                 writer.Write(azuki.Text);
@@ -1144,16 +1098,21 @@ namespace WitchsHat
 
             if (close)
             {
+                CloseProject();
+            }
+        }
 
-                this.Text = "Witch's Hat";
-                treeView1.Nodes.Clear();
-                CloseAllTab();
+        private void CloseProject()
+        {
+            this.Text = "Witch's Hat";
+            treeView1.Nodes.Clear();
+            CloseAllTab();
 
-                CurrentProject = null;
-                if (tempproject)
-                {
-                    tempproject = false;
-                }
+            CurrentProject = null;
+            if (tempproject)
+            {
+                tempproject = false;
+                tempprojectModify = false;
             }
         }
 
@@ -1162,11 +1121,8 @@ namespace WitchsHat
             List<TabPage> removes = new List<TabPage>();
             foreach (var pair in tabInfos)
             {
-                if (pair.Value.Uri.StartsWith(CurrentProject.Dir))
-                {
-                    tabControl1.TabPages.Remove(pair.Key);
-                    removes.Add(pair.Key);
-                }
+                tabControl1.TabPages.Remove(pair.Key);
+                removes.Add(pair.Key);
             }
             foreach (TabPage removePage in removes)
             {
@@ -1349,8 +1305,11 @@ namespace WitchsHat
                     }
                 }
                 var tabPage = tabInfos.FirstOrDefault(x => x.Value.Uri == oldFilePath).Key;
-                tabInfos[tabPage].Uri = newFilePath;
-                tabPage.Text = newFileName;
+                if (tabPage != null)
+                {
+                    tabInfos[tabPage].Uri = newFilePath;
+                    tabPage.Text = newFileName;
+                }
                 UpdateFileTree();
                 if (tempproject)
                 {
@@ -1385,6 +1344,7 @@ namespace WitchsHat
         {
             OpenFileDialog ofd = new OpenFileDialog();
             ofd.Filter = "javascriptファイル(*.js)|*.js|htmlファイル(*.html;*.html)|*.html;*.htm|画像ファイル(*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif|テキストファイル(*.txt)|*.txt|すべてのファイル(*.*)|*.*";
+            ofd.FilterIndex = 5;
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 string destFileName = Path.Combine(CurrentProject.Dir, Path.GetFileName(ofd.FileName));
@@ -1470,6 +1430,11 @@ namespace WitchsHat
         private void OpenExplorerContextToolStripMenuItem_Click(object sender, EventArgs e)
         {
             System.Diagnostics.Process.Start("EXPLORER.EXE", @"/e, " + treeView1.SelectedNode.Name);
+        }
+
+        private void OpenToolBartoolStripButton1_Click(object sender, EventArgs e)
+        {
+            OpenProjectOrFileToolStripMenuItem_Click(sender, e);
         }
 
     }

@@ -73,15 +73,15 @@
             this.aPIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.バージョン情報AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeView1 = new System.Windows.Forms.TreeView();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.treeView1 = new WitchsHat.FileTreeView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.CreateToolBartoolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.CreateProjectToolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreateFileToolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreateFolderToolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.OpenToolBartoolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.CutToolBartoolStripButton3 = new System.Windows.Forms.ToolStripButton();
@@ -107,6 +107,8 @@
             this.ProjectContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.CreateFolderContextToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.OpenExplorerContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
             this.PropertyContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.TextContextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.開くToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -118,8 +120,6 @@
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.削除ToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.名前の変更ToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenExplorerContextToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
             this.エクスプローラーで開くToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
@@ -464,20 +464,6 @@
             this.バージョン情報AToolStripMenuItem.Size = new System.Drawing.Size(240, 22);
             this.バージョン情報AToolStripMenuItem.Text = "バージョン情報(A)";
             // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.treeView1.FullRowSelect = true;
-            this.treeView1.HideSelection = false;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(150, 547);
-            this.treeView1.TabIndex = 1;
-            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -495,6 +481,21 @@
             this.splitContainer1.SplitterDistance = 150;
             this.splitContainer1.TabIndex = 2;
             // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.treeView1.form1 = null;
+            this.treeView1.FullRowSelect = true;
+            this.treeView1.HideSelection = false;
+            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.ShowLines = false;
+            this.treeView1.Size = new System.Drawing.Size(150, 547);
+            this.treeView1.TabIndex = 2;
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
+            // 
             // tabControl1
             // 
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -506,9 +507,10 @@
             // 
             // toolStrip1
             // 
+            this.toolStrip1.Font = new System.Drawing.Font("MS UI Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CreateToolBartoolStripDropDownButton1,
-            this.toolStripButton1,
+            this.OpenToolBartoolStripButton1,
             this.toolStripButton2,
             this.toolStripSeparator15,
             this.CutToolBartoolStripButton3,
@@ -544,33 +546,34 @@
             // CreateProjectToolBarToolStripMenuItem
             // 
             this.CreateProjectToolBarToolStripMenuItem.Name = "CreateProjectToolBarToolStripMenuItem";
-            this.CreateProjectToolBarToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.CreateProjectToolBarToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.CreateProjectToolBarToolStripMenuItem.Text = "プロジェクト";
             this.CreateProjectToolBarToolStripMenuItem.Click += new System.EventHandler(this.CreateProjectToolBarToolStripMenuItem_Click);
             // 
             // CreateFileToolBarToolStripMenuItem
             // 
             this.CreateFileToolBarToolStripMenuItem.Name = "CreateFileToolBarToolStripMenuItem";
-            this.CreateFileToolBarToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.CreateFileToolBarToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.CreateFileToolBarToolStripMenuItem.Text = "ファイル";
             this.CreateFileToolBarToolStripMenuItem.Click += new System.EventHandler(this.CreateFileToolBarToolStripMenuItem_Click);
             // 
             // CreateFolderToolBarToolStripMenuItem
             // 
             this.CreateFolderToolBarToolStripMenuItem.Name = "CreateFolderToolBarToolStripMenuItem";
-            this.CreateFolderToolBarToolStripMenuItem.Size = new System.Drawing.Size(125, 22);
+            this.CreateFolderToolBarToolStripMenuItem.Size = new System.Drawing.Size(121, 22);
             this.CreateFolderToolBarToolStripMenuItem.Text = "フォルダー";
             this.CreateFolderToolBarToolStripMenuItem.Click += new System.EventHandler(this.CreateFolderToolBarToolStripMenuItem_Click);
             // 
-            // toolStripButton1
+            // OpenToolBartoolStripButton1
             // 
-            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton1.Image")));
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton1.Text = "toolStripButton1";
-            this.toolStripButton1.ToolTipText = "開く";
+            this.OpenToolBartoolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.OpenToolBartoolStripButton1.Image = ((System.Drawing.Image)(resources.GetObject("OpenToolBartoolStripButton1.Image")));
+            this.OpenToolBartoolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.OpenToolBartoolStripButton1.Name = "OpenToolBartoolStripButton1";
+            this.OpenToolBartoolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.OpenToolBartoolStripButton1.Text = "toolStripButton1";
+            this.OpenToolBartoolStripButton1.ToolTipText = "開く";
+            this.OpenToolBartoolStripButton1.Click += new System.EventHandler(this.OpenToolBartoolStripButton1_Click);
             // 
             // toolStripButton2
             // 
@@ -776,6 +779,18 @@
             this.toolStripSeparator13.Name = "toolStripSeparator13";
             this.toolStripSeparator13.Size = new System.Drawing.Size(171, 6);
             // 
+            // OpenExplorerContextToolStripMenuItem
+            // 
+            this.OpenExplorerContextToolStripMenuItem.Name = "OpenExplorerContextToolStripMenuItem";
+            this.OpenExplorerContextToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.OpenExplorerContextToolStripMenuItem.Text = "エクスプローラーで開く";
+            this.OpenExplorerContextToolStripMenuItem.Click += new System.EventHandler(this.OpenExplorerContextToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator18
+            // 
+            this.toolStripSeparator18.Name = "toolStripSeparator18";
+            this.toolStripSeparator18.Size = new System.Drawing.Size(171, 6);
+            // 
             // PropertyContextToolStripMenuItem
             // 
             this.PropertyContextToolStripMenuItem.Name = "PropertyContextToolStripMenuItem";
@@ -829,7 +844,7 @@
             this.toolStripSeparator19,
             this.エクスプローラーで開くToolStripMenuItem});
             this.FolderContextMenuStrip.Name = "FolderContextMenuStrip";
-            this.FolderContextMenuStrip.Size = new System.Drawing.Size(175, 126);
+            this.FolderContextMenuStrip.Size = new System.Drawing.Size(175, 104);
             // 
             // 新しいフォルダーToolStripMenuItem
             // 
@@ -856,18 +871,6 @@
             this.名前の変更ToolStripMenuItem3.Size = new System.Drawing.Size(174, 22);
             this.名前の変更ToolStripMenuItem3.Text = "名前の変更";
             this.名前の変更ToolStripMenuItem3.Click += new System.EventHandler(this.RenameContextToolStripMenuItem_Click);
-            // 
-            // OpenExplorerContextToolStripMenuItem
-            // 
-            this.OpenExplorerContextToolStripMenuItem.Name = "OpenExplorerContextToolStripMenuItem";
-            this.OpenExplorerContextToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.OpenExplorerContextToolStripMenuItem.Text = "エクスプローラーで開く";
-            this.OpenExplorerContextToolStripMenuItem.Click += new System.EventHandler(this.OpenExplorerContextToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator18
-            // 
-            this.toolStripSeparator18.Name = "toolStripSeparator18";
-            this.toolStripSeparator18.Size = new System.Drawing.Size(171, 6);
             // 
             // toolStripSeparator19
             // 
@@ -929,7 +932,6 @@
         private System.Windows.Forms.ToolStripMenuItem オプションOToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem EndToolStripMenuItem;
-        private System.Windows.Forms.TreeView treeView1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.TabControl tabControl1;
@@ -988,7 +990,7 @@
         private System.Windows.Forms.ToolStripMenuItem CreateFolderContextToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem ImportFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton OpenToolBartoolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
         private System.Windows.Forms.ToolStripButton CutToolBartoolStripButton3;
@@ -1008,6 +1010,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator18;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator19;
         private System.Windows.Forms.ToolStripMenuItem エクスプローラーで開くToolStripMenuItem;
+        private FileTreeView treeView1;
     }
 }
 
