@@ -118,6 +118,12 @@
       <DependentUpon>EnchantjsDownloadForm.cs</DependentUpon>
     </Compile>
     <Compile Include="EnvironmentSettings.cs" />
+    <Compile Include="FileTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="FileTreeView.Designer.cs">
+      <DependentUpon>FileTreeView.cs</DependentUpon>
+    </Compile>
     <Compile Include="FindForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -185,6 +191,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EnchantjsDownloadForm.resx">
       <DependentUpon>EnchantjsDownloadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FileTreeView.resx">
+      <DependentUpon>FileTreeView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FindForm.resx">
       <DependentUpon>FindForm.cs</DependentUpon>

@@ -38,6 +38,7 @@ namespace WitchsHat
         public Form1()
         {
             InitializeComponent();
+            treeView1.form1 = this;
             this.tabControl1.MouseDown += delegate(object sender, MouseEventArgs e)
             {
                 this.clickedTabPage = null;
@@ -403,7 +404,7 @@ namespace WitchsHat
             }
         }
 
-        private void UpdateFileTree()
+        public void UpdateFileTree()
         {
             this.Text = CurrentProject.Name + " - Witch's Hat";
             if (server != null)
