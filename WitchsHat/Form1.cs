@@ -268,6 +268,7 @@ namespace WitchsHat
                     // 保存ダイアログ表示
                     continueFlag = false;
                     SaveProjectFromTemp f = new SaveProjectFromTemp();
+                    f.ProjectsPath = settings.ProjectsPath;
                     f.OkClicked += delegate(string projectName, string projectDir)
                     {
                         // 保存する
