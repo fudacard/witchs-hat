@@ -272,7 +272,8 @@ namespace WitchsHat
                     {
                         // 保存する
                         SaveTempProject(projectName, projectDir);
-                        this.Close();
+
+                        CloseProject();
                     };
                     f.ShowDialog(this);
 
@@ -1145,16 +1146,20 @@ namespace WitchsHat
 
             if (close)
             {
+                CloseProject();
+            }
+        }
 
-                this.Text = "Witch's Hat";
-                treeView1.Nodes.Clear();
-                CloseAllTab();
+        private void CloseProject()
+        {
+            this.Text = "Witch's Hat";
+            treeView1.Nodes.Clear();
+            CloseAllTab();
 
-                CurrentProject = null;
-                if (tempproject)
-                {
-                    tempproject = false;
-                }
+            CurrentProject = null;
+            if (tempproject)
+            {
+                tempproject = false;
             }
         }
 
@@ -1163,9 +1168,9 @@ namespace WitchsHat
             List<TabPage> removes = new List<TabPage>();
             foreach (var pair in tabInfos)
             {
+                tabControl1.TabPages.Remove(pair.Key);
                 if (pair.Value.Uri.StartsWith(CurrentProject.Dir))
                 {
-                    tabControl1.TabPages.Remove(pair.Key);
                     removes.Add(pair.Key);
                 }
             }
