@@ -32,13 +32,23 @@ namespace WitchsHat
         EnvironmentSettings settings;
         WHServer server;
         ProjectProperty CurrentProject;
+        List<string> FileImportDirs;
 
         private delegate void StartupNextInstanceDelegate(params object[] parameters);
 
         public Form1()
         {
             InitializeComponent();
+            
             treeView1.form1 = this;
+            
+            FileImportDirs = new List<string>();
+            FileImportDirs.Add("");
+            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build"));
+            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build\plugins"));
+            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images"));
+            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images\monster"));
+            
             this.tabControl1.MouseDown += delegate(object sender, MouseEventArgs e)
             {
                 this.clickedTabPage = null;
@@ -185,7 +195,7 @@ namespace WitchsHat
             tabControl1.Controls.Add(tabPage);
         }
 
-        private void CreateProject(string projectName, string projectDir, int projectTemplate)
+        private void CreateProject(string projectName, string projectDir, WHTemplate projectTemplate)
         {
             bool create = true;
 
@@ -198,39 +208,14 @@ namespace WitchsHat
             {
                 return;
             }
-            string sourceDirName = Path.Combine(Application.StartupPath, @"Data\Templates\HelloWorldProject");
-            string[] extra = { };
 
             System.IO.Directory.CreateDirectory(projectDir);
 
-            switch (projectTemplate)
+            foreach (WHFile file in projectTemplate.Files)
             {
-                case 0:
-                    extra = new string[1];
-                    extra[0] = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Witchs Hat", "enchant.js", "images", "chara1.png");
-                    sourceDirName = Path.Combine(Application.StartupPath, @"Data\Templates\EnchantProject");
-                    break;
-                case 1:
-                    sourceDirName = Path.Combine(Application.StartupPath, @"Data\Templates\BlankProject");
-                    break;
-                case 2:
-                    sourceDirName = Path.Combine(Application.StartupPath, @"Data\Templates\HelloWorldProject");
-                    break;
-            }
-
-            string[] files = System.IO.Directory.GetFiles(sourceDirName);
-
-            foreach (string file in files)
-            {
-                Console.WriteLine(file);
-                System.IO.File.Copy(file, Path.Combine(projectDir, Path.GetFileName(file)), true);
-
-            }
-            foreach (string file in extra)
-            {
-                Console.WriteLine(file);
-                System.IO.File.Copy(file, Path.Combine(projectDir, Path.GetFileName(file)), true);
-
+                Directory.CreateDirectory(Path.Combine(projectDir, file.DestDir));
+                string fileName = Path.GetFileName(file.Src);
+                File.Copy(file.FullSrc, Path.Combine(projectDir, file.DestDir, fileName), true);
             }
 
             ProjectProperty pp = new ProjectProperty();
@@ -324,11 +309,20 @@ namespace WitchsHat
         {
             CreateLater = false;
 
-            int projectTemplate = 2;
+            string templateDir = "";
+            WHTemplate projectTemplate = null;
             if (HasEnchantjs())
             {
-                projectTemplate = 0;
+                templateDir = Path.Combine(Application.StartupPath, @"Data\Templates\02KumaProject");
+                projectTemplate = WHTemplate.ReadTemplate(Path.Combine(Application.StartupPath, @"Data\Templates\02KumaProject\KumaProject.template"));
             }
+            else
+            {
+                templateDir = Path.Combine(Application.StartupPath, @"Data\Templates\01EnchantProject");
+                projectTemplate = WHTemplate.ReadTemplate(Path.Combine(Application.StartupPath, @"Data\Templates\01EnchantProject\EnchantProject.template"));
+            }
+            FileImportDirs[0] = templateDir;
+            projectTemplate.CheckFiles(FileImportDirs);
             CreateProject("NoTitleProject", Path.Combine(Path.GetTempPath(), "Witchs Hat", "NoTitleProject"), projectTemplate);
 
         }
@@ -934,14 +928,11 @@ namespace WitchsHat
         {
             CreateProjectForm f = new CreateProjectForm();
             f.ProjectsPath = settings.ProjectsPath;
-            f.OkClicked = delegate(string projectName, string projectDir, int projectTemplate, string newProjectsPath)
+            f.FileImportDirs = this.FileImportDirs;
+            f.OkClicked = delegate(string projectName, string projectDir, WHTemplate projectTemplate, string newProjectsPath)
             {
                 CloseProjectToolStripMenuItem_Click(sender, e);
 
-                if (projectTemplate == 0 && !HasEnchantjs())
-                {
-                    projectTemplate = 2;
-                }
                 CreateProject(projectName, projectDir, projectTemplate);
 
                 if (newProjectsPath != null)
@@ -1108,12 +1099,13 @@ namespace WitchsHat
             treeView1.Nodes.Clear();
             CloseAllTab();
 
-            CurrentProject = null;
             if (tempproject)
             {
+                Directory.Delete(CurrentProject.Dir, true);
                 tempproject = false;
                 tempprojectModify = false;
             }
+            CurrentProject = null;
         }
 
         private void CloseAllTab()

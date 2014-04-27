@@ -177,6 +177,7 @@
     </Compile>
     <Compile Include="TabInfo.cs" />
     <Compile Include="WHServer.cs" />
+    <Compile Include="WHTemplate.cs" />
     <EmbeddedResource Include="CreateFileForm.resx">
       <DependentUpon>CreateFileForm.cs</DependentUpon>
     </EmbeddedResource>
