@@ -1094,12 +1094,13 @@ namespace WitchsHat
             treeView1.Nodes.Clear();
             CloseAllTab();
 
-            CurrentProject = null;
             if (tempproject)
             {
+                Directory.Delete(CurrentProject.Dir, true);
                 tempproject = false;
                 tempprojectModify = false;
             }
+            CurrentProject = null;
         }
 
         private void CloseAllTab()
