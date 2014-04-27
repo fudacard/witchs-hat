@@ -16,10 +16,11 @@ namespace WitchsHat
     public partial class CreateProjectForm : Form
     {
 
-        public delegate void OkEventHandler(string projectName, string projectDir, int projectTemplate, string newProjectsPath);
+        public delegate void OkEventHandler(string projectName, string projectDir, WHTemplate projectTemplate, string newProjectsPath);
         public OkEventHandler OkClicked;
 
         public string ProjectsPath { get; set; }
+        public List<WHTemplate> templates;
 
         public CreateProjectForm()
         {
@@ -36,6 +37,39 @@ namespace WitchsHat
             }
             this.textBox1.Text = "Project" + number;
             this.textBox2.Text = ProjectsPath;
+
+            List<string> importDirs = new List<string>();
+            importDirs.Add("");
+            importDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build"));
+            importDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build\plugins"));
+            importDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images"));
+            importDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images\monster"));
+            
+            this.templates = new List<WHTemplate>();
+
+            string[] templateDirs = Directory.GetDirectories(Path.Combine(Application.StartupPath, @"Data\Templates"));
+            foreach (string templateDir in templateDirs)
+            {
+                string[] files = Directory.GetFiles(templateDir);
+                foreach (string fileName in files) {
+                    // フォルダ内の最初に見つかったtemplateファイルを使う
+                    if (fileName.EndsWith(".template"))
+                    {
+                        WHTemplate temp = WHTemplate.ReadTemplate(fileName);
+
+                        importDirs[0] = templateDir;
+                        if (temp.CheckFiles(importDirs))
+                        {
+                            // ファイルがすべて揃っているならリストに追加
+                            this.listBox1.Items.Add(temp.Name);
+                            templates.Add(temp);
+                        }
+                        break;
+                    }
+                }
+            }
+            listBox1.DataSource = templates;
+            listBox1.DisplayMember = "Name";
 
             this.listBox1.SetSelected(0, true);
         }
@@ -74,11 +108,11 @@ namespace WitchsHat
 
             if (checkBox1.Checked)
             {
-                OkClicked(projectName, projectDir, projectTemplate, this.textBox2.Text);
+                OkClicked(projectName, projectDir, templates[projectTemplate], this.textBox2.Text);
             }
             else
             {
-                OkClicked(projectName, projectDir, projectTemplate, null);
+                OkClicked(projectName, projectDir, templates[projectTemplate], null);
             }
 
             this.Close();
@@ -112,17 +146,8 @@ namespace WitchsHat
                     break;
                 }
             }
-            switch (projectTemplate)
-            {
-                case 0:
-                    label3.Text = "enchant.js本体、表示用HTML、実行用初期コードが含まれたプロジェクトを作成します。";
-                    break;
-                case 1:
-                    label3.Text = "何もファイルが含まれていない空のプロジェクトを作成します。";
-                    break;
-            }
+
+            label3.Text = templates[projectTemplate].Description;
         }
-
-
     }
 }
