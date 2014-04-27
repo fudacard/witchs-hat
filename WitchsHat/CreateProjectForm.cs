@@ -21,6 +21,7 @@ namespace WitchsHat
 
         public string ProjectsPath { get; set; }
         public List<WHTemplate> templates;
+        public List<string> FileImportDirs;
 
         public CreateProjectForm()
         {
@@ -38,13 +39,6 @@ namespace WitchsHat
             this.textBox1.Text = "Project" + number;
             this.textBox2.Text = ProjectsPath;
 
-            List<string> importDirs = new List<string>();
-            importDirs.Add("");
-            importDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build"));
-            importDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build\plugins"));
-            importDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images"));
-            importDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images\monster"));
-            
             this.templates = new List<WHTemplate>();
 
             string[] templateDirs = Directory.GetDirectories(Path.Combine(Application.StartupPath, @"Data\Templates"));
@@ -57,8 +51,8 @@ namespace WitchsHat
                     {
                         WHTemplate temp = WHTemplate.ReadTemplate(fileName);
 
-                        importDirs[0] = templateDir;
-                        if (temp.CheckFiles(importDirs))
+                        FileImportDirs[0] = templateDir;
+                        if (temp.CheckFiles(FileImportDirs))
                         {
                             // ファイルがすべて揃っているならリストに追加
                             this.listBox1.Items.Add(temp.Name);

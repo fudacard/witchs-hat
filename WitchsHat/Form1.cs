@@ -32,13 +32,23 @@ namespace WitchsHat
         EnvironmentSettings settings;
         WHServer server;
         ProjectProperty CurrentProject;
+        List<string> FileImportDirs;
 
         private delegate void StartupNextInstanceDelegate(params object[] parameters);
 
         public Form1()
         {
             InitializeComponent();
+            
             treeView1.form1 = this;
+            
+            FileImportDirs = new List<string>();
+            FileImportDirs.Add("");
+            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build"));
+            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build\plugins"));
+            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images"));
+            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images\monster"));
+            
             this.tabControl1.MouseDown += delegate(object sender, MouseEventArgs e)
             {
                 this.clickedTabPage = null;
@@ -311,13 +321,7 @@ namespace WitchsHat
                 templateDir = Path.Combine(Application.StartupPath, @"Data\Templates\01EnchantProject");
                 projectTemplate = WHTemplate.ReadTemplate(Path.Combine(Application.StartupPath, @"Data\Templates\01EnchantProject\EnchantProject.template"));
             }
-            List<string> FileImportDirs = new List<string>();
-            FileImportDirs.Add(templateDir);
-            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build"));
-            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build\plugins"));
-            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images"));
-            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images\monster"));
-
+            FileImportDirs[0] = templateDir;
             projectTemplate.CheckFiles(FileImportDirs);
             CreateProject("NoTitleProject", Path.Combine(Path.GetTempPath(), "Witchs Hat", "NoTitleProject"), projectTemplate);
 
@@ -924,6 +928,7 @@ namespace WitchsHat
         {
             CreateProjectForm f = new CreateProjectForm();
             f.ProjectsPath = settings.ProjectsPath;
+            f.FileImportDirs = this.FileImportDirs;
             f.OkClicked = delegate(string projectName, string projectDir, WHTemplate projectTemplate, string newProjectsPath)
             {
                 CloseProjectToolStripMenuItem_Click(sender, e);
