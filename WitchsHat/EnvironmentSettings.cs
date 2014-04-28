@@ -18,6 +18,7 @@ namespace WitchsHat
         public string Encoding { get; set; }
         public string FontName { get; set; }
         public float FontSize { get; set; }
+        public bool EnchantjsDownload { get; set; }
 
         public static EnvironmentSettings ReadEnvironmentSettings(string path)
         {
@@ -93,6 +94,18 @@ namespace WitchsHat
                                 string fontSize = reader.ReadString();
                                 Console.WriteLine("[" + fontSize + "]");
                                 settings.FontSize = float.Parse(fontSize);
+                                break;
+                            case "EnchantjsDownload":
+                                string download = reader.ReadString();
+                                Console.WriteLine("[" + download + "]");
+                                if (download == "on")
+                                {
+                                    settings.EnchantjsDownload = true;
+                                }
+                                else
+                                {
+                                    settings.EnchantjsDownload = false;
+                                }
                                 break;
                         }
                     }
@@ -205,6 +218,21 @@ namespace WitchsHat
                                     this.FontSize = float.Parse(fontSize);
                                 }
                                 break;
+                            case "EnchantjsDownload":
+                                string download = reader.ReadString();
+                                Console.WriteLine("[" + download + "]");
+                                if (download != "")
+                                {
+                                    if (download == "on")
+                                    {
+                                        this.EnchantjsDownload = true;
+                                    }
+                                    else
+                                    {
+                                        this.EnchantjsDownload = false;
+                                    }
+                                }
+                                break;
                         }
                     }
                 }
@@ -226,6 +254,7 @@ namespace WitchsHat
             writer.WriteElementString("RunBrowser", this.RunBrowser);
             writer.WriteElementString("FontName", this.FontName);
             writer.WriteElementString("FontSize", this.FontSize.ToString());
+            writer.WriteElementString("EnchantjsDownload", this.EnchantjsDownload ? "on" : "off");
             writer.WriteEndElement();
             writer.Flush();
             writer.Close();

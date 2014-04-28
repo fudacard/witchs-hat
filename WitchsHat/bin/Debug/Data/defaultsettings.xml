@@ -3,7 +3,7 @@
 	<ProjectsPath></ProjectsPath>
 	<Encoding>utf-8</Encoding>
 	<Server>on</Server>
-	<ServerPort>9090</ServerPort>
+	<ServerPort>50124</ServerPort>
 	<Browser>iexplore</Browser>
 	<RunBrowser>iexplore</RunBrowser>
 	<TempProject>on</TempProject>
@@ -12,4 +12,5 @@
 	<EnchantjsDocs>http://wise9.github.io/enchant.js/doc/plugins/ja/index.html</EnchantjsDocs>
 	<FontName>ＭＳ ゴシック</FontName>
 	<FontSize>9.75</FontSize>
+	<EnchantjsDownload>on</EnchantjsDownload>
 </Settings>

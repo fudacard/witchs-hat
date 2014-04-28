@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Template>
-  <Name>KumaProject</Name>
-  <Description>enchant.js本体、表示用HTML、実行用初期コードが含まれたプロジェクトです。</Description>
+  <Name>クマ プロジェクト</Name>
+  <Description>クマを表示するプロジェクトです。</Description>
   <Files>
     <File>
       <Src>index.html</Src>
