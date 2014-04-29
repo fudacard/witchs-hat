@@ -20,8 +20,6 @@ namespace WitchsHat
     {
         // 表示しているタブの情報
         Dictionary<TabPage, TabInfo> tabInfos = new Dictionary<TabPage, TabInfo>();
-        // ツリーノードがディレクトリかどうか
-        Dictionary<int, bool> IsDirectory = new Dictionary<int, bool>();
         TabPage clickedTabPage = null;
         ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
         // テンポラリプロジェクトかどうか
@@ -41,6 +39,7 @@ namespace WitchsHat
             InitializeComponent();
 
             treeView1.form1 = this;
+            treeView1.ImageList = this.imageList1;
 
             FileImportDirs = new List<string>();
             FileImportDirs.Add("");
@@ -227,7 +226,7 @@ namespace WitchsHat
 
             CurrentProject = pp;
 
-            UpdateFileTree();
+            ResetProject();
 
             // main.jsを開く
             if (File.Exists(Path.Combine(CurrentProject.Dir, "main.js")))
@@ -386,9 +385,8 @@ namespace WitchsHat
 
                     // プロジェクト設定ファイル読み込み
                     CurrentProject = ProjectProperty.ReadProjectProperty(filePath);
-                    this.Text = CurrentProject.Name + " - Witch's Hat";
 
-                    UpdateFileTree();
+                    ResetProject();
                 }
             }
             else
@@ -398,83 +396,6 @@ namespace WitchsHat
             }
         }
 
-        public void UpdateFileTree()
-        {
-            this.Text = CurrentProject.Name + " - Witch's Hat";
-            if (server != null)
-            {
-                server.RootDir = CurrentProject.Dir;
-            }
-
-            this.treeView1.ImageList = this.imageList1;
-
-            // プロジェクトツリー更新
-            this.treeView1.Nodes.Clear();
-            this.treeView1.Nodes.Add(CurrentProject.Dir, CurrentProject.Name, 2, 2);
-            IsDirectory = new Dictionary<int, bool>();
-            // フォルダ一覧追加
-            string[] dirs = System.IO.Directory.GetDirectories(CurrentProject.Dir);
-            foreach (string dir in dirs)
-            {
-                TreeNode treenode = this.treeView1.Nodes[0].Nodes.Add(dir, System.IO.Path.GetFileName(dir), 1, 1);
-                IsDirectory[treenode.GetHashCode()] = true;
-                // ファイル一覧追加
-                string[] files0 = System.IO.Directory.GetFiles(dir);
-                foreach (string file in files0)
-                {
-                    if (!file.EndsWith(".whprj"))
-                    {
-                        int icon = GetTreeViewIcon(Path.GetExtension(file));
-                        TreeNode treenode1 = treenode.Nodes.Add(file, System.IO.Path.GetFileName(file), icon, icon);
-                        IsDirectory[treenode1.GetHashCode()] = false;
-                    }
-                }
-            }
-            // ファイル一覧追加
-            string[] files = System.IO.Directory.GetFiles(CurrentProject.Dir);
-            foreach (string file in files)
-            {
-                if (!file.EndsWith(".whprj"))
-                {
-                    int icon = GetTreeViewIcon(Path.GetExtension(file));
-                    TreeNode treenode = this.treeView1.Nodes[0].Nodes.Add(file, System.IO.Path.GetFileName(file), icon, icon);
-                    IsDirectory[treenode.GetHashCode()] = false;
-                }
-            }
-            treeView1.ExpandAll();
-        }
-
-        private int GetTreeViewIcon(string ext)
-        {
-            if (ext == ".js")
-            {
-                return 3;
-            }
-            else if (ext == ".html" || ext == ".htm")
-            {
-                return 4;
-            }
-            else if (ext == ".png")
-            {
-                return 5;
-            }
-            else if (ext == ".jpg" || ext == ".jpeg")
-            {
-                return 6;
-            }
-            else if (ext == ".gif")
-            {
-                return 7;
-            }
-            else if (ext == ".css")
-            {
-                return 8;
-            }
-            else
-            {
-                return 0;
-            }
-        }
 
 
         /// <summary>
@@ -522,7 +443,7 @@ namespace WitchsHat
             if (e.Node != treeView1.Nodes[0])
             {
                 Console.WriteLine(e.Node.Text);
-                if (!IsDirectory[e.Node.GetHashCode()])
+                if (!treeView1.IsDirectory(e.Node))
                 {
                     // ファイル
                     string filepath = e.Node.Name;
@@ -1002,13 +923,13 @@ namespace WitchsHat
                     settings.WriteEnvironmentSettings(Path.Combine(outputdir, "settings.xml"));
                 }
 
-                this.Text = projectName + " - Witch's Hat";
                 CurrentProject = new ProjectProperty();
                 CurrentProject.Name = projectName;
                 CurrentProject.Dir = projectDir;
                 CurrentProject.HtmlPath = "index.html";
                 CurrentProject.Encoding = settings.Encoding;
-                UpdateFileTree();
+
+                ResetProject();
             };
             f.ShowDialog(this);
         }
@@ -1031,7 +952,8 @@ namespace WitchsHat
                     OpenTab(filepath);
                     this.tabControl1.SelectedTab = tabInfos.FirstOrDefault(x => x.Value.Uri == filepath).Key;
                     tempprojectModify = true;
-                    UpdateFileTree();
+
+                    ResetProject();
                 };
                 f.ShowDialog(this);
             }
@@ -1047,7 +969,8 @@ namespace WitchsHat
                 {
                     Directory.CreateDirectory(folderpath);
                     tempprojectModify = true;
-                    UpdateFileTree();
+
+                    ResetProject();
                 };
                 f.ShowDialog(this);
             }
@@ -1323,7 +1246,9 @@ namespace WitchsHat
                         }
                     }
                 }
-                UpdateFileTree();
+
+                ResetProject();
+
                 if (tempproject)
                 {
                     tempprojectModify = true;
@@ -1362,7 +1287,9 @@ namespace WitchsHat
                     tabInfos[tabPage].Uri = newFilePath;
                     tabPage.Text = newFileName;
                 }
-                UpdateFileTree();
+
+                ResetProject();
+
                 if (tempproject)
                 {
                     tempprojectModify = true;
@@ -1383,7 +1310,9 @@ namespace WitchsHat
             f.OkClicked = delegate(string folderName)
             {
                 Directory.CreateDirectory(Path.Combine(treeView1.SelectedNode.Name, folderName));
-                UpdateFileTree();
+
+                ResetProject();
+
                 if (tempproject)
                 {
                     tempprojectModify = true;
@@ -1402,7 +1331,9 @@ namespace WitchsHat
                 string destFileName = Path.Combine(CurrentProject.Dir, Path.GetFileName(ofd.FileName));
                 File.Copy(ofd.FileName, destFileName);
                 OpenFile(destFileName);
-                UpdateFileTree();
+
+                ResetProject();
+
                 if (tempproject)
                 {
                     tempprojectModify = true;
@@ -1563,6 +1494,19 @@ namespace WitchsHat
                 tempproject = false;
             };
             f.Show();
+        }
+
+        private void ResetProject()
+        {
+            this.Text = CurrentProject.Name + " - Witch's Hat";
+
+            treeView1.ProjectName = CurrentProject.Name;
+            treeView1.ProjectDir = CurrentProject.Dir;
+            if (server != null)
+            {
+                server.RootDir = CurrentProject.Dir;
+            }
+            treeView1.UpdateFileTree();
         }
 
     }
