@@ -371,6 +371,7 @@ namespace WitchsHat
                             tempprojectModify = true;
                         }
                     };
+                    azuki.ContextMenuStrip = AzukiContextMenuStrip;
                 }
                 else if (pathlower.EndsWith(".jpg") || pathlower.EndsWith(".jpeg") || pathlower.EndsWith(".png") || pathlower.EndsWith(".gif") || pathlower.EndsWith(".bmp"))
                 {
@@ -1246,6 +1247,21 @@ namespace WitchsHat
                 server.RootDir = CurrentProject.Dir;
             }
             treeView1.UpdateFileTree();
+        }
+
+        private void CutAzukiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CutToolStripMenuItem_Click(sender, e);
+        }
+
+        private void CopyAzukiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CopyToolStripMenuItem_Click(sender, e);
+        }
+
+        private void PasteAzukiToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PasteToolStripMenuItem_Click(sender, e);
         }
 
     }
