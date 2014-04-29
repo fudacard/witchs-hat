@@ -48,6 +48,7 @@ namespace WitchsHat
             settings.ServerPort = int.Parse(ServerPortTextBox.Text);
             settings.Browser = BrowserComboBox.SelectedValue.ToString();
             settings.RunBrowser = RunBrowserComboBox.SelectedValue.ToString();
+            settings.EnchantjsDownload = EnchantjsDownloadcheckBox.Checked;
             OkClicked();
             this.Close();
         }
@@ -101,6 +102,7 @@ namespace WitchsHat
             TempProjectCheckBox.Checked = settings.TempProjectEnable;
             ServerCheckBox.Checked = settings.ServerEnable;
             ServerPortTextBox.Text = settings.ServerPort.ToString();
+            EnchantjsDownloadcheckBox.Checked = settings.EnchantjsDownload;
             // ブラウザー
             BrowserComboBox.SelectedValue = settings.Browser;
             RunBrowserComboBox.SelectedValue = settings.RunBrowser;

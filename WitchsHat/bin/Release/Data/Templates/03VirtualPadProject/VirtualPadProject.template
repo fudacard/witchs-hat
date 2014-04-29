@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Template>
-  <Name>VirtualPadProject</Name>
-  <Description>バーチャルパッドで操作するプロジェクトです。</Description>
+  <Name>バーチャルパッド プロジェクト</Name>
+  <Description>バーチャルパッドで操作するゲームを作成するためのプロジェクトです。</Description>
   <Files>
     <File>
       <Src>index.html</Src>

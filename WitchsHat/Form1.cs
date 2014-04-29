@@ -39,16 +39,16 @@ namespace WitchsHat
         public Form1()
         {
             InitializeComponent();
-            
+
             treeView1.form1 = this;
-            
+
             FileImportDirs = new List<string>();
             FileImportDirs.Add("");
             FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build"));
             FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build\plugins"));
             FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images"));
             FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images\monster"));
-            
+
             this.tabControl1.MouseDown += delegate(object sender, MouseEventArgs e)
             {
                 this.clickedTabPage = null;
@@ -162,7 +162,7 @@ namespace WitchsHat
             if (settings.TempProjectEnable && cmds.Length == 1)
             {
                 tempproject = true;
-                if (HasEnchantjs())
+                if (HasEnchantjs() || !settings.EnchantjsDownload)
                 {
                     CreateLater = false;
                     CreateTemporaryProject();
@@ -406,15 +406,17 @@ namespace WitchsHat
                 server.RootDir = CurrentProject.Dir;
             }
 
+            this.treeView1.ImageList = this.imageList1;
+
             // プロジェクトツリー更新
             this.treeView1.Nodes.Clear();
-            this.treeView1.Nodes.Add(CurrentProject.Dir, CurrentProject.Name);
+            this.treeView1.Nodes.Add(CurrentProject.Dir, CurrentProject.Name, 2, 2);
             IsDirectory = new Dictionary<int, bool>();
             // フォルダ一覧追加
             string[] dirs = System.IO.Directory.GetDirectories(CurrentProject.Dir);
             foreach (string dir in dirs)
             {
-                TreeNode treenode = this.treeView1.Nodes[0].Nodes.Add(dir, System.IO.Path.GetFileName(dir));
+                TreeNode treenode = this.treeView1.Nodes[0].Nodes.Add(dir, System.IO.Path.GetFileName(dir), 1, 1);
                 IsDirectory[treenode.GetHashCode()] = true;
                 // ファイル一覧追加
                 string[] files0 = System.IO.Directory.GetFiles(dir);
@@ -422,7 +424,8 @@ namespace WitchsHat
                 {
                     if (!file.EndsWith(".whprj"))
                     {
-                        TreeNode treenode1 = treenode.Nodes.Add(file, System.IO.Path.GetFileName(file));
+                        int icon = GetTreeViewIcon(Path.GetExtension(file));
+                        TreeNode treenode1 = treenode.Nodes.Add(file, System.IO.Path.GetFileName(file), icon, icon);
                         IsDirectory[treenode1.GetHashCode()] = false;
                     }
                 }
@@ -433,11 +436,44 @@ namespace WitchsHat
             {
                 if (!file.EndsWith(".whprj"))
                 {
-                    TreeNode treenode = this.treeView1.Nodes[0].Nodes.Add(file, System.IO.Path.GetFileName(file));
+                    int icon = GetTreeViewIcon(Path.GetExtension(file));
+                    TreeNode treenode = this.treeView1.Nodes[0].Nodes.Add(file, System.IO.Path.GetFileName(file), icon, icon);
                     IsDirectory[treenode.GetHashCode()] = false;
                 }
             }
             treeView1.ExpandAll();
+        }
+
+        private int GetTreeViewIcon(string ext)
+        {
+            if (ext == ".js")
+            {
+                return 3;
+            }
+            else if (ext == ".html" || ext == ".htm")
+            {
+                return 4;
+            }
+            else if (ext == ".png")
+            {
+                return 5;
+            }
+            else if (ext == ".jpg" || ext == ".jpeg")
+            {
+                return 6;
+            }
+            else if (ext == ".gif")
+            {
+                return 7;
+            }
+            else if (ext == ".css")
+            {
+                return 8;
+            }
+            else
+            {
+                return 0;
+            }
         }
 
 
@@ -560,6 +596,25 @@ namespace WitchsHat
                 {
                     // 新しいタブを追加して開く
                     TabPage tabPage = new TabPage(filename);
+                    Panel panel = new Panel();
+                    panel.Height = 100;
+                    panel.BorderStyle = BorderStyle.FixedSingle;
+                    panel.Dock = DockStyle.Bottom;
+                    tabPage.Controls.Add(panel);
+
+                    Label label = new Label();
+                    label.AutoSize = true;
+                    label.Top = 14;
+                    label.Text = "横幅, 縦幅";
+                    panel.Controls.Add(label);
+
+
+                    TextBox textBox = new TextBox();
+                    textBox.Top = 10;
+                    textBox.Left = 70;
+                    textBox.ReadOnly = true;
+                    panel.Controls.Add(textBox);
+
                     PictureBox picturebox = new PictureBox();
                     Console.WriteLine(fullpath);
                     picturebox.ImageLocation = fullpath;
@@ -569,7 +624,7 @@ namespace WitchsHat
                     tabPage.Layout += delegate(Object sender, LayoutEventArgs e)
                     {
                         picturebox.Left = (tabPage.Width - picturebox.Width) / 2;
-                        picturebox.Top = (tabPage.Height - picturebox.Height) / 2;
+                        picturebox.Top = (tabPage.Height - panel.Height - picturebox.Height) / 2;
                     };
                     tabPage.MouseEnter += delegate
                     {
@@ -599,7 +654,6 @@ namespace WitchsHat
                                 scale -= scale / 10;
                             }
                         }
-                        Console.WriteLine(scale);
 
                         picturebox.Width = (int)(picturebox.Image.Width * scale);
                         picturebox.Height = (int)(picturebox.Image.Height * scale);
@@ -616,6 +670,7 @@ namespace WitchsHat
                     {
                         picturebox.Width = picturebox.Image.Width;
                         picturebox.Height = picturebox.Image.Height;
+                        textBox.Text = picturebox.Image.Width + ", " + picturebox.Image.Height;
                     };
                 }
             }
@@ -723,7 +778,7 @@ namespace WitchsHat
         private void Form1_Shown(object sender, EventArgs e)
         {
             // enchant.jsがあるかどうかチェック
-            if (!HasEnchantjs())
+            if (!HasEnchantjs() && settings.EnchantjsDownload)
             {
                 DialogResult result = MessageBox.Show("enchant.jsがありません。\r\nenchant.jsをダウンロードしますか？", "", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
                 if (result == DialogResult.OK)
@@ -784,6 +839,9 @@ namespace WitchsHat
                 if (server != null && server.IsRunning() && settings.ServerPort != server.Port)
                 {
                     // ポート変更
+                    server.Stop();
+                    //server = new WHServer();
+                    //server.RootDir = CurrentProject.Dir;
                     server.Start(settings.ServerPort);
                 }
                 // フォント変更
@@ -1029,12 +1087,14 @@ namespace WitchsHat
                 CreateFileToolStripMenuItem.Enabled = true;
                 CreateFolderToolStripMenuItem.Enabled = true;
                 CloseProjectToolStripMenuItem.Enabled = true;
+                SaveAsProjectToolStripMenuItem.Enabled = true;
             }
             else
             {
                 CreateFileToolStripMenuItem.Enabled = false;
                 CreateFolderToolStripMenuItem.Enabled = false;
                 CloseProjectToolStripMenuItem.Enabled = false;
+                SaveAsProjectToolStripMenuItem.Enabled = false;
             }
         }
 
@@ -1427,6 +1487,82 @@ namespace WitchsHat
         private void OpenToolBartoolStripButton1_Click(object sender, EventArgs e)
         {
             OpenProjectOrFileToolStripMenuItem_Click(sender, e);
+        }
+
+        private void FindToolBartoolStripButton8_Click(object sender, EventArgs e)
+        {
+            FindToolStripMenuItem_Click(sender, e);
+        }
+
+        private void SaveAsProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveProjectFromTemp f = new SaveProjectFromTemp();
+            f.ProjectsPath = settings.ProjectsPath;
+            f.OkClicked = delegate(string projectName, string projectDir)
+            {
+
+                string tempprojectDir = CurrentProject.Dir;
+                // プロジェクトをコピー
+                System.IO.Directory.CreateDirectory(projectDir);
+                // ファイルコピー
+                string sourceDirName = CurrentProject.Dir;
+                string[] files = System.IO.Directory.GetFiles(sourceDirName);
+                foreach (string file in files)
+                {
+                    Console.WriteLine(file);
+                    string filename = System.IO.Path.GetFileName(file);
+                    if (System.IO.Path.GetFileName(file) == CurrentProject.Name + ".whprj")
+                    {
+                        //                                filename = f.ProjectName + ".whprj";
+                        CurrentProject.Name = projectName;
+                        CurrentProject.Dir = projectDir;
+                        ProjectProperty.WriteProjectProperty(CurrentProject);
+                    }
+                    else
+                    {
+                        KeyValuePair<TabPage, TabInfo> pair = tabInfos.FirstOrDefault(x => x.Value.Uri == file);
+                        if (pair.Key == null)
+                        {
+                            System.IO.File.Copy(file, Path.Combine(projectDir, filename), true);
+                        }
+                        else
+                        {
+                            pair.Value.Uri = Path.Combine(projectDir, filename);
+
+                            if (pair.Value.Type == TabInfo.TabTypeAzuki)
+                            {
+                                Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0];
+                                StreamWriter writer = new StreamWriter(pair.Value.Uri);
+                                writer.Write(azuki.Text);
+                                writer.Close();
+                                pair.Value.Modify = false;
+                                pair.Key.Text = filename;
+                            }
+                            else
+                            {
+                                System.IO.File.Copy(file, pair.Value.Uri, true);
+                            }
+                        }
+                    }
+
+                }
+                if (!File.Exists(Path.Combine(projectDir, projectName + ".whprj")))
+                {
+                    // プロジェクト設定ファイル生成
+                    CurrentProject.Name = projectName;
+                    CurrentProject.Dir = projectDir;
+                    ProjectProperty.WriteProjectProperty(CurrentProject);
+                }
+                treeView1.Nodes[0].Name = CurrentProject.Dir;
+
+                tempprojectModify = false;
+                if (tempproject)
+                {
+                    Directory.Delete(tempprojectDir, true);
+                }
+                tempproject = false;
+            };
+            f.Show();
         }
 
     }

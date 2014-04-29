@@ -12,6 +12,7 @@ namespace WitchsHat
         volatile bool running;
         int serverPort;
         System.Net.HttpListener listener;
+        System.Net.HttpListener closer;
         System.Threading.Thread serverThread;
 
         public void Start()
@@ -88,7 +89,6 @@ namespace WitchsHat
             {
 
             }
-            listener.Close();
             Console.WriteLine("server close");
         }
     }
