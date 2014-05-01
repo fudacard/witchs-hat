@@ -46,7 +46,7 @@ namespace WitchsHat
             string[] dirs = System.IO.Directory.GetDirectories(ProjectDir);
             foreach (string dir in dirs)
             {
-                TreeNode treenode = this.treeView1.Nodes[0].Nodes.Add(dir, System.IO.Path.GetFileName(dir), 1, 1);
+                TreeNode treenode = this.Nodes[0].Nodes.Add(dir, System.IO.Path.GetFileName(dir), 1, 1);
                 isDirectory[treenode.GetHashCode()] = true;
                 // ファイル一覧追加
                 string[] files0 = System.IO.Directory.GetFiles(dir);
