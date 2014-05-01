@@ -186,6 +186,8 @@ namespace WitchsHat
                 }
             }
 
+            tempproject = false;
+            
             return continueFlag;
         }
 
@@ -264,6 +266,9 @@ namespace WitchsHat
             {
                 bool open = true;
                 open = NewProjectCheck();
+                if (CurrentProject != null) {
+                    CloseProject();
+                }
                 if (open)
                 {
                     tabManager.CloseAllTab();
@@ -883,7 +888,8 @@ namespace WitchsHat
             f.projectProperty = CurrentProject;
             f.OkClicked = delegate
             {
-
+                // プロジェクトファイル保存
+                ProjectProperty.WriteProjectProperty(CurrentProject);
             };
             f.Show();
         }

@@ -28,6 +28,16 @@ namespace WitchsHat
             textBox1.Text = projectProperty.Name;
             ProjectDirTextBox.Text = projectProperty.Dir;
             comboBox1.Text = projectProperty.Encoding;
+
+            string[] files = System.IO.Directory.GetFiles(projectProperty.Dir);
+            foreach (string file in files)
+            {
+                string lower = file.ToLower();
+                if (lower.EndsWith(".html") || lower.EndsWith(".htm"))
+                {
+                    comboBox2.Items.Add(file.Replace(projectProperty.Dir + "\\", ""));
+                }
+            }
             comboBox2.Text = projectProperty.HtmlPath;
         }
 
@@ -37,6 +47,12 @@ namespace WitchsHat
             {
                 return;
             }
+            if (comboBox2.Text == "")
+            {
+                MessageBox.Show("実行するHTMLファイルを入力してください。");
+                return;
+            }
+            OkClicked();
             Close();
         }
 
