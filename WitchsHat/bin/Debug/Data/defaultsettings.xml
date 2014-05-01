@@ -6,7 +6,7 @@
   <ServerPort>50124</ServerPort>
   <Browser>iexplore</Browser>
   <RunBrowser>iexplore</RunBrowser>
-  <TempProject>on<  empProject>
+  <TempProject>on</TempProject>
   <EnchantjsBuild>https://github.com/uei/enchant.js-builds/archive/v0.8.1.zip</EnchantjsBuild>
   <EnchantjsReference>http://enchantjs.com/ja/tutorial/lets-start-enchant-js/</EnchantjsReference>
   <EnchantjsDocs>http://wise9.github.io/enchant.js/doc/plugins/ja/index.html</EnchantjsDocs>
