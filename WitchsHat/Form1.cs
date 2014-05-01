@@ -577,7 +577,15 @@ namespace WitchsHat
         {
             try
             {
-                Process.Start(settings.Browser, "http://wise9.github.io/enchant.js/doc/plugins/ja/index.html");
+                if (HasEnchantjs())
+                {
+                    string path = "\"" + Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\doc\plugins\ja\index.html") + "\"";
+                    Process.Start(settings.Browser, path);
+                }
+                else
+                {
+                    Process.Start(settings.Browser, "http://wise9.github.io/enchant.js/doc/plugins/ja/index.html");
+                }
             }
             catch (Exception e1)
             {
