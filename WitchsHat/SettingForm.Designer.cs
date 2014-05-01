@@ -41,6 +41,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.EnchantjsDownloadcheckBox = new System.Windows.Forms.CheckBox();
             this.TempProjectCheckBox = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
             this.ProjectsPathTextBox = new System.Windows.Forms.TextBox();
@@ -62,7 +63,7 @@
             this.ServerPortTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.ServerCheckBox = new System.Windows.Forms.CheckBox();
-            this.EnchantjsDownloadcheckBox = new System.Windows.Forms.CheckBox();
+            this.SuggestCheckBox = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -118,6 +119,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.SuggestCheckBox);
             this.panel1.Controls.Add(this.EnchantjsDownloadcheckBox);
             this.panel1.Controls.Add(this.TempProjectCheckBox);
             this.panel1.Controls.Add(this.button3);
@@ -129,6 +131,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(479, 302);
             this.panel1.TabIndex = 3;
+            // 
+            // EnchantjsDownloadcheckBox
+            // 
+            this.EnchantjsDownloadcheckBox.AutoSize = true;
+            this.EnchantjsDownloadcheckBox.Location = new System.Drawing.Point(7, 159);
+            this.EnchantjsDownloadcheckBox.Name = "EnchantjsDownloadcheckBox";
+            this.EnchantjsDownloadcheckBox.Size = new System.Drawing.Size(203, 16);
+            this.EnchantjsDownloadcheckBox.TabIndex = 6;
+            this.EnchantjsDownloadcheckBox.Text = "起動時にenchant.jsをダウンロードする";
+            this.EnchantjsDownloadcheckBox.UseVisualStyleBackColor = true;
             // 
             // TempProjectCheckBox
             // 
@@ -327,15 +339,15 @@
             this.ServerCheckBox.Text = "内部サーバーを起動する";
             this.ServerCheckBox.UseVisualStyleBackColor = true;
             // 
-            // EnchantjsDownloadcheckBox
+            // SuggestCheckBox
             // 
-            this.EnchantjsDownloadcheckBox.AutoSize = true;
-            this.EnchantjsDownloadcheckBox.Location = new System.Drawing.Point(7, 159);
-            this.EnchantjsDownloadcheckBox.Name = "EnchantjsDownloadcheckBox";
-            this.EnchantjsDownloadcheckBox.Size = new System.Drawing.Size(203, 16);
-            this.EnchantjsDownloadcheckBox.TabIndex = 6;
-            this.EnchantjsDownloadcheckBox.Text = "起動時にenchant.jsをダウンロードする";
-            this.EnchantjsDownloadcheckBox.UseVisualStyleBackColor = true;
+            this.SuggestCheckBox.AutoSize = true;
+            this.SuggestCheckBox.Location = new System.Drawing.Point(7, 182);
+            this.SuggestCheckBox.Name = "SuggestCheckBox";
+            this.SuggestCheckBox.Size = new System.Drawing.Size(124, 16);
+            this.SuggestCheckBox.TabIndex = 7;
+            this.SuggestCheckBox.Text = "入力候補を表示する";
+            this.SuggestCheckBox.UseVisualStyleBackColor = true;
             // 
             // SettingForm
             // 
@@ -394,5 +406,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox ServerCheckBox;
         private System.Windows.Forms.CheckBox EnchantjsDownloadcheckBox;
+        private System.Windows.Forms.CheckBox SuggestCheckBox;
     }
 }

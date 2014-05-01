@@ -75,8 +75,8 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.バージョン情報AToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new WitchsHat.FileTreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.CreateToolBartoolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
@@ -128,6 +128,7 @@
             this.CutAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PasteAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeView1 = new WitchsHat.FileTreeView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -491,30 +492,11 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.listBox1);
             this.splitContainer1.Panel2.Controls.Add(this.tabControl1);
             this.splitContainer1.Size = new System.Drawing.Size(800, 547);
             this.splitContainer1.SplitterDistance = 150;
             this.splitContainer1.TabIndex = 2;
-            // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.treeView1.form1 = null;
-            this.treeView1.FullRowSelect = true;
-            this.treeView1.HideSelection = false;
-            this.treeView1.ImageIndex = 0;
-            this.treeView1.ImageList = this.imageList1;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.ProjectDir = null;
-            this.treeView1.ProjectName = null;
-            this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(150, 547);
-            this.treeView1.TabIndex = 2;
-            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
             // imageList1
             // 
@@ -529,6 +511,17 @@
             this.imageList1.Images.SetKeyName(6, "tree-jpg.png");
             this.imageList1.Images.SetKeyName(7, "tree-gif.png");
             this.imageList1.Images.SetKeyName(8, "tree-css.png");
+            // 
+            // listBox1
+            // 
+            this.listBox1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.ItemHeight = 17;
+            this.listBox1.Location = new System.Drawing.Point(224, 471);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(182, 140);
+            this.listBox1.TabIndex = 1;
+            this.listBox1.Visible = false;
             // 
             // tabControl1
             // 
@@ -926,28 +919,48 @@
             this.CopyAzukiToolStripMenuItem,
             this.PasteAzukiToolStripMenuItem});
             this.AzukiContextMenuStrip.Name = "AzukiContextMenuStrip";
-            this.AzukiContextMenuStrip.Size = new System.Drawing.Size(153, 92);
+            this.AzukiContextMenuStrip.Size = new System.Drawing.Size(117, 70);
             // 
             // CutAzukiToolStripMenuItem
             // 
             this.CutAzukiToolStripMenuItem.Name = "CutAzukiToolStripMenuItem";
-            this.CutAzukiToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CutAzukiToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.CutAzukiToolStripMenuItem.Text = "切り取り";
             this.CutAzukiToolStripMenuItem.Click += new System.EventHandler(this.CutAzukiToolStripMenuItem_Click);
             // 
             // CopyAzukiToolStripMenuItem
             // 
             this.CopyAzukiToolStripMenuItem.Name = "CopyAzukiToolStripMenuItem";
-            this.CopyAzukiToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CopyAzukiToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.CopyAzukiToolStripMenuItem.Text = "コピー";
             this.CopyAzukiToolStripMenuItem.Click += new System.EventHandler(this.CopyAzukiToolStripMenuItem_Click);
             // 
             // PasteAzukiToolStripMenuItem
             // 
             this.PasteAzukiToolStripMenuItem.Name = "PasteAzukiToolStripMenuItem";
-            this.PasteAzukiToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.PasteAzukiToolStripMenuItem.Size = new System.Drawing.Size(116, 22);
             this.PasteAzukiToolStripMenuItem.Text = "貼り付け";
             this.PasteAzukiToolStripMenuItem.Click += new System.EventHandler(this.PasteAzukiToolStripMenuItem_Click);
+            // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.treeView1.form1 = null;
+            this.treeView1.FullRowSelect = true;
+            this.treeView1.HideSelection = false;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.imageList1;
+            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.ProjectDir = null;
+            this.treeView1.ProjectName = null;
+            this.treeView1.SelectedImageIndex = 0;
+            this.treeView1.ShowLines = false;
+            this.treeView1.Size = new System.Drawing.Size(150, 547);
+            this.treeView1.TabIndex = 2;
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
             // Form1
             // 
@@ -1083,6 +1096,7 @@
         private System.Windows.Forms.ToolStripMenuItem CutAzukiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem CopyAzukiToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem PasteAzukiToolStripMenuItem;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 

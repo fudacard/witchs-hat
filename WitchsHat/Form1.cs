@@ -30,6 +30,7 @@ namespace WitchsHat
         ProjectProperty CurrentProject;
         List<string> FileImportDirs;
         TabManager tabManager;
+        PopupWindow popupWindow;
 
         private delegate void StartupNextInstanceDelegate(params object[] parameters);
 
@@ -187,7 +188,7 @@ namespace WitchsHat
             }
 
             tempproject = false;
-            
+
             return continueFlag;
         }
 
@@ -266,7 +267,8 @@ namespace WitchsHat
             {
                 bool open = true;
                 open = NewProjectCheck();
-                if (CurrentProject != null) {
+                if (CurrentProject != null)
+                {
                     CloseProject();
                 }
                 if (open)
@@ -377,6 +379,21 @@ namespace WitchsHat
                         }
                     };
                     azuki.ContextMenuStrip = AzukiContextMenuStrip;
+
+                    if (popupWindow == null)
+                    {
+                        popupWindow = new PopupWindow();
+                    }
+                    if (pathlower.EndsWith(".js"))
+                    {
+                        SuggestionManager suggestionManager = new SuggestionManager(tabPage, azuki, listBox1, this, popupWindow);
+                        tabInfos[tabPage].suggestionManager = suggestionManager;
+                        suggestionManager.Enable = settings.SuggestEnable;
+                        if (settings.SuggestEnable)
+                        {
+                            suggestionManager.Analyze();
+                        }
+                    }
                 }
                 else if (pathlower.EndsWith(".jpg") || pathlower.EndsWith(".jpeg") || pathlower.EndsWith(".png") || pathlower.EndsWith(".gif") || pathlower.EndsWith(".bmp"))
                 {
@@ -530,6 +547,14 @@ namespace WitchsHat
                     if (pair.Value.Type == TabInfo.TabTypeAzuki)
                     {
                         ((Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0]).Font = font;
+                    }
+                }
+                // サジェスト機能有効切り替え
+                foreach (var pair in tabInfos)
+                {
+                    if (pair.Value.Type == TabInfo.TabTypeAzuki)
+                    {
+                        pair.Value.suggestionManager.Enable = settings.SuggestEnable;
                     }
                 }
             };
@@ -1270,6 +1295,15 @@ namespace WitchsHat
             PasteToolStripMenuItem_Click(sender, e);
         }
 
+
+        internal int GetListBoxLeft()
+        {
+            return this.Left + splitContainer1.Left + splitContainer1.Panel2.Left + listBox1.Left;//+ tabControl1.Left +tabControl1.SelectedTab.Left + tabControl1.SelectedTab.Controls[0].Left;
+        }
+        internal int GetListBoxTop()
+        {
+            return this.Top + splitContainer1.Top + splitContainer1.Panel2.Top + listBox1.Top;//+ tabControl1.Left +tabControl1.SelectedTab.Left + tabControl1.SelectedTab.Controls[0].Left;
+        }
     }
 
 }
