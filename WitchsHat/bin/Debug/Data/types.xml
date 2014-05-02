@@ -205,18 +205,22 @@
       <Member>
         <Name>addEventListener</Name>
         <Type>function</Type>
+        <Hint>addEventListener(type: String, listener: function)&#xA;イベントリスナを追加します。</Hint>
       </Member>
       <Member>
         <Name>clearEventListener</Name>
         <Type>function</Type>
+        <Hint>clearEventListener(type: String)&#xA;すべてのイベントリスナを削除します。</Hint>
       </Member>
       <Member>
         <Name>dispatchEvent</Name>
         <Type>function</Type>
+        <Hint>dispatchEvent(type: enchant.Event)&#xA;イベントを発行します。</Hint>
       </Member>
       <Member>
         <Name>removeEventListener</Name>
         <Type>function</Type>
+        <Hint>removeEventListener(type: String, listener: function)&#xA;イベントリスナを削除します。</Hint>
       </Member>
     </Members>
   </Class>
@@ -280,26 +284,32 @@
       <Member>
         <Name>addChild</Name>
         <Type>function</Type>
+        <Hint>addChild(node: Node)&#xA;GroupにNodeを追加する.</Hint>
       </Member>
       <Member>
         <Name>childNodes</Name>
-        <Type>object</Type>
+        <Type>Array</Type>
+        <Hint>子のNode.</Hint>
       </Member>
       <Member>
         <Name>firstChild</Name>
-        <Type>object</Type>
+        <Type>Node</Type>
+        <Hint>最初の子Node.</Hint>
       </Member>
       <Member>
         <Name>lastChild</Name>
-        <Type>object</Type>
+        <Type>Node</Type>
+        <Hint>最後の子Node.</Hint>
       </Member>
       <Member>
         <Name>insertBefore</Name>
         <Type>function</Type>
+        <Hint>insertBefore(node: Node, reference: Node)&#xA;referenceの前にnodeを挿入する.</Hint>
       </Member>
       <Member>
         <Name>removeChild</Name>
         <Type>function</Type>
+        <Hint>removeChild(node: Node)&#xA;GroupからNodeを削除する.</Hint>
       </Member>
     </Members>
   </Class>
@@ -334,18 +344,22 @@
       <Member>
         <Name>color</Name>
         <Type>String</Type>
+        <Hint>文字色の指定. CSSの'color'プロパティと同様の形式で指定できる.</Hint>
       </Member>
       <Member>
         <Name>font</Name>
         <Type>String</Type>
+        <Hint>フォントの指定. CSSの'font'プロパティと同様の形式で指定できる.</Hint>
       </Member>
       <Member>
         <Name>text</Name>
         <Type>String</Type>
+        <Hint>表示するテキスト.</Hint>
       </Member>
       <Member>
         <Name>textAlign</Name>
         <Type>String</Type>
+        <Hint>テキストの水平位置の指定. CSSの'text-align'プロパティと同様の形式で指定できる.</Hint>
       </Member>
     </Members>
   </Class>
@@ -368,22 +382,27 @@
       <Member>
         <Name>moveBy</Name>
         <Type>function</Type>
+        <Hint>moveBy(x: Number, y:Number)&#xA;移動距離を指定してNodeを移動します。</Hint>
       </Member>
       <Member>
         <Name>moveTo</Name>
         <Type>function</Type>
+        <Hint>moveBy(x: Number, y:Number)&#xA;移動先を指定してNodeを移動します。</Hint>
       </Member>
       <Member>
         <Name>scene</Name>
         <Type>Scene</Type>
+        <Hint>Nodeが属しているScene.</Hint>
       </Member>
       <Member>
         <Name>x</Name>
         <Type>number</Type>
+        <Hint>Nodeのx座標.</Hint>
       </Member>
       <Member>
         <Name>y</Name>
         <Type>number</Type>
+        <Hint>Nodeのy座標.</Hint>
       </Member>
     </Members>
   </Class>

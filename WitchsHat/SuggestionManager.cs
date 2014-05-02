@@ -184,15 +184,18 @@ namespace WitchsHat
                             NewList.Add(member);
                         }
                     }
+                    listBox.SelectedIndex = -1;
                     if (NewInputString != "" && NewList.Count > 0)
                     {
                         listBox.Items.Clear();
-                        foreach (string member in NewList)
+                        for (int i = 0; i < NewList.Count; i++)
                         {
-                            listBox.Items.Add(member);
-
+                            listBox.Items.Add(NewList[i]);
+                            if (listBox.SelectedIndex == -1 && NewList[i].StartsWith(NewInputString))
+                            {
+                                listBox.SelectedIndex = i;
+                            }
                         }
-                        listBox.SelectedIndex = 0;
                     }
                     else
                     {
@@ -394,10 +397,12 @@ namespace WitchsHat
             {
                 popup = new PopupWindow();
             }
-            popup.Show(form);
+            if (!popup.Visible)
+            {
+                //popup.Show(form);
+            }
 
             popup.Size = new Size(400, 80);
-            popup.Controls[0].Text = "ヒント";
 
             UpdateListBoxPos(offset);
 
@@ -669,9 +674,17 @@ namespace WitchsHat
             if (token2 == ".")
             {
                 string token3 = lastToken(src, 3);
-                JSType t = types[GetClass(src, token3)];
-                //return t.Members[token].Name;
-                return t.GetMembers()[token].Name;
+                string className = GetClass(src, token3);
+                if (className != null)
+                {
+                    JSType t = types[className];
+                    //return t.Members[token].Name;
+                    return t.GetMembers()[token].Name;
+                }
+                else
+                {
+                    return null;
+                }
             }
             else
             {
@@ -741,16 +754,20 @@ namespace WitchsHat
             {
                 if (typedata[(string)listBox.SelectedItem].Hint != null)
                 {
+                    popup.Visible = true;
                     popup.Controls[0].Text = typedata[(string)listBox.SelectedItem].Hint;
+                    Console.WriteLine(popup.Controls[0].Text);
                 }
                 else
                 {
+                    popup.Visible = false;
                     popup.Controls[0].Text = "ヒント";
                 }
 
             }
             else
             {
+                popup.Visible = false;
                 popup.Controls[0].Text = "";
             }
 
