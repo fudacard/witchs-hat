@@ -394,6 +394,8 @@ namespace WitchsHat
                             suggestionManager.Analyze();
                         }
                     }
+                    azuki.UsesTabForIndent = settings.IndentUseTab;
+
                 }
                 else if (pathlower.EndsWith(".jpg") || pathlower.EndsWith(".jpeg") || pathlower.EndsWith(".png") || pathlower.EndsWith(".gif") || pathlower.EndsWith(".bmp"))
                 {
@@ -540,13 +542,17 @@ namespace WitchsHat
                     //server.RootDir = CurrentProject.Dir;
                     server.Start(settings.ServerPort);
                 }
-                // フォント変更
+                
                 Font font = new Font(settings.FontName, settings.FontSize);
                 foreach (var pair in tabInfos)
                 {
                     if (pair.Value.Type == TabInfo.TabTypeAzuki)
                     {
-                        ((Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0]).Font = font;
+                        Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0];
+                        // フォント変更
+                        azuki.Font = font;
+                        // インデント設定変更
+                        azuki.UsesTabForIndent = settings.IndentUseTab;
                     }
                 }
                 // サジェスト機能有効切り替え
