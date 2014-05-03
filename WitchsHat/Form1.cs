@@ -438,6 +438,8 @@ namespace WitchsHat
                     Directory.Delete(CurrentProject.Dir, true);
                 }
                 Program.mutex.ReleaseMutex();
+
+                Properties.Settings.Default.Save();
             }
 
         }
