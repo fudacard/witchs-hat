@@ -77,6 +77,7 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.listBox1 = new System.Windows.Forms.ListBox();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.CreateToolBartoolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.CreateProjectToolBarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,7 +128,9 @@
             this.CutAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PasteAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.SpecialImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DocumentImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EnchantjsImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new WitchsHat.FileTreeView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -295,78 +298,78 @@
             // UndoToolStripMenuItem
             // 
             this.UndoToolStripMenuItem.Name = "UndoToolStripMenuItem";
-            this.UndoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.UndoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.UndoToolStripMenuItem.Text = "元に戻す";
             this.UndoToolStripMenuItem.Click += new System.EventHandler(this.UndoToolStripMenuItem_Click);
             // 
             // RedoToolStripMenuItem
             // 
             this.RedoToolStripMenuItem.Name = "RedoToolStripMenuItem";
-            this.RedoToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.RedoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.RedoToolStripMenuItem.Text = "やり直し";
             this.RedoToolStripMenuItem.Click += new System.EventHandler(this.RedoToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(124, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // CutToolStripMenuItem
             // 
             this.CutToolStripMenuItem.Name = "CutToolStripMenuItem";
-            this.CutToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.CutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.CutToolStripMenuItem.Text = "切り取り";
             this.CutToolStripMenuItem.Click += new System.EventHandler(this.CutToolStripMenuItem_Click);
             // 
             // CopyToolStripMenuItem
             // 
             this.CopyToolStripMenuItem.Name = "CopyToolStripMenuItem";
-            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.CopyToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.CopyToolStripMenuItem.Text = "コピー";
             this.CopyToolStripMenuItem.Click += new System.EventHandler(this.CopyToolStripMenuItem_Click);
             // 
             // PasteToolStripMenuItem
             // 
             this.PasteToolStripMenuItem.Name = "PasteToolStripMenuItem";
-            this.PasteToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.PasteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.PasteToolStripMenuItem.Text = "貼り付け";
             this.PasteToolStripMenuItem.Click += new System.EventHandler(this.PasteToolStripMenuItem_Click);
             // 
             // DeleteToolStripMenuItem
             // 
             this.DeleteToolStripMenuItem.Name = "DeleteToolStripMenuItem";
-            this.DeleteToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.DeleteToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.DeleteToolStripMenuItem.Text = "削除";
             this.DeleteToolStripMenuItem.Click += new System.EventHandler(this.DeleteToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(124, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(149, 6);
             // 
             // SelectAllToolStripMenuItem
             // 
             this.SelectAllToolStripMenuItem.Name = "SelectAllToolStripMenuItem";
-            this.SelectAllToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.SelectAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.SelectAllToolStripMenuItem.Text = "すべて選択";
             this.SelectAllToolStripMenuItem.Click += new System.EventHandler(this.SelectAllToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(124, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(149, 6);
             // 
             // FindToolStripMenuItem
             // 
             this.FindToolStripMenuItem.Name = "FindToolStripMenuItem";
-            this.FindToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.FindToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.FindToolStripMenuItem.Text = "検索";
             this.FindToolStripMenuItem.Click += new System.EventHandler(this.FindToolStripMenuItem_Click);
             // 
             // ReplaceToolStripMenuItem
             // 
             this.ReplaceToolStripMenuItem.Name = "ReplaceToolStripMenuItem";
-            this.ReplaceToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.ReplaceToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.ReplaceToolStripMenuItem.Text = "置換";
             this.ReplaceToolStripMenuItem.Click += new System.EventHandler(this.ReplaceToolStripMenuItem_Click);
             // 
@@ -374,6 +377,7 @@
             // 
             this.ProjecttoolStripMenuItem2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ImportFileToolStripMenuItem,
+            this.SpecialImportToolStripMenuItem,
             this.toolStripSeparator14,
             this.ProjectPropertyToolStripMenuItem});
             this.ProjecttoolStripMenuItem2.Name = "ProjecttoolStripMenuItem2";
@@ -384,19 +388,19 @@
             // ImportFileToolStripMenuItem
             // 
             this.ImportFileToolStripMenuItem.Name = "ImportFileToolStripMenuItem";
-            this.ImportFileToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.ImportFileToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.ImportFileToolStripMenuItem.Text = "既存項目の追加";
             this.ImportFileToolStripMenuItem.Click += new System.EventHandler(this.ImportFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator14
             // 
             this.toolStripSeparator14.Name = "toolStripSeparator14";
-            this.toolStripSeparator14.Size = new System.Drawing.Size(176, 6);
+            this.toolStripSeparator14.Size = new System.Drawing.Size(186, 6);
             // 
             // ProjectPropertyToolStripMenuItem
             // 
             this.ProjectPropertyToolStripMenuItem.Name = "ProjectPropertyToolStripMenuItem";
-            this.ProjectPropertyToolStripMenuItem.Size = new System.Drawing.Size(179, 22);
+            this.ProjectPropertyToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.ProjectPropertyToolStripMenuItem.Text = "プロジェクトのプロパティ";
             this.ProjectPropertyToolStripMenuItem.Click += new System.EventHandler(this.ProjectPropertyToolStripMenuItem_Click);
             // 
@@ -522,6 +526,15 @@
             this.listBox1.Size = new System.Drawing.Size(182, 140);
             this.listBox1.TabIndex = 1;
             this.listBox1.Visible = false;
+            // 
+            // tabControl1
+            // 
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(755, 612);
+            this.tabControl1.TabIndex = 2;
             // 
             // toolStrip1
             // 
@@ -933,14 +946,29 @@
             this.PasteAzukiToolStripMenuItem.Text = "貼り付け";
             this.PasteAzukiToolStripMenuItem.Click += new System.EventHandler(this.PasteAzukiToolStripMenuItem_Click);
             // 
-            // tabControl1
+            // SpecialImportToolStripMenuItem
             // 
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(755, 612);
-            this.tabControl1.TabIndex = 2;
+            this.SpecialImportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.DocumentImportToolStripMenuItem,
+            this.EnchantjsImportToolStripMenuItem});
+            this.SpecialImportToolStripMenuItem.Name = "SpecialImportToolStripMenuItem";
+            this.SpecialImportToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.SpecialImportToolStripMenuItem.Text = "特殊ディレクトリから追加";
+            this.SpecialImportToolStripMenuItem.DropDownOpening += new System.EventHandler(this.SpecialImportToolStripMenuItem_DropDownOpening);
+            // 
+            // DocumentImportToolStripMenuItem
+            // 
+            this.DocumentImportToolStripMenuItem.Name = "DocumentImportToolStripMenuItem";
+            this.DocumentImportToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.DocumentImportToolStripMenuItem.Text = "ドキュメント";
+            this.DocumentImportToolStripMenuItem.Click += new System.EventHandler(this.DocumentImportToolStripMenuItem_Click);
+            // 
+            // EnchantjsImportToolStripMenuItem
+            // 
+            this.EnchantjsImportToolStripMenuItem.Name = "EnchantjsImportToolStripMenuItem";
+            this.EnchantjsImportToolStripMenuItem.Size = new System.Drawing.Size(186, 22);
+            this.EnchantjsImportToolStripMenuItem.Text = "enchant.js 同梱素材";
+            this.EnchantjsImportToolStripMenuItem.Click += new System.EventHandler(this.EnchantjsImportToolStripMenuItem_Click);
             // 
             // treeView1
             // 
@@ -1100,6 +1128,9 @@
         private System.Windows.Forms.ToolStripMenuItem PasteAzukiToolStripMenuItem;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.ToolStripMenuItem SpecialImportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem DocumentImportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem EnchantjsImportToolStripMenuItem;
     }
 }
 

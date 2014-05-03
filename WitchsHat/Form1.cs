@@ -1132,22 +1132,7 @@ namespace WitchsHat
 
         private void ImportFileToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "javascriptファイル(*.js)|*.js|htmlファイル(*.html;*.html)|*.html;*.htm|画像ファイル(*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif|テキストファイル(*.txt)|*.txt|すべてのファイル(*.*)|*.*";
-            ofd.FilterIndex = 5;
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                string destFileName = Path.Combine(CurrentProject.Dir, Path.GetFileName(ofd.FileName));
-                File.Copy(ofd.FileName, destFileName);
-                OpenFile(destFileName);
-
-                ResetProject();
-
-                if (tempproject)
-                {
-                    tempprojectModify = true;
-                }
-            }
+            SelectImportFile(null);
         }
 
 
@@ -1349,6 +1334,54 @@ namespace WitchsHat
         internal int GetListBoxTop()
         {
             return this.Top + splitContainer1.Top + splitContainer1.Panel2.Top + listBox1.Top;//+ tabControl1.Left +tabControl1.SelectedTab.Left + tabControl1.SelectedTab.Controls[0].Left;
+        }
+
+        private void DocumentImportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectImportFile(System.Environment.GetFolderPath(Environment.SpecialFolder.Personal));
+        }
+
+        private void EnchantjsImportToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectImportFile(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images"));
+        }
+
+        private void SpecialImportToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            if (Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images")))
+            {
+                EnchantjsImportToolStripMenuItem.Enabled = true;
+            }
+            else
+            {
+                EnchantjsImportToolStripMenuItem.Enabled = false;
+            }
+        }
+
+        private void SelectImportFile(string initialDirectory)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "javascriptファイル(*.js)|*.js|htmlファイル(*.html;*.html)|*.html;*.htm|画像ファイル(*.png;*.jpg;*.jpeg;*.gif)|*.png;*.jpg;*.jpeg;*.gif|テキストファイル(*.txt)|*.txt|すべてのファイル(*.*)|*.*";
+            ofd.FilterIndex = 5;
+            ofd.InitialDirectory = initialDirectory;
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                string destFileName = Path.Combine(CurrentProject.Dir, Path.GetFileName(ofd.FileName));
+                if (File.Exists(Path.Combine(CurrentProject.Dir, Path.GetFileName(destFileName))))
+                {
+                    MessageBox.Show("同名のファイルがプロジェクトに含まれています。");
+                    return;
+                }
+                File.Copy(ofd.FileName, destFileName);
+                OpenFile(destFileName);
+
+                ResetProject();
+
+                if (tempproject)
+                {
+                    tempprojectModify = true;
+                }
+            }
         }
     }
 
