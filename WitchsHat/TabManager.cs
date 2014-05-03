@@ -49,7 +49,7 @@ namespace WitchsHat
             menuClose.Click += delegate(object sender1, EventArgs e1)
             {
                 // タブを閉じる
-                if (targetTab.Text.EndsWith("*"))
+                if (tabInfos[targetTab].Modify)
                 {
                     DialogResult result = MessageBox.Show("変更を保存しますか？", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button2);
                     if (result == DialogResult.Yes)
@@ -127,7 +127,8 @@ namespace WitchsHat
             sr.Close();
 
             // 新しいタブを追加して開く
-            TabPage tabPage = new TabPage(Path.GetFileName(fullpath));
+            TabPage tabPage = new TabPage();
+            SetTabText(tabPage, Path.GetFileName(fullpath), false);
             Sgry.Azuki.WinForms.AzukiControl azuki = new Sgry.Azuki.WinForms.AzukiControl();
             azuki.Text = text;
             azuki.ClearHistory();
@@ -144,6 +145,14 @@ namespace WitchsHat
             }
             tabPage.Controls.Add(azuki);
 
+
+            azuki.TextChanged += delegate
+            {
+                SetTabText(tabPage, Path.GetFileName(fullpath), true);
+//                tabPage.Text = Path.GetFileName(fullpath) + " *";
+                tabInfos[tabPage].Modify = true;
+            };
+
             this.tabControl.TabPages.Add(tabPage);
             this.tabInfos[tabPage] = new TabInfo();
             this.tabInfos[tabPage].Type = TabInfo.TabTypeAzuki;
@@ -156,7 +165,8 @@ namespace WitchsHat
         public TabPage AddImageTab(string fullpath)
         {
             // 新しいタブを追加して開く
-            TabPage tabPage = new TabPage(Path.GetFileName(fullpath));
+            TabPage tabPage = new TabPage();
+            SetTabText(tabPage, Path.GetFileName(fullpath), false);
             Panel panel = new Panel();
             panel.Height = 100;
             panel.BorderStyle = BorderStyle.FixedSingle;
@@ -297,6 +307,17 @@ namespace WitchsHat
             foreach (TabPage removePage in removes)
             {
                 tabInfos.Remove(removePage);
+            }
+        }
+        public void SetTabText(TabPage tabPage, string text, bool modify)
+        {
+            if (!modify)
+            {
+                tabPage.Text = text;
+            }
+            else
+            {
+                tabPage.Text = text + " *";
             }
         }
     }

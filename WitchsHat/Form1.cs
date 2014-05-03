@@ -389,8 +389,6 @@ namespace WitchsHat
                     });
                     azuki.TextChanged += delegate
                     {
-                        tabPage.Text = filename + " *";
-                        tabInfos[tabPage].Modify = true;
                         if (tempproject)
                         {
                             tempprojectModify = true;
