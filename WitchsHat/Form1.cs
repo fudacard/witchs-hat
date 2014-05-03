@@ -31,6 +31,7 @@ namespace WitchsHat
         List<string> FileImportDirs;
         TabManager tabManager;
         PopupWindow popupWindow;
+        TaskScheduler taskScheduler;
 
         private delegate void StartupNextInstanceDelegate(params object[] parameters);
 
@@ -38,6 +39,7 @@ namespace WitchsHat
         {
             InitializeComponent();
 
+            taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             tabManager = new TabManager(this.tabControl1, tabInfos);
 
             treeView1.form1 = this;
@@ -234,14 +236,16 @@ namespace WitchsHat
 
         public void StartupNextInstance(params object[] parameters)
         {
-            this.Activate();
-            string[] args = (string[])parameters[0];
-
-            //MessageBox.Show("既に起動しています。引数1の数：" + args.Length.ToString());
-            if (parameters.Length > 1)
+            Task.Factory.StartNew(() =>
             {
-                OpenFile((string)parameters[1]);
-            }
+                this.Activate();
+                string[] args = (string[])parameters[0];
+
+                if (args.Length > 1)
+                {
+                    OpenFile((string)args[1]);
+                }
+            }, System.Threading.CancellationToken.None, TaskCreationOptions.None, taskScheduler);
         }
 
 
@@ -542,7 +546,7 @@ namespace WitchsHat
                     //server.RootDir = CurrentProject.Dir;
                     server.Start(settings.ServerPort);
                 }
-                
+
                 Font font = new Font(settings.FontName, settings.FontSize);
                 foreach (var pair in tabInfos)
                 {
