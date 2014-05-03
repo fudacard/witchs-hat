@@ -33,14 +33,14 @@
             System.Windows.Forms.TreeNode treeNode3 = new System.Windows.Forms.TreeNode("全般", new System.Windows.Forms.TreeNode[] {
             treeNode1,
             treeNode2});
-            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("フォント");
-            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("エディタ", new System.Windows.Forms.TreeNode[] {
-            treeNode4});
-            System.Windows.Forms.TreeNode treeNode6 = new System.Windows.Forms.TreeNode("上級者設定");
+            System.Windows.Forms.TreeNode treeNode4 = new System.Windows.Forms.TreeNode("エディタ");
+            System.Windows.Forms.TreeNode treeNode5 = new System.Windows.Forms.TreeNode("上級者設定");
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.SuggestCheckBox = new System.Windows.Forms.CheckBox();
+            this.EnchantjsDownloadcheckBox = new System.Windows.Forms.CheckBox();
             this.TempProjectCheckBox = new System.Windows.Forms.CheckBox();
             this.button3 = new System.Windows.Forms.Button();
             this.ProjectsPathTextBox = new System.Windows.Forms.TextBox();
@@ -53,6 +53,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.RunBrowserComboBox = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.IndentSpaceRadioButton = new System.Windows.Forms.RadioButton();
+            this.IndentTabRadioButton = new System.Windows.Forms.RadioButton();
             this.FontSizeLabel = new System.Windows.Forms.Label();
             this.FontNameLabel = new System.Windows.Forms.Label();
             this.FontPreviewTextBox = new System.Windows.Forms.TextBox();
@@ -62,7 +64,6 @@
             this.ServerPortTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.ServerCheckBox = new System.Windows.Forms.CheckBox();
-            this.EnchantjsDownloadcheckBox = new System.Windows.Forms.CheckBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
@@ -100,16 +101,14 @@
             treeNode2.Text = "ブラウザー";
             treeNode3.Name = "ノード0";
             treeNode3.Text = "全般";
-            treeNode4.Name = "ノード4";
-            treeNode4.Text = "フォント";
-            treeNode5.Name = "ノード3";
-            treeNode5.Text = "エディタ";
-            treeNode6.Name = "ノード0";
-            treeNode6.Text = "上級者設定";
+            treeNode4.Name = "ノード3";
+            treeNode4.Text = "エディタ";
+            treeNode5.Name = "ノード0";
+            treeNode5.Text = "上級者設定";
             this.treeView1.Nodes.AddRange(new System.Windows.Forms.TreeNode[] {
             treeNode3,
-            treeNode5,
-            treeNode6});
+            treeNode4,
+            treeNode5});
             this.treeView1.ShowLines = false;
             this.treeView1.ShowRootLines = false;
             this.treeView1.Size = new System.Drawing.Size(145, 364);
@@ -118,6 +117,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.SuggestCheckBox);
             this.panel1.Controls.Add(this.EnchantjsDownloadcheckBox);
             this.panel1.Controls.Add(this.TempProjectCheckBox);
             this.panel1.Controls.Add(this.button3);
@@ -129,6 +129,26 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(479, 302);
             this.panel1.TabIndex = 3;
+            // 
+            // SuggestCheckBox
+            // 
+            this.SuggestCheckBox.AutoSize = true;
+            this.SuggestCheckBox.Location = new System.Drawing.Point(7, 182);
+            this.SuggestCheckBox.Name = "SuggestCheckBox";
+            this.SuggestCheckBox.Size = new System.Drawing.Size(124, 16);
+            this.SuggestCheckBox.TabIndex = 7;
+            this.SuggestCheckBox.Text = "入力候補を表示する";
+            this.SuggestCheckBox.UseVisualStyleBackColor = true;
+            // 
+            // EnchantjsDownloadcheckBox
+            // 
+            this.EnchantjsDownloadcheckBox.AutoSize = true;
+            this.EnchantjsDownloadcheckBox.Location = new System.Drawing.Point(7, 159);
+            this.EnchantjsDownloadcheckBox.Name = "EnchantjsDownloadcheckBox";
+            this.EnchantjsDownloadcheckBox.Size = new System.Drawing.Size(203, 16);
+            this.EnchantjsDownloadcheckBox.TabIndex = 6;
+            this.EnchantjsDownloadcheckBox.Text = "起動時にenchant.jsをダウンロードする";
+            this.EnchantjsDownloadcheckBox.UseVisualStyleBackColor = true;
             // 
             // TempProjectCheckBox
             // 
@@ -233,6 +253,8 @@
             // 
             // panel3
             // 
+            this.panel3.Controls.Add(this.IndentSpaceRadioButton);
+            this.panel3.Controls.Add(this.IndentTabRadioButton);
             this.panel3.Controls.Add(this.FontSizeLabel);
             this.panel3.Controls.Add(this.FontNameLabel);
             this.panel3.Controls.Add(this.FontPreviewTextBox);
@@ -241,6 +263,28 @@
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(479, 302);
             this.panel3.TabIndex = 6;
+            // 
+            // IndentSpaceRadioButton
+            // 
+            this.IndentSpaceRadioButton.AutoSize = true;
+            this.IndentSpaceRadioButton.Location = new System.Drawing.Point(7, 161);
+            this.IndentSpaceRadioButton.Name = "IndentSpaceRadioButton";
+            this.IndentSpaceRadioButton.Size = new System.Drawing.Size(143, 16);
+            this.IndentSpaceRadioButton.TabIndex = 6;
+            this.IndentSpaceRadioButton.TabStop = true;
+            this.IndentSpaceRadioButton.Text = "インデントにスペースを使う";
+            this.IndentSpaceRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // IndentTabRadioButton
+            // 
+            this.IndentTabRadioButton.AutoSize = true;
+            this.IndentTabRadioButton.Location = new System.Drawing.Point(7, 137);
+            this.IndentTabRadioButton.Name = "IndentTabRadioButton";
+            this.IndentTabRadioButton.Size = new System.Drawing.Size(122, 16);
+            this.IndentTabRadioButton.TabIndex = 5;
+            this.IndentTabRadioButton.TabStop = true;
+            this.IndentTabRadioButton.Text = "インデントにタブを使う";
+            this.IndentTabRadioButton.UseVisualStyleBackColor = true;
             // 
             // FontSizeLabel
             // 
@@ -327,16 +371,6 @@
             this.ServerCheckBox.Text = "内部サーバーを起動する";
             this.ServerCheckBox.UseVisualStyleBackColor = true;
             // 
-            // EnchantjsDownloadcheckBox
-            // 
-            this.EnchantjsDownloadcheckBox.AutoSize = true;
-            this.EnchantjsDownloadcheckBox.Location = new System.Drawing.Point(7, 159);
-            this.EnchantjsDownloadcheckBox.Name = "EnchantjsDownloadcheckBox";
-            this.EnchantjsDownloadcheckBox.Size = new System.Drawing.Size(203, 16);
-            this.EnchantjsDownloadcheckBox.TabIndex = 6;
-            this.EnchantjsDownloadcheckBox.Text = "起動時にenchant.jsをダウンロードする";
-            this.EnchantjsDownloadcheckBox.UseVisualStyleBackColor = true;
-            // 
             // SettingForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -346,10 +380,10 @@
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
+            this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel4);
-            this.Controls.Add(this.panel3);
             this.Name = "SettingForm";
             this.Text = "オプション";
             this.Load += new System.EventHandler(this.SettingForm_Load);
@@ -394,5 +428,8 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.CheckBox ServerCheckBox;
         private System.Windows.Forms.CheckBox EnchantjsDownloadcheckBox;
+        private System.Windows.Forms.CheckBox SuggestCheckBox;
+        private System.Windows.Forms.RadioButton IndentSpaceRadioButton;
+        private System.Windows.Forms.RadioButton IndentTabRadioButton;
     }
 }

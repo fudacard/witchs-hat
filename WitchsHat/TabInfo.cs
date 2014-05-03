@@ -11,6 +11,7 @@ namespace WitchsHat
         public const int TabTypeAzuki = 0;
         public const int TabTypeImage = 1;
         public const int TabTypeBrowser = 2;
+        public SuggestionManager suggestionManager;
         public int Type { get; set; }
         public string Uri { get; set; }
         public bool Modify { get; set; }

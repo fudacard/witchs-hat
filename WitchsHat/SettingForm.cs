@@ -49,6 +49,8 @@ namespace WitchsHat
             settings.Browser = BrowserComboBox.SelectedValue.ToString();
             settings.RunBrowser = RunBrowserComboBox.SelectedValue.ToString();
             settings.EnchantjsDownload = EnchantjsDownloadcheckBox.Checked;
+            settings.SuggestEnable = SuggestCheckBox.Checked;
+            settings.IndentUseTab = IndentTabRadioButton.Checked;
             OkClicked();
             this.Close();
         }
@@ -71,9 +73,9 @@ namespace WitchsHat
                 panel3.Visible = false;
                 panel4.Visible = false;
             }
-            else if (e.Node.Text == "エディタ" || e.Node.Text == "フォント")
+            else if (e.Node.Text == "エディタ")
             {
-                TitleLabel.Text = "フォント";
+                TitleLabel.Text = "エディタ";
                 panel1.Visible = false;
                 panel2.Visible = false;
                 panel3.Visible = true;
@@ -103,14 +105,23 @@ namespace WitchsHat
             ServerCheckBox.Checked = settings.ServerEnable;
             ServerPortTextBox.Text = settings.ServerPort.ToString();
             EnchantjsDownloadcheckBox.Checked = settings.EnchantjsDownload;
+            SuggestCheckBox.Checked = settings.SuggestEnable;
             // ブラウザー
             BrowserComboBox.SelectedValue = settings.Browser;
             RunBrowserComboBox.SelectedValue = settings.RunBrowser;
-            // フォント
+            // エディタ
             TitleLabel.Text = "動作";
             FontPreviewTextBox.Font = new Font(settings.FontName, settings.FontSize);
             FontNameLabel.Text = "フォント名 " + settings.FontName;
             FontSizeLabel.Text = "フォントサイズ " + settings.FontSize;
+            if (settings.IndentUseTab)
+            {
+                IndentTabRadioButton.Checked = true;
+            }
+            else
+            {
+                IndentSpaceRadioButton.Checked = true;
+            }
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)

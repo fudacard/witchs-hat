@@ -135,6 +135,14 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="IRemoteObject.cs" />
+    <Compile Include="JSMember.cs" />
+    <Compile Include="JSType.cs" />
+    <Compile Include="PopupWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PopupWindow.Designer.cs">
+      <DependentUpon>PopupWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="ProjectProperty.cs" />
     <Compile Include="ProjectPropertyForm.cs">
@@ -173,8 +181,10 @@
     <Compile Include="SettingForm.Designer.cs">
       <DependentUpon>SettingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SuggestionManager.cs" />
     <Compile Include="TabInfo.cs" />
     <Compile Include="TabManager.cs" />
+    <Compile Include="Token.cs" />
     <Compile Include="WHServer.cs" />
     <Compile Include="WHTemplate.cs" />
     <EmbeddedResource Include="CreateFileForm.resx">
@@ -200,6 +210,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PopupWindow.resx">
+      <DependentUpon>PopupWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ProjectPropertyForm.resx">
       <DependentUpon>ProjectPropertyForm.cs</DependentUpon>

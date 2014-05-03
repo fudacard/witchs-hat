@@ -30,6 +30,8 @@ namespace WitchsHat
         ProjectProperty CurrentProject;
         List<string> FileImportDirs;
         TabManager tabManager;
+        PopupWindow popupWindow;
+        TaskScheduler taskScheduler;
 
         private delegate void StartupNextInstanceDelegate(params object[] parameters);
 
@@ -37,6 +39,7 @@ namespace WitchsHat
         {
             InitializeComponent();
 
+            taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             tabManager = new TabManager(this.tabControl1, tabInfos);
 
             treeView1.form1 = this;
@@ -187,7 +190,7 @@ namespace WitchsHat
             }
 
             tempproject = false;
-            
+
             return continueFlag;
         }
 
@@ -233,14 +236,16 @@ namespace WitchsHat
 
         public void StartupNextInstance(params object[] parameters)
         {
-            this.Activate();
-            string[] args = (string[])parameters[0];
-
-            //MessageBox.Show("既に起動しています。引数1の数：" + args.Length.ToString());
-            if (parameters.Length > 1)
+            Task.Factory.StartNew(() =>
             {
-                OpenFile((string)parameters[1]);
-            }
+                this.Activate();
+                string[] args = (string[])parameters[0];
+
+                if (args.Length > 1)
+                {
+                    OpenFile((string)args[1]);
+                }
+            }, System.Threading.CancellationToken.None, TaskCreationOptions.None, taskScheduler);
         }
 
 
@@ -266,7 +271,8 @@ namespace WitchsHat
             {
                 bool open = true;
                 open = NewProjectCheck();
-                if (CurrentProject != null) {
+                if (CurrentProject != null)
+                {
                     CloseProject();
                 }
                 if (open)
@@ -295,7 +301,15 @@ namespace WitchsHat
         /// <param name="e"></param>
         private void RunOnBrowserToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(CurrentProject.Dir, CurrentProject.HtmlPath);
+            string path;
+            if (tabInfos[tabControl1.SelectedTab].Uri.EndsWith(".html") || tabInfos[tabControl1.SelectedTab].Uri.EndsWith(".htm"))
+            {
+                path = tabInfos[tabControl1.SelectedTab].Uri;
+            }
+            else
+            {
+                path = Path.Combine(CurrentProject.Dir, CurrentProject.HtmlPath);
+            }
             RunOnBrowser(path);
         }
 
@@ -303,9 +317,15 @@ namespace WitchsHat
         {
             if (File.Exists(path))
             {
+                bool useServer = false;
+                if (CurrentProject != null && path.StartsWith(CurrentProject.Dir))
+                {
+                    useServer = true;
+                }
+
                 try
                 {
-                    if (settings.ServerEnable)
+                    if (settings.ServerEnable && useServer)
                     {
                         Process.Start(settings.RunBrowser, "http://localhost:" + settings.ServerPort + "/" + CurrentProject.HtmlPath);
                         //OpenWebBrowserTab("http://localhost:" + settings.ServerPort + "/"+ CurrentProject.HtmlPath);
@@ -350,7 +370,7 @@ namespace WitchsHat
             string pathlower = fullpath.ToLower();
             if (!tabInfos.Any(x => x.Value.Uri == fullpath))
             {
-                if (pathlower.EndsWith(".js") || pathlower.EndsWith(".txt") || pathlower.EndsWith(".html") || pathlower.EndsWith(".htm"))
+                if (pathlower.EndsWith(".js") || pathlower.EndsWith(".txt") || pathlower.EndsWith(".html") || pathlower.EndsWith(".htm") || pathlower.EndsWith(".css"))
                 {
                     TabPage tabPage = tabManager.AddEditorTab(fullpath);
                     Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabPage.Controls[0];
@@ -369,14 +389,29 @@ namespace WitchsHat
                     });
                     azuki.TextChanged += delegate
                     {
-                        tabPage.Text = filename + " *";
-                        tabInfos[tabPage].Modify = true;
                         if (tempproject)
                         {
                             tempprojectModify = true;
                         }
                     };
                     azuki.ContextMenuStrip = AzukiContextMenuStrip;
+
+                    if (popupWindow == null)
+                    {
+                        popupWindow = new PopupWindow();
+                    }
+                    if (pathlower.EndsWith(".js"))
+                    {
+                        SuggestionManager suggestionManager = new SuggestionManager(tabPage, azuki, listBox1, this, popupWindow);
+                        tabInfos[tabPage].suggestionManager = suggestionManager;
+                        suggestionManager.Enable = settings.SuggestEnable;
+                        if (settings.SuggestEnable)
+                        {
+                            suggestionManager.Analyze();
+                        }
+                    }
+                    azuki.UsesTabForIndent = settings.IndentUseTab;
+
                 }
                 else if (pathlower.EndsWith(".jpg") || pathlower.EndsWith(".jpeg") || pathlower.EndsWith(".png") || pathlower.EndsWith(".gif") || pathlower.EndsWith(".bmp"))
                 {
@@ -401,6 +436,8 @@ namespace WitchsHat
                     Directory.Delete(CurrentProject.Dir, true);
                 }
                 Program.mutex.ReleaseMutex();
+
+                Properties.Settings.Default.Save();
             }
 
         }
@@ -523,13 +560,25 @@ namespace WitchsHat
                     //server.RootDir = CurrentProject.Dir;
                     server.Start(settings.ServerPort);
                 }
-                // フォント変更
+
                 Font font = new Font(settings.FontName, settings.FontSize);
                 foreach (var pair in tabInfos)
                 {
                     if (pair.Value.Type == TabInfo.TabTypeAzuki)
                     {
-                        ((Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0]).Font = font;
+                        Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)pair.Key.Controls[0];
+                        // フォント変更
+                        azuki.Font = font;
+                        // インデント設定変更
+                        azuki.UsesTabForIndent = settings.IndentUseTab;
+                    }
+                }
+                // サジェスト機能有効切り替え
+                foreach (var pair in tabInfos)
+                {
+                    if (pair.Value.Type == TabInfo.TabTypeAzuki && pair.Value.suggestionManager != null)
+                    {
+                        pair.Value.suggestionManager.Enable = settings.SuggestEnable;
                     }
                 }
             };
@@ -552,7 +601,15 @@ namespace WitchsHat
         {
             try
             {
-                Process.Start(settings.Browser, "http://wise9.github.io/enchant.js/doc/plugins/ja/index.html");
+                if (HasEnchantjs())
+                {
+                    string path = "\"" + Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\doc\plugins\ja\index.html") + "\"";
+                    Process.Start(settings.Browser, path);
+                }
+                else
+                {
+                    Process.Start(settings.Browser, "http://wise9.github.io/enchant.js/doc/plugins/ja/index.html");
+                }
             }
             catch (Exception e1)
             {
@@ -910,15 +967,21 @@ namespace WitchsHat
 
         private void RunToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
+
+            RunOnBrowserToolStripMenuItem.Enabled = false;
+
             if (CurrentProject != null)
             {
                 RunOnBrowserToolStripMenuItem.Enabled = true;
             }
-            else
+            else if (tabInfos.Count > 0)
             {
-                RunOnBrowserToolStripMenuItem.Enabled = false;
+                string path = tabInfos[tabControl1.SelectedTab].Uri;
+                if (path.EndsWith(".html") || path.EndsWith(".htm"))
+                {
+                    RunOnBrowserToolStripMenuItem.Enabled = true;
+                }
             }
-
         }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -1093,6 +1156,14 @@ namespace WitchsHat
             if (CurrentProject != null)
             {
                 RunOnBrowserToolStripMenuItem_Click(sender, e);
+            }
+            else if (tabInfos.Count > 0)
+            {
+                string path = tabInfos[tabControl1.SelectedTab].Uri;
+                if (path.EndsWith(".html") || path.EndsWith(".htm"))
+                {
+                    RunOnBrowserToolStripMenuItem_Click(sender, e);
+                }
             }
         }
 
@@ -1270,6 +1341,15 @@ namespace WitchsHat
             PasteToolStripMenuItem_Click(sender, e);
         }
 
+
+        internal int GetListBoxLeft()
+        {
+            return this.Left + splitContainer1.Left + splitContainer1.Panel2.Left + listBox1.Left;//+ tabControl1.Left +tabControl1.SelectedTab.Left + tabControl1.SelectedTab.Controls[0].Left;
+        }
+        internal int GetListBoxTop()
+        {
+            return this.Top + splitContainer1.Top + splitContainer1.Panel2.Top + listBox1.Top;//+ tabControl1.Left +tabControl1.SelectedTab.Left + tabControl1.SelectedTab.Controls[0].Left;
+        }
     }
 
 }
