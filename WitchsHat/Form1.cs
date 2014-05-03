@@ -301,7 +301,15 @@ namespace WitchsHat
         /// <param name="e"></param>
         private void RunOnBrowserToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string path = Path.Combine(CurrentProject.Dir, CurrentProject.HtmlPath);
+            string path;
+            if (tabInfos[tabControl1.SelectedTab].Uri.EndsWith(".html") || tabInfos[tabControl1.SelectedTab].Uri.EndsWith(".htm"))
+            {
+                path = tabInfos[tabControl1.SelectedTab].Uri;
+            }
+            else
+            {
+                path = Path.Combine(CurrentProject.Dir, CurrentProject.HtmlPath);
+            }
             RunOnBrowser(path);
         }
 
@@ -309,9 +317,15 @@ namespace WitchsHat
         {
             if (File.Exists(path))
             {
+                bool useServer = false;
+                if (CurrentProject != null && path.StartsWith(CurrentProject.Dir))
+                {
+                    useServer = true;
+                }
+
                 try
                 {
-                    if (settings.ServerEnable)
+                    if (settings.ServerEnable && useServer)
                     {
                         Process.Start(settings.RunBrowser, "http://localhost:" + settings.ServerPort + "/" + CurrentProject.HtmlPath);
                         //OpenWebBrowserTab("http://localhost:" + settings.ServerPort + "/"+ CurrentProject.HtmlPath);
@@ -953,15 +967,21 @@ namespace WitchsHat
 
         private void RunToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
+
+            RunOnBrowserToolStripMenuItem.Enabled = false;
+
             if (CurrentProject != null)
             {
                 RunOnBrowserToolStripMenuItem.Enabled = true;
             }
-            else
+            else if (tabInfos.Count > 0)
             {
-                RunOnBrowserToolStripMenuItem.Enabled = false;
+                string path = tabInfos[tabControl1.SelectedTab].Uri;
+                if (path.EndsWith(".html") || path.EndsWith(".htm"))
+                {
+                    RunOnBrowserToolStripMenuItem.Enabled = true;
+                }
             }
-
         }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -1136,6 +1156,14 @@ namespace WitchsHat
             if (CurrentProject != null)
             {
                 RunOnBrowserToolStripMenuItem_Click(sender, e);
+            }
+            else if (tabInfos.Count > 0)
+            {
+                string path = tabInfos[tabControl1.SelectedTab].Uri;
+                if (path.EndsWith(".html") || path.EndsWith(".htm"))
+                {
+                    RunOnBrowserToolStripMenuItem_Click(sender, e);
+                }
             }
         }
 
