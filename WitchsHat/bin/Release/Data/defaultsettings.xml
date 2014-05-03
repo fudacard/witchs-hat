@@ -14,4 +14,5 @@
   <FontSize>9.75</FontSize>
   <EnchantjsDownload>on</EnchantjsDownload>
   <SuggestEnable>on</SuggestEnable>
+  <IndentUseTab>off</IndentUseTab>
 </Settings>

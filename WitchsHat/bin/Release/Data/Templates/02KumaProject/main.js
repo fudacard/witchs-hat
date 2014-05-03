@@ -1,7 +1,8 @@
 enchant();
+var game;
 window.onload = function() {
 
-    var game = new Game(320, 320);
+    game = new Game(320, 320);
     game.preload('chara1.png');
     game.onload = function() {
         // ここに処理を書いていきます。
