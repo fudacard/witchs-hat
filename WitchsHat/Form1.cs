@@ -370,7 +370,7 @@ namespace WitchsHat
             string pathlower = fullpath.ToLower();
             if (!tabInfos.Any(x => x.Value.Uri == fullpath))
             {
-                if (pathlower.EndsWith(".js") || pathlower.EndsWith(".txt") || pathlower.EndsWith(".html") || pathlower.EndsWith(".htm"))
+                if (pathlower.EndsWith(".js") || pathlower.EndsWith(".txt") || pathlower.EndsWith(".html") || pathlower.EndsWith(".htm") || pathlower.EndsWith(".css"))
                 {
                     TabPage tabPage = tabManager.AddEditorTab(fullpath);
                     Sgry.Azuki.WinForms.AzukiControl azuki = (Sgry.Azuki.WinForms.AzukiControl)tabPage.Controls[0];
@@ -576,7 +576,7 @@ namespace WitchsHat
                 // サジェスト機能有効切り替え
                 foreach (var pair in tabInfos)
                 {
-                    if (pair.Value.Type == TabInfo.TabTypeAzuki)
+                    if (pair.Value.Type == TabInfo.TabTypeAzuki && pair.Value.suggestionManager != null)
                     {
                         pair.Value.suggestionManager.Enable = settings.SuggestEnable;
                     }
