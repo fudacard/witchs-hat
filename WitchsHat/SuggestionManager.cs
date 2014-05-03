@@ -378,7 +378,14 @@ namespace WitchsHat
         {
             Rectangle clientRect = form.ClientRectangle;
             Point winP = form.PointToClient(form.Bounds.Location);
-            popup.Left = form.GetListBoxLeft() - winP.X - popup.Width;
+            int displayWidth;
+            displayWidth = System.Windows.Forms.Screen.GetBounds(form).Width;
+            if (form.GetListBoxLeft() - winP.X > displayWidth / 2)
+            {
+                popup.Left = form.GetListBoxLeft() - winP.X - popup.Width;
+            } else {
+                popup.Left = form.GetListBoxLeft() - winP.X + listBox.Width;
+            }
             if (listBox.SelectedIndex >= 0)
             {
                 popup.Top = form.GetListBoxTop() - winP.Y + (listBox.SelectedIndex - listBox.TopIndex) * listBox.ItemHeight;
