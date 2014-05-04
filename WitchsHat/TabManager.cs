@@ -9,12 +9,12 @@ using System.Windows.Forms;
 
 namespace WitchsHat
 {
-    class TabManager
+    public class TabManager
     {
         TabControl tabControl { get; set; }
         public TabPage clickedTabPage;
         ContextMenuStrip contextMenuStrip = new ContextMenuStrip();
-        Dictionary<TabPage, TabInfo> tabInfos;
+        public Dictionary<TabPage, TabInfo> tabInfos;
 
         public TabManager(TabControl tabControl, Dictionary<TabPage, TabInfo> tabInfos)
         {
@@ -149,7 +149,7 @@ namespace WitchsHat
             azuki.TextChanged += delegate
             {
                 SetTabText(tabPage, Path.GetFileName(fullpath), true);
-//                tabPage.Text = Path.GetFileName(fullpath) + " *";
+                //                tabPage.Text = Path.GetFileName(fullpath) + " *";
                 tabInfos[tabPage].Modify = true;
             };
 
