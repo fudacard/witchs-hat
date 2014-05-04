@@ -68,7 +68,6 @@ namespace WitchsHat
             cmds = System.Environment.GetCommandLineArgs();
             if (settings.TempProjectEnable && cmds.Length == 1)
             {
-                tempproject = true;
                 if (HasEnchantjs() || !settings.EnchantjsDownload)
                 {
                     CreateLater = false;
@@ -189,8 +188,6 @@ namespace WitchsHat
                 }
             }
 
-            tempproject = false;
-
             return continueFlag;
         }
 
@@ -213,7 +210,7 @@ namespace WitchsHat
             FileImportDirs[0] = templateDir;
             projectTemplate.CheckFiles(FileImportDirs);
             CreateProject("NoTitleProject", Path.Combine(Path.GetTempPath(), "Witchs Hat", "NoTitleProject"), projectTemplate);
-
+            tempproject = true;
         }
 
         private void readConfig()
@@ -271,12 +268,13 @@ namespace WitchsHat
             {
                 bool open = true;
                 open = NewProjectCheck();
-                if (CurrentProject != null)
-                {
-                    CloseProject();
-                }
                 if (open)
                 {
+                    if (CurrentProject != null)
+                    {
+                        CloseProject();
+                    }
+
                     tabManager.CloseAllTab();
 
                     // プロジェクト設定ファイル読み込み
@@ -438,6 +436,10 @@ namespace WitchsHat
                 Program.mutex.ReleaseMutex();
 
                 Properties.Settings.Default.Save();
+            }
+            else
+            {
+                e.Cancel = true;
             }
 
         }
