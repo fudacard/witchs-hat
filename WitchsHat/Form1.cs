@@ -782,11 +782,13 @@ namespace WitchsHat
             if (projectManager.CurrentProject != null)
             {
                 ImportFileToolStripMenuItem.Enabled = true;
+                SpecialImportToolStripMenuItem.Enabled = true;
                 ProjectPropertyToolStripMenuItem.Enabled = true;
             }
             else
             {
                 ImportFileToolStripMenuItem.Enabled = false;
+                SpecialImportToolStripMenuItem.Enabled = false;
                 ProjectPropertyToolStripMenuItem.Enabled = false;
             }
         }
@@ -1180,12 +1182,14 @@ namespace WitchsHat
 
         private void SpecialImportToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            if (Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images")))
+            if (projectManager.IsProjectOpened() &&  Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images")))
             {
+                DocumentImportToolStripMenuItem.Enabled = true;
                 EnchantjsImportToolStripMenuItem.Enabled = true;
             }
             else
             {
+                DocumentImportToolStripMenuItem.Enabled = false;
                 EnchantjsImportToolStripMenuItem.Enabled = false;
             }
         }
