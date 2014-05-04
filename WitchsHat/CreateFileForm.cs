@@ -32,7 +32,8 @@ namespace WitchsHat
         {
             Console.WriteLine(treeView1.SelectedNode.Name);
             string filename = textBox1.Text;
-            if (filename == "") {
+            if (filename == "")
+            {
                 MessageBox.Show("ファイル名を入力してください。");
                 return;
             }
@@ -45,7 +46,8 @@ namespace WitchsHat
 
             string filepath = Path.Combine(treeView1.SelectedNode.Name, filename);
 
-            if (File.Exists(filepath)) {
+            if (File.Exists(filepath))
+            {
                 MessageBox.Show("同名のファイルが存在します。");
                 return;
             }
@@ -58,6 +60,14 @@ namespace WitchsHat
         {
 
             comboBox1.SelectedIndex = 0;
+            List<FileExt> extlist = new List<FileExt>();
+            extlist.Add(new FileExt("javascript ソースファイル", "js"));
+            extlist.Add(new FileExt("HTML ファイル", "html"));
+            extlist.Add(new FileExt("CSS ファイル", "css"));
+            extlist.Add(new FileExt("テキストファイル", "txt"));
+            comboBox1.DisplayMember = "Name";
+            comboBox1.ValueMember = "Ext";
+            comboBox1.DataSource = extlist;
 
             // プロジェクトツリー更新
             treeView1.Nodes.Clear();
@@ -74,7 +84,7 @@ namespace WitchsHat
                     if (!file.EndsWith(".whprj"))
                     {
                         TreeNode treenode1 = treenode.Nodes.Add(file, System.IO.Path.GetFileName(file));
-                        
+
                     }
                 }
             }
@@ -106,6 +116,32 @@ namespace WitchsHat
             {
                 e.Cancel = true;
             }
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string fileName = "";
+            if (textBox1.Text != "" && textBox1.Text.IndexOf(".") >= 0)
+            {
+                fileName = textBox1.Text.Substring(0, textBox1.Text.LastIndexOf("."));
+                textBox1.Text = fileName + "." + comboBox1.SelectedValue;
+            }
+            else if (textBox1.Text.IndexOf(".") == -1)
+            {
+                textBox1.Text += "." + comboBox1.SelectedValue;
+            }
+        }
+    }
+
+    class FileExt
+    {
+        public string Ext { get; set; }
+        public string Name { get; set; }
+
+        public FileExt(string name, string ext)
+        {
+            this.Name = name;
+            this.Ext = ext;
         }
     }
 }

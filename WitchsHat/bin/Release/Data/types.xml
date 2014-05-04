@@ -42,10 +42,12 @@
       <Member>
         <Name>create</Name>
         <Type>function</Type>
+        <Hint>enchant.Class.create(superclass, definition): Boolean&#xA;クラスを作成する. ほかのクラスを継承したクラスを作成する場合, コンストラクタはデフォルトで 継承元のクラスのものが使われる. コンストラクタをオーバーライドする場合継承元の コンストラクタを適用するには明示的に呼び出す必要がある.</Hint>
       </Member>
       <Member>
         <Name>getInheritanceTree</Name>
         <Type>function</Type>
+        <Hint>enchant.Class.getInheritanceTree(): {Function[]}&#xA;クラスの継承関係を取得する.</Hint>
       </Member>
     </Members>
   </Class>
@@ -415,6 +417,51 @@
   <Class>
     <Name>Scene</Name>
     <Super>Group</Super>
+  </Class>
+  <Class>
+    <Name>Sound</Name>
+    <Members>
+      <Member>
+        <Name>currentTime</Name>
+        <Type>Number</Type>
+        <Hint>現在の再生位置 (秒).</Hint>
+      </Member>
+      <Member>
+        <Name>duration</Name>
+        <Type>Number</Type>
+        <Hint>Soundの再生時間 (秒).</Hint>
+      </Member>
+      <Member>
+        <Name>volume</Name>
+        <Type>Number</Type>
+        <Hint>ボリューム.0 (無音) ～ 1 (フルボリューム).</Hint>
+      </Member>
+      <Member>
+        <Name>clone</Name>
+        <Type>function</Type>
+        <Hint>clone()&#xA;Soundを複製する.</Hint>
+      </Member>
+      <Member>
+        <Name>load</Name>
+        <Type>function</Type>
+        <Hint>load(src, type, callback, onerror)&#xA;音声ファイルを読み込んでSoundオブジェクトを作成する.</Hint>
+      </Member>
+      <Member>
+        <Name>pause</Name>
+        <Type>function</Type>
+        <Hint>pause()&#xA;再生を中断する.</Hint>
+      </Member>
+      <Member>
+        <Name>play</Name>
+        <Type>function</Type>
+        <Hint>play()&#xA;再生を開始する.</Hint>
+      </Member>
+      <Member>
+        <Name>stop</Name>
+        <Type>function</Type>
+        <Hint>stop()&#xA;再生を停止する.</Hint>
+      </Member>
+    </Members>
   </Class>
   <Class>
     <Name>Sprite</Name>
