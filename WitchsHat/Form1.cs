@@ -324,6 +324,7 @@ namespace WitchsHat
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            Properties.Settings.Default.SettingChanging += new System.Configuration.SettingChangingEventHandler(Default_SettingChanging);
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -1182,7 +1183,7 @@ namespace WitchsHat
 
         private void SpecialImportToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            if (projectManager.IsProjectOpened() &&  Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images")))
+            if (projectManager.IsProjectOpened() && Directory.Exists(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images")))
             {
                 DocumentImportToolStripMenuItem.Enabled = true;
                 EnchantjsImportToolStripMenuItem.Enabled = true;
@@ -1214,6 +1215,17 @@ namespace WitchsHat
                 ResetProject();
 
                 projectManager.ProjectModified();
+            }
+        }
+
+        void Default_SettingChanging(object sender, System.Configuration.SettingChangingEventArgs e)
+        {
+            if (this.WindowState != FormWindowState.Normal)
+            {
+                if ((e.SettingName == "MyClientSize") || (e.SettingName == "MyLocation"))
+                {
+                    e.Cancel = true;
+                }
             }
         }
     }
