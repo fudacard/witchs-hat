@@ -527,7 +527,7 @@ namespace WitchsHat
                 }
                 else if (src[i] == '/' && src[i] == '/')
                 {
-                    while (src[i] != '\n')
+                    while (i < src.Length && src[i] != '\n')
                     {
                         i++;
                     }
@@ -686,7 +686,8 @@ namespace WitchsHat
                 {
                     JSType t = types[className];
                     //return t.Members[token].Name;
-                    return t.GetMembers()[token].Name;
+                    //return t.GetMembers()[token].Name;
+                    return t.GetMembers()[token].Type.Name;
                 }
                 else
                 {
