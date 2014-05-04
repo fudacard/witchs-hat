@@ -383,7 +383,9 @@ namespace WitchsHat
             if (form.GetListBoxLeft() - winP.X > displayWidth / 2)
             {
                 popup.Left = form.GetListBoxLeft() - winP.X - popup.Width;
-            } else {
+            }
+            else
+            {
                 popup.Left = form.GetListBoxLeft() - winP.X + listBox.Width;
             }
             if (listBox.SelectedIndex >= 0)
