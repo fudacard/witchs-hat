@@ -487,42 +487,52 @@
       <Member>
         <Name>clear</Name>
         <Type>function</Type>
+        <Hint>clone()&#xA;Surfaceの全ピクセルをクリアし透明度0の黒に設定する.</Hint>
       </Member>
       <Member>
         <Name>clone</Name>
         <Type>function</Type>
+        <Hint>clone()&#xA;Surfaceを複製する.</Hint>
       </Member>
       <Member>
         <Name>context</Name>
         <Type>Context</Type>
+        <Hint>Surfaceの描画コンテクスト.</Hint>
       </Member>
       <Member>
         <Name>draw</Name>
         <Type>function</Type>
+        <Hint>draw(image: Surface)&#xA;Surfaceに対して引数で指定されたSurfaceを描画する.</Hint>
       </Member>
       <Member>
         <Name>getPixel</Name>
         <Type>function</Type>
+        <Hint>getPixel(x: Number, y: Number)&#xA;Surfaceから1ピクセル取得する.</Hint>
       </Member>
       <Member>
         <Name>height</Name>
         <Type>number</Type>
+        <Hint>Surfaceの高さ.</Hint>
       </Member>
       <Member>
         <Name>load</Name>
         <Type>function</Type>
+        <Hint>load(src, callback, onerror)&#xA;画像ファイルを読み込んでSurfaceオブジェクトを作成する.</Hint>
       </Member>
       <Member>
         <Name>setPixel</Name>
         <Type>function</Type>
+        <Hint>setPixel(x: Number, y: Number, r: Number, g: Number, b: Number, a: Number)&#xA;Surfaceに1ピクセル設定する.</Hint>
       </Member>
       <Member>
         <Name>toDataURL</Name>
         <Type>function</Type>
+        <Hint>toDataURL(): String&#xA;SurfaceからdataスキームのURLを生成する.</Hint>
       </Member>
       <Member>
         <Name>width</Name>
         <Type>number</Type>
+        <Hint>Surfaceの横幅.</Hint>
       </Member>
     </Members>
   </Class>
@@ -550,34 +560,62 @@
       <Member>
         <Name>arc</Name>
         <Type>function</Type>
+        <Hint>arc(x: Number, y: Number, radius: Number, startAngle: Number, endAngle: Number[, anticlockwise: Boolean])&#xA;円弧を作成します。</Hint>
       </Member>
       <Member>
         <Name>beginPath</Name>
         <Type>function</Type>
+        <Hint>beginPath()&#xA;パスを開始または現在のパスをリセットします。</Hint>
       </Member>
       <Member>
         <Name>clearRect</Name>
         <Type>function</Type>
+        <Hint>clearRect(x :Number, y:Number, width: Number, height: Number)&#xA;矩形領域を削除します。</Hint>
+      </Member>
+      <Member>
+        <Name>closePath</Name>
+        <Type>function</Type>
+        <Hint>closePath()&#xA;パスを閉じます。</Hint>
+      </Member>
+      <Member>
+        <Name>fill</Name>
+        <Type>function</Type>
+        <Hint>fill()&#xA;パスを塗りつぶします。</Hint>
       </Member>
       <Member>
         <Name>fillRect</Name>
         <Type>function</Type>
+        <Hint>fillRect(x :Number, y:Number, width: Number, height: Number)&#xA;矩形領域を塗りつぶします。</Hint>
       </Member>
       <Member>
         <Name>fillstyle</Name>
         <Type>String</Type>
+        <Hint>塗りつぶす色、グラデーション、パターンを取得または設定します。</Hint>
+      </Member>
+      <Member>
+        <Name>lineTo</Name>
+        <Type>function</Type>
+        <Hint>lineTo(x :Number, y:Number)&#xA;指定点までの直線パスを作成します。</Hint>
+      </Member>
+      <Member>
+        <Name>moveTo</Name>
+        <Type>function</Type>
+        <Hint>moveTo(x :Number, y:Number)&#xA;パスの始点を指定した点に設定します。</Hint>
       </Member>
       <Member>
         <Name>stroke</Name>
         <Type>function</Type>
+        <Hint>stroke()&#xA;パスを描画します。</Hint>
       </Member>
       <Member>
         <Name>strokeRect</Name>
         <Type>function</Type>
+        <Hint>strokeRect(x :Number, y:Number, width: Number, height: Number)&#xA;矩形領域を描画します。</Hint>
       </Member>
       <Member>
         <Name>strokeStyle</Name>
         <Type>String</Type>
+        <Hint>描画する色、グラデーション、パターンを取得または設定します。</Hint>
       </Member>
     </Members>
   </Class>
