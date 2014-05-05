@@ -153,7 +153,6 @@ namespace WitchsHat
                 {
                     listBox.Visible = false;
                     popup.Visible = false;
-                    Analyze();
                 }
                 else
                 {
@@ -362,6 +361,10 @@ namespace WitchsHat
                     }
                 }
             }
+            if (e.KeyChar == ';')
+            {
+                Analyze();
+            }
         }
 
         private void UpdateListBoxPos(int offset)
@@ -410,7 +413,13 @@ namespace WitchsHat
             {
                 //popup.Show(form);
             }
-
+            if (listBox.SelectedItem != null && typedata.ContainsKey((string)listBox.SelectedItem) && typedata[(string)listBox.SelectedItem].Hint != null)
+            {
+                popup.Visible = true;
+                popup.Controls[0].Text = typedata[(string)listBox.SelectedItem].Hint;
+                Console.WriteLine(popup.Controls[0].Text);
+            }
+            
             popup.Size = new Size(400, 80);
 
             UpdateListBoxPos(offset);
@@ -497,6 +506,7 @@ namespace WitchsHat
             {
                 return;
             }
+            Console.WriteLine("Analyze");
             string src = azuki.Text;
             tokens = Tokenize(src);
             localVarTypes = new Dictionary<string, JSType>();
@@ -738,7 +748,7 @@ namespace WitchsHat
 
             for (int j = 0; j < tokens.Count - 1; j++)
             {
-                if (tokens[j].body == "var")
+                if (tokens[j].body == "var" && !words.Contains(tokens[j + 1].body))
                 {
                     words.Add(tokens[j + 1].body);
                 }

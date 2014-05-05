@@ -180,7 +180,7 @@ namespace WitchsHat
         private void RunOnBrowserToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string path;
-            if (tabInfos[tabControl1.SelectedTab].Uri.EndsWith(".html") || tabInfos[tabControl1.SelectedTab].Uri.EndsWith(".htm"))
+            if (tabControl1.SelectedTab != null && (tabInfos[tabControl1.SelectedTab].Uri.EndsWith(".html") || tabInfos[tabControl1.SelectedTab].Uri.EndsWith(".htm")))
             {
                 path = tabInfos[tabControl1.SelectedTab].Uri;
             }
