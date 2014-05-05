@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WitchsHat
 {
-    class TabInfo
+    public class TabInfo
     {
         public const int TabTypeAzuki = 0;
         public const int TabTypeImage = 1;

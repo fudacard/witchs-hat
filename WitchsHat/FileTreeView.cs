@@ -40,8 +40,12 @@ namespace WitchsHat
 
             // プロジェクトツリー更新
             this.Nodes.Clear();
-            this.Nodes.Add(ProjectDir, ProjectName, 2, 2);
             isDirectory = new Dictionary<int, bool>();
+            if (!Directory.Exists(ProjectDir))
+            {
+                return;
+            }
+            this.Nodes.Add(ProjectDir, ProjectName, 2, 2);
             // フォルダ一覧追加
             string[] dirs = System.IO.Directory.GetDirectories(ProjectDir);
             foreach (string dir in dirs)

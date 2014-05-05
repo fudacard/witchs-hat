@@ -144,6 +144,7 @@
       <DependentUpon>PopupWindow.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
+    <Compile Include="ProjectManager.cs" />
     <Compile Include="ProjectProperty.cs" />
     <Compile Include="ProjectPropertyForm.cs">
       <SubType>Form</SubType>
