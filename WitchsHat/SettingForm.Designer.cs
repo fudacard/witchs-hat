@@ -48,8 +48,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.EncodingComboBox = new System.Windows.Forms.ComboBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.BrowserComboBox = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.RunBrowserComboBox = new System.Windows.Forms.ComboBox();
             this.panel3 = new System.Windows.Forms.Panel();
@@ -208,8 +206,6 @@
             // 
             // panel2
             // 
-            this.panel2.Controls.Add(this.BrowserComboBox);
-            this.panel2.Controls.Add(this.label5);
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.RunBrowserComboBox);
             this.panel2.Location = new System.Drawing.Point(185, 46);
@@ -217,27 +213,10 @@
             this.panel2.Size = new System.Drawing.Size(479, 302);
             this.panel2.TabIndex = 5;
             // 
-            // BrowserComboBox
-            // 
-            this.BrowserComboBox.FormattingEnabled = true;
-            this.BrowserComboBox.Location = new System.Drawing.Point(8, 27);
-            this.BrowserComboBox.Name = "BrowserComboBox";
-            this.BrowserComboBox.Size = new System.Drawing.Size(186, 20);
-            this.BrowserComboBox.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(6, 12);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(118, 12);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "全般で使用するブラウザ";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 65);
+            this.label4.Location = new System.Drawing.Point(6, 13);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(117, 12);
             this.label4.TabIndex = 2;
@@ -246,7 +225,7 @@
             // RunBrowserComboBox
             // 
             this.RunBrowserComboBox.FormattingEnabled = true;
-            this.RunBrowserComboBox.Location = new System.Drawing.Point(8, 81);
+            this.RunBrowserComboBox.Location = new System.Drawing.Point(8, 29);
             this.RunBrowserComboBox.Name = "RunBrowserComboBox";
             this.RunBrowserComboBox.Size = new System.Drawing.Size(186, 20);
             this.RunBrowserComboBox.TabIndex = 1;
@@ -380,10 +359,10 @@
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
-            this.Controls.Add(this.panel3);
-            this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel4);
+            this.Controls.Add(this.panel3);
+            this.Controls.Add(this.panel1);
             this.Name = "SettingForm";
             this.Text = "オプション";
             this.Load += new System.EventHandler(this.SettingForm_Load);
@@ -412,8 +391,6 @@
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.TextBox ProjectsPathTextBox;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.ComboBox BrowserComboBox;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.ComboBox RunBrowserComboBox;
         private System.Windows.Forms.CheckBox TempProjectCheckBox;

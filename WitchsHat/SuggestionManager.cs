@@ -212,7 +212,6 @@ namespace WitchsHat
                     string token = lastToken(src, 1);
                     Console.WriteLine(token);
                     //string className = GetClass(src, token);
-                    string className;
 
                     Dictionary<string, JSMember> OriginalList = GetMembers(src, azuki.CaretIndex);
                     if (OriginalList != null && OriginalList.Count > 0)

@@ -14,7 +14,7 @@ namespace WitchsHat
         public bool ServerEnable { get; set; }
         public int ServerPort { get; set; }
         public string EnchantjsUrl { get; set; }
-        public string Browser { get; set; }
+        public string RunBrowser { get; set; }
         public string Encoding { get; set; }
         public string FontName { get; set; }
         public float FontSize { get; set; }
@@ -71,11 +71,6 @@ namespace WitchsHat
                                 {
                                     settings.TempProjectEnable = false;
                                 }
-                                break;
-                            case "Browser":
-                                string b = reader.ReadString();
-                                Console.WriteLine("[" + b + "]");
-                                settings.Browser = b;
                                 break;
                             case "RunBrowser":
                                 string run = reader.ReadString();
@@ -188,14 +183,6 @@ namespace WitchsHat
                                     this.ServerPort = int.Parse(port);
                                 }
                                 break;
-                            case "Browser":
-                                string b = reader.ReadString();
-                                if (b != "")
-                                {
-                                    Console.WriteLine("[" + b + "]");
-                                    this.Browser = b;
-                                }
-                                break;
                             case "RunBrowser":
                                 string run = reader.ReadString();
                                 if (run != "")
@@ -306,7 +293,6 @@ namespace WitchsHat
             writer.WriteElementString("Server", this.ServerEnable ? "on" : "off");
             writer.WriteElementString("ServerPort", this.ServerPort.ToString());
             writer.WriteElementString("Encoding", this.Encoding);
-            writer.WriteElementString("Browser", this.Browser);
             writer.WriteElementString("RunBrowser", this.RunBrowser);
             writer.WriteElementString("FontName", this.FontName);
             writer.WriteElementString("FontSize", this.FontSize.ToString());
@@ -319,6 +305,5 @@ namespace WitchsHat
         }
 
 
-        public string RunBrowser { get; set; }
     }
 }
