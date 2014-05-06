@@ -292,6 +292,9 @@ namespace WitchsHat
                     StreamWriter writer = new StreamWriter(pair.Value.Uri);
                     writer.Write(azuki.Text);
                     writer.Close();
+
+                    pair.Value.Modify = false;
+                    SetTabText(pair.Key, Path.GetFileName(pair.Value.Uri), pair.Value.Modify);
                 }
             }
         }

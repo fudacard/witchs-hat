@@ -195,6 +195,9 @@ namespace WitchsHat
         {
             if (File.Exists(path))
             {
+                // 開いているファイルを保存する
+                tabManager.SaveAllFiles();
+
                 bool useServer = false;
                 if (projectManager.CurrentProject != null && path.StartsWith(projectManager.CurrentProject.Dir))
                 {
