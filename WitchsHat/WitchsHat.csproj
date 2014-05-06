@@ -85,6 +85,12 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AbouteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AbouteForm.Designer.cs">
+      <DependentUpon>AbouteForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateFileForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -188,6 +194,9 @@
     <Compile Include="Token.cs" />
     <Compile Include="WHServer.cs" />
     <Compile Include="WHTemplate.cs" />
+    <EmbeddedResource Include="AbouteForm.resx">
+      <DependentUpon>AbouteForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateFileForm.resx">
       <DependentUpon>CreateFileForm.cs</DependentUpon>
     </EmbeddedResource>

@@ -1228,6 +1228,16 @@ namespace WitchsHat
                 }
             }
         }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbouteForm form = new AbouteForm();
+            form.ShowDialog(this);
+        }
     }
 
 }
