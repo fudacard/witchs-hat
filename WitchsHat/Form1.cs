@@ -760,8 +760,9 @@ namespace WitchsHat
         {
             ProjectPropertyForm f = new ProjectPropertyForm();
             f.projectProperty = projectManager.CurrentProject;
-            f.OkClicked = delegate
+            f.OkClicked = delegate(string executeHtml)
             {
+                projectManager.CurrentProject.HtmlPath = executeHtml;
                 // プロジェクトファイル保存
                 ProjectProperty.WriteProjectProperty(projectManager.CurrentProject);
             };

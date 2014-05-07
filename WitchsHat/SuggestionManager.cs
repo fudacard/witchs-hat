@@ -418,7 +418,7 @@ namespace WitchsHat
                 popup.Controls[0].Text = typedata[(string)listBox.SelectedItem].Hint;
                 Console.WriteLine(popup.Controls[0].Text);
             }
-            
+
             popup.Size = new Size(400, 80);
 
             UpdateListBoxPos(offset);
@@ -528,15 +528,15 @@ namespace WitchsHat
             int i = 0;
             while (i < src.Length)
             {
-                if (src[i] == '/' && src[i + 1] == '*')
+                if (src[i] == '/' && i + 1 < src.Length && src[i + 1] == '*')
                 {
-                    while (!(src[i] == '*' && src[i + 1] == '/'))
+                    while (!(src[i] == '*' && i + 1 < src.Length && src[i + 1] == '/'))
                     {
                         i++;
                     }
                     i += 2;
                 }
-                else if (src[i] == '/' && src[i] == '/')
+                else if (src[i] == '/' && i + 1 < src.Length && src[i + 1] == '/')
                 {
                     while (i < src.Length && src[i] != '\n')
                     {
@@ -596,10 +596,6 @@ namespace WitchsHat
                     tokens.Add(token);
                     i += m.Value.Length;
                     count++;
-                    if (count > 2000)
-                    {
-                        //    break;
-                    }
                 }
                 else if ((m = Regex.Match(src.Substring(i), @";")).Success)
                 {
@@ -623,7 +619,7 @@ namespace WitchsHat
         {
             if (types.ContainsKey(tokens[index].body) && types[tokens[index].body] != null)
             {
-                if (index + 1 < tokens.Count && tokens[index + 1].body == ".")
+                if (index + 2 < tokens.Count && tokens[index + 1].body == ".")
                 {
                     return GetClassName(index + 2);
                 }
