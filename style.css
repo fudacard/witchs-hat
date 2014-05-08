@@ -25,7 +25,6 @@ body {
 
 .column {
 	display: table-cell;
-	vertical-align: middle;
 }
 
 .left {
@@ -35,6 +34,17 @@ body {
 
 .right {
 	width: 50%;
+}
+
+.left50 {
+	width: 50%;
+	padding-right: 40px;
+	vertical-align: middle;
+}
+
+.right50 {
+	width: 50%;
+	vertical-align: middle;
 }
 
 .right-image {
@@ -71,8 +81,20 @@ body {
     margin-right: 5px;
 }
 
+.header li {
+    list-style-type: none;
+}
+
+.header h1 a {
+    color: #fff;
+}
+
 .header a:hover {
     text-decoration: underline;
+}
+
+.header h1 a:hover {
+    text-decoration: none;
 }
 
 .download {
@@ -87,4 +109,33 @@ body {
 	padding-bottom: 15px;
     text-decoration: none;
     
+}
+
+.content {
+    background-color: #fff;
+}
+
+.left80 {
+	width: 80%;
+}
+
+.right20 {
+	width: 20%;
+}
+
+.left75 {
+	width: 75%;
+}
+
+.right25 {
+	width: 25%;
+}
+
+.list-none {
+    list-style-type: none;
+}
+
+.subitem {
+    font-size: small;
+    padding-left: 20px;
 }
