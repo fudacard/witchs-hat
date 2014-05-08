@@ -1293,6 +1293,11 @@ namespace WitchsHat
             return path;
 
         }
+
+        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://fudacard.github.io/witchs-hat/help.html");
+        }
     }
 
 }
