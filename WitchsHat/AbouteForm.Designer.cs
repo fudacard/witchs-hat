@@ -44,7 +44,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 12);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Witch\'s Hat v0.1.0";
+            this.label1.Text = "Witch\'s Hat v0.2.0";
             // 
             // pictureBox1
             // 
