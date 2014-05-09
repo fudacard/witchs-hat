@@ -509,7 +509,7 @@ namespace WitchsHat
             tokens = Tokenize(src);
             localVarTypes = new Dictionary<string, JSType>();
 
-            for (int j = 0; j < tokens.Count - 3; j++)
+            for (int j = 0; j < tokens.Count - 4; j++)
             {
                 string className;
                 if (tokens[j + 1].body == "=" && tokens[j + 2].body == "new" && (className = GetClassName(j + 3)) != null)
