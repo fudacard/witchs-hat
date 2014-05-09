@@ -44,7 +44,7 @@ namespace WitchsHat
             this.popup = popup;
 
             types = new Dictionary<string, JSType>();
-            ReadXml();
+            ReadXml(Path.Combine(Application.StartupPath, @"Data\Classes\core.xml"));
             azuki.KeyPress += this.Azuki_KeyPress;
             azuki.KeyDown += delegate(object sender, KeyEventArgs e)
             {
@@ -178,7 +178,7 @@ namespace WitchsHat
                     List<string> NewList = new List<string>();
                     foreach (string member in CurrentList)
                     {
-                        if (member.StartsWith(NewInputString) || NewInputString.Length == 1)
+                        if (member.StartsWith(NewInputString, StringComparison.OrdinalIgnoreCase) || NewInputString.Length == 1)
                         {
                             NewList.Add(member);
                         }
@@ -190,7 +190,7 @@ namespace WitchsHat
                         for (int i = 0; i < NewList.Count; i++)
                         {
                             listBox.Items.Add(NewList[i]);
-                            if (listBox.SelectedIndex == -1 && NewList[i].StartsWith(NewInputString))
+                            if (listBox.SelectedIndex == -1 && NewList[i].StartsWith(NewInputString, StringComparison.OrdinalIgnoreCase))
                             {
                                 listBox.SelectedIndex = i;
                             }
@@ -212,7 +212,6 @@ namespace WitchsHat
                     string token = lastToken(src, 1);
                     Console.WriteLine(token);
                     //string className = GetClass(src, token);
-                    string className;
 
                     Dictionary<string, JSMember> OriginalList = GetMembers(src, azuki.CaretIndex);
                     if (OriginalList != null && OriginalList.Count > 0)
@@ -419,7 +418,7 @@ namespace WitchsHat
                 popup.Controls[0].Text = typedata[(string)listBox.SelectedItem].Hint;
                 Console.WriteLine(popup.Controls[0].Text);
             }
-            
+
             popup.Size = new Size(400, 80);
 
             UpdateListBoxPos(offset);
@@ -428,9 +427,8 @@ namespace WitchsHat
 
         }
 
-        private void ReadXml()
+        private void ReadXml(string path)
         {
-            string path = Path.Combine(Application.StartupPath, @"Data\types.xml");
             string currentClass = "";
             string currentMember = "";
             string target = "Class";
@@ -511,12 +509,19 @@ namespace WitchsHat
             tokens = Tokenize(src);
             localVarTypes = new Dictionary<string, JSType>();
 
-            for (int j = 0; j < tokens.Count - 3; j++)
+            for (int j = 0; j < tokens.Count - 4; j++)
             {
                 string className;
                 if (tokens[j + 1].body == "=" && tokens[j + 2].body == "new" && (className = GetClassName(j + 3)) != null)
                 {
                     localVarTypes[tokens[j].body] = types[className];
+                }
+                else if (tokens[j + 1].body == "=" && tokens[j + 2].body == "Class" && tokens[j + 3].body == "." && tokens[j + 4].body == "create")
+                {
+                    if (!types.ContainsKey(tokens[j].body))
+                    {
+                        types[tokens[j].body] = new JSType(tokens[j].body);
+                    }
                 }
             }
         }
@@ -529,15 +534,15 @@ namespace WitchsHat
             int i = 0;
             while (i < src.Length)
             {
-                if (src[i] == '/' && src[i + 1] == '*')
+                if (src[i] == '/' && i + 1 < src.Length && src[i + 1] == '*')
                 {
-                    while (!(src[i] == '*' && src[i + 1] == '/'))
+                    while (!(src[i] == '*' && i + 1 < src.Length && src[i + 1] == '/'))
                     {
                         i++;
                     }
                     i += 2;
                 }
-                else if (src[i] == '/' && src[i] == '/')
+                else if (src[i] == '/' && i + 1 < src.Length && src[i + 1] == '/')
                 {
                     while (i < src.Length && src[i] != '\n')
                     {
@@ -597,10 +602,6 @@ namespace WitchsHat
                     tokens.Add(token);
                     i += m.Value.Length;
                     count++;
-                    if (count > 2000)
-                    {
-                        //    break;
-                    }
                 }
                 else if ((m = Regex.Match(src.Substring(i), @";")).Success)
                 {
@@ -624,7 +625,7 @@ namespace WitchsHat
         {
             if (types.ContainsKey(tokens[index].body) && types[tokens[index].body] != null)
             {
-                if (index + 1 < tokens.Count && tokens[index + 1].body == ".")
+                if (index + 2 < tokens.Count && tokens[index + 1].body == ".")
                 {
                     return GetClassName(index + 2);
                 }

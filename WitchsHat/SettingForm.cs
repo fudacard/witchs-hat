@@ -26,9 +26,6 @@ namespace WitchsHat
             browserList.Add(new Browser("Chrome", "chrome"));
             browserList.Add(new Browser("Firefox", "firefox"));
             browserList.Add(new Browser("Opera", "opera"));
-            BrowserComboBox.DisplayMember = "Name";
-            BrowserComboBox.ValueMember = "Command";
-            BrowserComboBox.DataSource = browserList;
             RunBrowserComboBox.DisplayMember = "Name";
             RunBrowserComboBox.ValueMember = "Command";
             RunBrowserComboBox.DataSource = new List<Browser>(browserList);
@@ -46,7 +43,6 @@ namespace WitchsHat
             settings.TempProjectEnable = TempProjectCheckBox.Checked;
             settings.ServerEnable = ServerCheckBox.Checked;
             settings.ServerPort = int.Parse(ServerPortTextBox.Text);
-            settings.Browser = BrowserComboBox.SelectedValue.ToString();
             settings.RunBrowser = RunBrowserComboBox.SelectedValue.ToString();
             settings.EnchantjsDownload = EnchantjsDownloadcheckBox.Checked;
             settings.SuggestEnable = SuggestCheckBox.Checked;
@@ -107,7 +103,6 @@ namespace WitchsHat
             EnchantjsDownloadcheckBox.Checked = settings.EnchantjsDownload;
             SuggestCheckBox.Checked = settings.SuggestEnable;
             // ブラウザー
-            BrowserComboBox.SelectedValue = settings.Browser;
             RunBrowserComboBox.SelectedValue = settings.RunBrowser;
             // エディタ
             TitleLabel.Text = "動作";

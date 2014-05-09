@@ -81,6 +81,10 @@ namespace WitchsHat
                         byte[] content = File.ReadAllBytes(path);
                         res.OutputStream.Write(content, 0, content.Length);
                     }
+                    else
+                    {
+                        res.StatusCode = 404;
+                    }
                     res.Close();
 
                 }

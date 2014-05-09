@@ -195,6 +195,9 @@ namespace WitchsHat
         {
             if (File.Exists(path))
             {
+                // 開いているファイルを保存する
+                tabManager.SaveAllFiles();
+
                 bool useServer = false;
                 if (projectManager.CurrentProject != null && path.StartsWith(projectManager.CurrentProject.Dir))
                 {
@@ -325,6 +328,7 @@ namespace WitchsHat
         private void Form1_Load(object sender, EventArgs e)
         {
             Properties.Settings.Default.SettingChanging += new System.Configuration.SettingChangingEventHandler(Default_SettingChanging);
+            Console.WriteLine(GetDefaultBrowserPath());
         }
 
         private void Form1_Shown(object sender, EventArgs e)
@@ -425,33 +429,19 @@ namespace WitchsHat
 
         private void OpenReferenceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
-            {
-                Process.Start(settings.Browser, "http://enchantjs.com/ja/tutorial/lets-start-enchant-js/");
-            }
-            catch (Exception e1)
-            {
-                MessageBox.Show("ブラウザ " + settings.Browser + " を開く際にエラーが発生しました。\r\n" + e1.Message);
-            }
+            OpenBrowser("http://enchantjs.com/ja/tutorial/lets-start-enchant-js/");
         }
 
         private void OpenApidocsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
+            if (HasEnchantjs())
             {
-                if (HasEnchantjs())
-                {
-                    string path = "\"" + Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\doc\plugins\ja\index.html") + "\"";
-                    Process.Start(settings.Browser, path);
-                }
-                else
-                {
-                    Process.Start(settings.Browser, "http://wise9.github.io/enchant.js/doc/plugins/ja/index.html");
-                }
+                string path = "\"" + Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\doc\plugins\ja\index.html") + "\"";
+                OpenBrowser(path);
             }
-            catch (Exception e1)
+            else
             {
-                MessageBox.Show("ブラウザ " + settings.Browser + " を開く際にエラーが発生しました。\r\n" + e1.Message);
+                OpenBrowser("http://wise9.github.io/enchant.js/doc/plugins/ja/index.html");
             }
         }
 
@@ -770,8 +760,9 @@ namespace WitchsHat
         {
             ProjectPropertyForm f = new ProjectPropertyForm();
             f.projectProperty = projectManager.CurrentProject;
-            f.OkClicked = delegate
+            f.OkClicked = delegate(string executeHtml)
             {
+                projectManager.CurrentProject.HtmlPath = executeHtml;
                 // プロジェクトファイル保存
                 ProjectProperty.WriteProjectProperty(projectManager.CurrentProject);
             };
@@ -1227,6 +1218,85 @@ namespace WitchsHat
                     e.Cancel = true;
                 }
             }
+        }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+        }
+
+        private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AbouteForm form = new AbouteForm();
+            form.ShowDialog(this);
+        }
+
+        private void OpenBrowser(string url)
+        {
+            string browserPath = GetDefaultBrowserPath();
+            if (browserPath != "")
+            {
+                try
+                {
+                    Process.Start(browserPath, url);
+                }
+                catch (Exception e1)
+                {
+                    MessageBox.Show("ブラウザ " + browserPath + " を開く際にエラーが発生しました。\r\n" + e1.Message);
+                }
+            }
+            else
+            {
+                Process.Start(url);
+            }
+        }
+
+        private string GetDefaultBrowserPath()
+        {
+            string path = "";
+            Microsoft.Win32.RegistryKey rKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(@"http\shell\open\command");
+            if (rKey != null)
+            {
+                string command = (string)rKey.GetValue(String.Empty);
+                if (command == null)
+                {
+                    return path;
+                }
+
+                command = command.Trim();
+                if (command.Length == 0)
+                {
+                    return path;
+                }
+
+                if (command[0] == '"')
+                {
+                    int endIndex = command.IndexOf('"', 1);
+                    if (endIndex != -1)
+                    {
+                        path = command.Substring(1, endIndex - 1);
+                    }
+                }
+                else
+                {
+                    int endIndex = command.IndexOf(' ');
+                    if (endIndex != -1)
+                    {
+                        path = command.Substring(0, endIndex);
+                    }
+                    else
+                    {
+                        path = command;
+                    }
+                }
+            }
+
+            return path;
+
+        }
+
+        private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Process.Start("http://fudacard.github.io/witchs-hat/help.html");
         }
     }
 

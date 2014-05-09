@@ -12,7 +12,7 @@ namespace WitchsHat
 {
     public partial class ProjectPropertyForm : Form
     {
-        public delegate void OkEventHandler();
+        public delegate void OkEventHandler(string executeHtml);
         public OkEventHandler OkClicked;
 
         public ProjectProperty projectProperty { get; set; }
@@ -52,7 +52,7 @@ namespace WitchsHat
                 MessageBox.Show("実行するHTMLファイルを入力してください。");
                 return;
             }
-            OkClicked();
+            OkClicked(comboBox2.Text);
             Close();
         }
 

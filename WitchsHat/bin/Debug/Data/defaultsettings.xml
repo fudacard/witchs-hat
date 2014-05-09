@@ -4,7 +4,6 @@
   <Encoding>utf-8</Encoding>
   <Server>on</Server>
   <ServerPort>50124</ServerPort>
-  <Browser>iexplore</Browser>
   <RunBrowser>iexplore</RunBrowser>
   <TempProject>on</TempProject>
   <EnchantjsBuild>https://github.com/uei/enchant.js-builds/archive/v0.8.1.zip</EnchantjsBuild>
