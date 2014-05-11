@@ -9,5 +9,6 @@ namespace WitchsHat
     public class Token
     {
         public string body { get; set; }
+        public int Position { get; set; }
     }
 }

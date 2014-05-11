@@ -224,6 +224,26 @@
         <Type>function</Type>
         <Hint>removeEventListener(type: String, listener: function)&#xA;イベントリスナを削除します。</Hint>
       </Member>
+      <Member>
+        <Name>onenterframe</Name>
+        <Type>function</Type>
+        <Hint>フレーム開始時に実行するイベントリスナを登録します。</Hint>
+      </Member>
+      <Member>
+        <Name>ontouchstart</Name>
+        <Type>function</Type>
+        <Hint>タッチ開始時に実行するイベントリスナを登録します。</Hint>
+      </Member>
+      <Member>
+        <Name>ontouchmove</Name>
+        <Type>function</Type>
+        <Hint>タッチ移動時に実行するイベントリスナを登録します。</Hint>
+      </Member>
+      <Member>
+        <Name>ontouchend</Name>
+        <Type>function</Type>
+        <Hint>タッチ終了時に実行するイベントリスナを登録します。</Hint>
+      </Member>
     </Members>
   </Class>
   <Class>
@@ -247,6 +267,10 @@
       </Member>
       <Member>
         <Name>load</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>popScene</Name>
         <Type>function</Type>
       </Member>
       <Member>
@@ -381,6 +405,11 @@
     <Name>Node</Name>
     <Super>EventTarget</Super>
     <Members>
+      <Member>
+        <Name>age</Name>
+        <Type>Number</Type>
+        <Hint>Nodeが画面に表示されてから経過したフレーム数.</Hint>
+      </Member>
       <Member>
         <Name>moveBy</Name>
         <Type>function</Type>
@@ -588,7 +617,7 @@
         <Hint>fillRect(x :Number, y:Number, width: Number, height: Number)&#xA;矩形領域を塗りつぶします。</Hint>
       </Member>
       <Member>
-        <Name>fillstyle</Name>
+        <Name>fillStyle</Name>
         <Type>String</Type>
         <Hint>塗りつぶす色、グラデーション、パターンを取得または設定します。</Hint>
       </Member>
@@ -665,6 +694,60 @@
     </Members>
   </Class>
   <Class>
+    <Name>Input</Name>
+    <Members>
+      <Member>
+        <Name>up</Name>
+        <Type>bool</Type>
+      </Member>
+      <Member>
+        <Name>right</Name>
+        <Type>bool</Type>
+      </Member>
+      <Member>
+        <Name>left</Name>
+        <Type>bool</Type>
+      </Member>
+      <Member>
+        <Name>down</Name>
+        <Type>bool</Type>
+      </Member>
+    </Members>
+  </Class>
+  <Class>
+    <Name>Date</Name>
+    <Members>
+      <Member>
+        <Name>setTime</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getTime</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getFullYear</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getMonth</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getDate</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getHours</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getMinutes</Name>
+        <Type>function</Type>
+      </Member>
+    </Members>
+  </Class>
+  <Class>
     <Name>String</Name>
     <Members>
       <Member>
@@ -681,6 +764,15 @@
       </Member>
       <Member>
         <Name>substring</Name>
+        <Type>function</Type>
+      </Member>
+    </Members>
+  </Class>
+  <Class>
+    <Name>window</Name>
+    <Members>
+      <Member>
+        <Name>alert</Name>
         <Type>function</Type>
       </Member>
     </Members>
