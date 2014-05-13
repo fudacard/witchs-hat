@@ -55,6 +55,81 @@
     <Name>Core</Name>
     <Super>EventTarget</Super>
     <Members>
+      <Member>
+        <Name>assets</Name>
+        <Type>array</Type>
+        <Hint>ロードされた画像をパスをキーとして保存するオブジェクト.</Hint>
+      </Member>
+      <Member>
+        <Name>input</Name>
+        <Type>object</Type>
+        <Hint>アプリに対する入力状態を保存するオブジェクト.</Hint>
+      </Member>
+      <Member>
+        <Name>fps</Name>
+        <Type>number</Type>
+        <Hint>フレームレート.</Hint>
+      </Member>
+      <Member>
+        <Name>height</Name>
+        <Type>number</Type>
+        <Hint>画面の高さ.</Hint>
+      </Member>
+      <Member>
+        <Name>keybind</Name>
+        <Type>function</Type>
+        <Hint>keybind(key: Number, button: String)&#xA;キーバインドを設定する.</Hint>
+      </Member>
+      <Member>
+        <Name>keyunbind</Name>
+        <Type>function</Type>
+        <Hint>keyunbind(key: Number)&#xA;キーバインドを削除する.</Hint>
+      </Member>
+      <Member>
+        <Name>load</Name>
+        <Type>function</Type>
+        <Hint>load(src: String, alias: String, callback: Function, onerror: Function)&#xA;ファイルのロードを行う.</Hint>
+      </Member>
+      <Member>
+        <Name>popScene</Name>
+        <Type>function</Type>
+        <Hint>popScene()&#xA;現在のSceneを終了させ前のSceneに戻る.</Hint>
+      </Member>
+      <Member>
+        <Name>preload</Name>
+        <Type>function</Type>
+        <Hint>preload(assets)&#xA;ファイルのプリロードを行う.</Hint>
+      </Member>
+      <Member>
+        <Name>pushScene</Name>
+        <Type>function</Type>
+        <Hint>pushScene(scene: Scene)&#xA;新しいSceneに移行する.</Hint>
+      </Member>
+      <Member>
+        <Name>removeScene</Name>
+        <Type>function</Type>
+        <Hint>removeScene(scene: Scene)&#xA;Sceneを削除する.</Hint>
+      </Member>
+      <Member>
+        <Name>replaceScene</Name>
+        <Type>function</Type>
+        <Hint>replaceScene(scene: Scene)&#xA;現在のSceneを別のSceneにおきかえる.</Hint>
+      </Member>
+      <Member>
+        <Name>rootScene</Name>
+        <Type>Scene</Type>
+        <Hint></Hint>
+      </Member>
+      <Member>
+        <Name>start</Name>
+        <Type>function</Type>
+        <Hint>start()&#xA;アプリを起動する.</Hint>
+      </Member>
+      <Member>
+        <Name>width</Name>
+        <Type>number</Type>
+        <Hint>画面の横幅.</Hint>
+      </Member>
     </Members>
   </Class>
   <Class>
@@ -248,60 +323,7 @@
   </Class>
   <Class>
     <Name>Game</Name>
-    <Members>
-      <Member>
-        <Name>assets</Name>
-        <Type>array</Type>
-      </Member>
-      <Member>
-        <Name>input</Name>
-        <Type>object</Type>
-      </Member>
-      <Member>
-        <Name>fps</Name>
-        <Type>number</Type>
-      </Member>
-      <Member>
-        <Name>height</Name>
-        <Type>number</Type>
-      </Member>
-      <Member>
-        <Name>load</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>popScene</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>preload</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>pushScene</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>removeScene</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>replaceScene</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>rootScene</Name>
-        <Type>Scene</Type>
-      </Member>
-      <Member>
-        <Name>start</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>width</Name>
-        <Type>number</Type>
-      </Member>
-    </Members>
+    <Super>Core</Super>
   </Class>
   <Class>
     <Name>Group</Name>

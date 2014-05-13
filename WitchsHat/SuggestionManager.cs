@@ -434,13 +434,12 @@ namespace WitchsHat
             {
                 popup = new PopupWindow();
             }
-            if (!popup.Visible)
-            {
-                popup.Show(form);
-            }
             if (listBox.SelectedItem != null && typedata.ContainsKey((string)listBox.SelectedItem) && typedata[(string)listBox.SelectedItem].Hint != null)
             {
-                popup.Visible = true;
+                if (!popup.Visible)
+                {
+                    popup.Show(form);
+                }
                 popup.Controls[0].Text = typedata[(string)listBox.SelectedItem].Hint;
                 Console.WriteLine(popup.Controls[0].Text);
             }
@@ -840,7 +839,11 @@ namespace WitchsHat
             {
                 if (typedata[(string)listBox.SelectedItem].Hint != null)
                 {
-                    popup.Visible = true;
+                    if (!popup.Visible)
+                    {
+                        popup.Show(form);
+                    }
+                    //popup.Visible = true;
                     popup.Controls[0].Text = typedata[(string)listBox.SelectedItem].Hint;
                     Console.WriteLine(popup.Controls[0].Text);
                 }

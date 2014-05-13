@@ -1,6 +1,6 @@
 ﻿namespace WitchsHat
 {
-    partial class AbouteForm
+    partial class AboutForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AbouteForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -44,7 +44,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(95, 12);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Witch\'s Hat v0.2.0";
+            this.label1.Text = "Witch\'s Hat v0.0.0";
             // 
             // pictureBox1
             // 
@@ -87,7 +87,7 @@
             this.textBox1.TabIndex = 5;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
-            // AbouteForm
+            // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -97,9 +97,9 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
-            this.Name = "AbouteForm";
+            this.Name = "AboutForm";
             this.Text = "AbouteForm";
-            this.Load += new System.EventHandler(this.AbouteForm_Load);
+            this.Load += new System.EventHandler(this.AboutForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
