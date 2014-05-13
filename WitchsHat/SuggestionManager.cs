@@ -97,6 +97,7 @@ namespace WitchsHat
                 popup.Visible = false;
 
             };
+            azuki.TextChanged += azuki_TextChanged;
             listBox.MouseDoubleClick += delegate
             {
                 if (listBox.SelectedIndex >= 0)
@@ -124,6 +125,15 @@ namespace WitchsHat
                     }
                 }
             }
+        }
+
+        void azuki_TextChanged(object sender, EventArgs e)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                Analyze();
+            });
+
         }
 
         public void Azuki_KeyPress(object sender, KeyPressEventArgs e)
@@ -309,7 +319,6 @@ namespace WitchsHat
                 {
                     string src = azuki.Text.Substring(0, azuki.CaretIndex);
                     string token = lastToken(src, 1);
-                    Console.WriteLine("[" + token + "]");
                     if (token == ".")
                     {
 
@@ -381,10 +390,6 @@ namespace WitchsHat
                     }
                 }
             }
-            if (e.KeyChar == ';')
-            {
-                Analyze();
-            }
         }
 
         private void UpdateListBoxPos(int offset)
@@ -431,7 +436,7 @@ namespace WitchsHat
             }
             if (!popup.Visible)
             {
-                //popup.Show(form);
+                popup.Show(form);
             }
             if (listBox.SelectedItem != null && typedata.ContainsKey((string)listBox.SelectedItem) && typedata[(string)listBox.SelectedItem].Hint != null)
             {
