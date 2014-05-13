@@ -1,4 +1,5 @@
-﻿using Sgry.Azuki.WinForms;
+﻿using Sgry.Azuki;
+using Sgry.Azuki.WinForms;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -32,6 +33,9 @@ namespace WitchsHat
         string NewInputString = "";
         List<string> CurrentList;
         Dictionary<string, JSMember> typedata = new Dictionary<string, JSMember>();
+        Dictionary<string, Word> wordList;
+        List<string> keywords;
+        bool firstMark = true;
 
         public bool Enable { get; set; }
 
@@ -93,6 +97,7 @@ namespace WitchsHat
                 popup.Visible = false;
 
             };
+            azuki.TextChanged += azuki_TextChanged;
             listBox.MouseDoubleClick += delegate
             {
                 if (listBox.SelectedIndex >= 0)
@@ -103,6 +108,32 @@ namespace WitchsHat
                 }
             };
             listBox.SelectedIndexChanged += this.listBox_SelectedIndexChanged;
+
+            keywords = new List<string>();
+            ReadKeywords(Path.Combine(Application.StartupPath, @"Data\keywords.txt"));
+            foreach (var pair in types)
+            {
+                if (!keywords.Contains(pair.Key))
+                {
+                    keywords.Add(pair.Key);
+                }
+                foreach (var pair2 in pair.Value.Members)
+                {
+                    if (!keywords.Contains(pair2.Key))
+                    {
+                        keywords.Add(pair2.Key);
+                    }
+                }
+            }
+        }
+
+        void azuki_TextChanged(object sender, EventArgs e)
+        {
+            Task.Factory.StartNew(() =>
+            {
+                Analyze();
+            });
+
         }
 
         public void Azuki_KeyPress(object sender, KeyPressEventArgs e)
@@ -288,7 +319,6 @@ namespace WitchsHat
                 {
                     string src = azuki.Text.Substring(0, azuki.CaretIndex);
                     string token = lastToken(src, 1);
-                    Console.WriteLine("[" + token + "]");
                     if (token == ".")
                     {
 
@@ -360,10 +390,6 @@ namespace WitchsHat
                     }
                 }
             }
-            if (e.KeyChar == ';')
-            {
-                Analyze();
-            }
         }
 
         private void UpdateListBoxPos(int offset)
@@ -408,13 +434,12 @@ namespace WitchsHat
             {
                 popup = new PopupWindow();
             }
-            if (!popup.Visible)
-            {
-                //popup.Show(form);
-            }
             if (listBox.SelectedItem != null && typedata.ContainsKey((string)listBox.SelectedItem) && typedata[(string)listBox.SelectedItem].Hint != null)
             {
-                popup.Visible = true;
+                if (!popup.Visible)
+                {
+                    popup.Show(form);
+                }
                 popup.Controls[0].Text = typedata[(string)listBox.SelectedItem].Hint;
                 Console.WriteLine(popup.Controls[0].Text);
             }
@@ -524,6 +549,32 @@ namespace WitchsHat
                     }
                 }
             }
+
+            wordList = new Dictionary<string, Word>();
+            foreach (Token token in tokens)
+            {
+                //if ((Regex.Match(token.body, "^([0-9]|\"|\')")).Success)
+                if (!(Regex.Match(token.body, @"^[a-zA-Z]")).Success)
+                {
+                    continue;
+                }
+                if (keywords.Contains(token.body))
+                {
+                    continue;
+                }
+                if (wordList.ContainsKey(token.body))
+                {
+                    wordList[token.body].Count++;
+                }
+                else
+                {
+                    wordList[token.body] = new Word();
+                    wordList[token.body].Body = token.body;
+                    wordList[token.body].Count = 1;
+                    wordList[token.body].FirstPosition = token.Position;
+                }
+            }
+            CheckOneWord();
         }
 
         public static List<Token> Tokenize(string src)
@@ -555,6 +606,7 @@ namespace WitchsHat
                     //Console.WriteLine("[" + m.Value + "]");
                     Token token = new Token();
                     token.body = m.Value;
+                    token.Position = i;
                     tokens.Add(token);
                     i += m.Value.Length;
                 }
@@ -563,6 +615,7 @@ namespace WitchsHat
                     //Console.WriteLine("[" + m.Value + "]");
                     Token token = new Token();
                     token.body = m.Value;
+                    token.Position = i;
                     tokens.Add(token);
                     i += m.Value.Length;
                 }
@@ -571,6 +624,7 @@ namespace WitchsHat
                     //Console.WriteLine("[" + m.Value + "]");
                     Token token = new Token();
                     token.body = m.Value;
+                    token.Position = i;
                     tokens.Add(token);
                     i += m.Value.Length;
                 }
@@ -583,6 +637,7 @@ namespace WitchsHat
                     // Console.WriteLine("[" + m.Value + "]");
                     Token token = new Token();
                     token.body = m.Value;
+                    token.Position = i;
                     tokens.Add(token);
                     i += m.Value.Length;
                 }
@@ -591,6 +646,7 @@ namespace WitchsHat
                     //Console.WriteLine("[" + m.Value + "]");
                     Token token = new Token();
                     token.body = m.Value;
+                    token.Position = i;
                     tokens.Add(token);
                     i += m.Value.Length;
                 }
@@ -599,6 +655,7 @@ namespace WitchsHat
                     //Console.WriteLine("[" + m.Value + "]");
                     Token token = new Token();
                     token.body = m.Value;
+                    token.Position = i;
                     tokens.Add(token);
                     i += m.Value.Length;
                     count++;
@@ -608,6 +665,7 @@ namespace WitchsHat
                     //Console.WriteLine("[" + m.Value + "]");
                     Token token = new Token();
                     token.body = m.Value;
+                    token.Position = i;
                     tokens.Add(token);
                     i += m.Value.Length;
                 }
@@ -698,9 +756,15 @@ namespace WitchsHat
                 if (className != null)
                 {
                     JSType t = types[className];
-                    //return t.Members[token].Name;
-                    //return t.GetMembers()[token].Name;
-                    return t.GetMembers()[token].Type.Name;
+                    var members = t.GetMembers();
+                    if (members.ContainsKey(token))
+                    {
+                        return t.GetMembers()[token].Type.Name;
+                    }
+                    else
+                    {
+                        return null;
+                    }
                 }
                 else
                 {
@@ -775,7 +839,11 @@ namespace WitchsHat
             {
                 if (typedata[(string)listBox.SelectedItem].Hint != null)
                 {
-                    popup.Visible = true;
+                    if (!popup.Visible)
+                    {
+                        popup.Show(form);
+                    }
+                    //popup.Visible = true;
                     popup.Controls[0].Text = typedata[(string)listBox.SelectedItem].Hint;
                     Console.WriteLine(popup.Controls[0].Text);
                 }
@@ -794,5 +862,47 @@ namespace WitchsHat
 
             UpdatePopupPos();
         }
+
+        private void CheckOneWord()
+        {
+            if (firstMark)
+            {
+                Marking.Register(new MarkingInfo(0, "oneword"));
+                firstMark = false;
+            }
+            else
+            {
+                azuki.Document.Unmark(0, azuki.Document.Length, 0);
+            }
+            foreach (var pair in wordList)
+            {
+                if (pair.Value.Count == 1)
+                {
+
+                    azuki.ColorScheme.SetMarkingDecoration(0, new UnderlineTextDecoration(LineStyle.Waved, Color.Red));
+                    azuki.Document.Mark(pair.Value.FirstPosition, pair.Value.FirstPosition + pair.Value.Body.Length, 0);
+                }
+            }
+        }
+
+        private void ReadKeywords(string path)
+        {
+            using (StreamReader reader = new StreamReader(path))
+            {
+                while (!reader.EndOfStream)
+                {
+                    string keyword = reader.ReadLine();
+                    Console.WriteLine("[" + keyword + "]");
+                    keywords.Add(keyword);
+                }
+            }
+        }
+    }
+
+    class Word
+    {
+        public string Body { get; set; }
+        public int Count { get; set; }
+        public int FirstPosition { get; set; }
     }
 }

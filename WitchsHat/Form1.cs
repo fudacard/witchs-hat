@@ -1226,7 +1226,7 @@ namespace WitchsHat
 
         private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            AbouteForm form = new AbouteForm();
+            AboutForm form = new AboutForm();
             form.ShowDialog(this);
         }
 

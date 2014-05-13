@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace WitchsHat
 {
-    public partial class AbouteForm : Form
+    public partial class AboutForm : Form
     {
-        public AbouteForm()
+        public AboutForm()
         {
             InitializeComponent();
         }
@@ -27,9 +29,11 @@ namespace WitchsHat
             System.Diagnostics.Process.Start("https://github.com/fudacard/witchs-hat");
         }
 
-        private void AbouteForm_Load(object sender, EventArgs e)
+        private void AboutForm_Load(object sender, EventArgs e)
         {
-
+            Assembly asm = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(asm.Location);
+            label1.Text = String.Format("Witch's Hat v{0}.{1}.{2}", fvi.ProductMajorPart, fvi.ProductMinorPart, fvi.ProductBuildPart);
         }
     }
 }

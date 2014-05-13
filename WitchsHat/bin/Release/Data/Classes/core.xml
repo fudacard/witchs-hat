@@ -55,6 +55,81 @@
     <Name>Core</Name>
     <Super>EventTarget</Super>
     <Members>
+      <Member>
+        <Name>assets</Name>
+        <Type>array</Type>
+        <Hint>ロードされた画像をパスをキーとして保存するオブジェクト.</Hint>
+      </Member>
+      <Member>
+        <Name>input</Name>
+        <Type>object</Type>
+        <Hint>アプリに対する入力状態を保存するオブジェクト.</Hint>
+      </Member>
+      <Member>
+        <Name>fps</Name>
+        <Type>number</Type>
+        <Hint>フレームレート.</Hint>
+      </Member>
+      <Member>
+        <Name>height</Name>
+        <Type>number</Type>
+        <Hint>画面の高さ.</Hint>
+      </Member>
+      <Member>
+        <Name>keybind</Name>
+        <Type>function</Type>
+        <Hint>keybind(key: Number, button: String)&#xA;キーバインドを設定する.</Hint>
+      </Member>
+      <Member>
+        <Name>keyunbind</Name>
+        <Type>function</Type>
+        <Hint>keyunbind(key: Number)&#xA;キーバインドを削除する.</Hint>
+      </Member>
+      <Member>
+        <Name>load</Name>
+        <Type>function</Type>
+        <Hint>load(src: String, alias: String, callback: Function, onerror: Function)&#xA;ファイルのロードを行う.</Hint>
+      </Member>
+      <Member>
+        <Name>popScene</Name>
+        <Type>function</Type>
+        <Hint>popScene()&#xA;現在のSceneを終了させ前のSceneに戻る.</Hint>
+      </Member>
+      <Member>
+        <Name>preload</Name>
+        <Type>function</Type>
+        <Hint>preload(assets)&#xA;ファイルのプリロードを行う.</Hint>
+      </Member>
+      <Member>
+        <Name>pushScene</Name>
+        <Type>function</Type>
+        <Hint>pushScene(scene: Scene)&#xA;新しいSceneに移行する.</Hint>
+      </Member>
+      <Member>
+        <Name>removeScene</Name>
+        <Type>function</Type>
+        <Hint>removeScene(scene: Scene)&#xA;Sceneを削除する.</Hint>
+      </Member>
+      <Member>
+        <Name>replaceScene</Name>
+        <Type>function</Type>
+        <Hint>replaceScene(scene: Scene)&#xA;現在のSceneを別のSceneにおきかえる.</Hint>
+      </Member>
+      <Member>
+        <Name>rootScene</Name>
+        <Type>Scene</Type>
+        <Hint></Hint>
+      </Member>
+      <Member>
+        <Name>start</Name>
+        <Type>function</Type>
+        <Hint>start()&#xA;アプリを起動する.</Hint>
+      </Member>
+      <Member>
+        <Name>width</Name>
+        <Type>number</Type>
+        <Hint>画面の横幅.</Hint>
+      </Member>
     </Members>
   </Class>
   <Class>
@@ -224,60 +299,31 @@
         <Type>function</Type>
         <Hint>removeEventListener(type: String, listener: function)&#xA;イベントリスナを削除します。</Hint>
       </Member>
+      <Member>
+        <Name>onenterframe</Name>
+        <Type>function</Type>
+        <Hint>フレーム開始時に実行するイベントリスナを登録します。</Hint>
+      </Member>
+      <Member>
+        <Name>ontouchstart</Name>
+        <Type>function</Type>
+        <Hint>タッチ開始時に実行するイベントリスナを登録します。</Hint>
+      </Member>
+      <Member>
+        <Name>ontouchmove</Name>
+        <Type>function</Type>
+        <Hint>タッチ移動時に実行するイベントリスナを登録します。</Hint>
+      </Member>
+      <Member>
+        <Name>ontouchend</Name>
+        <Type>function</Type>
+        <Hint>タッチ終了時に実行するイベントリスナを登録します。</Hint>
+      </Member>
     </Members>
   </Class>
   <Class>
     <Name>Game</Name>
-    <Members>
-      <Member>
-        <Name>assets</Name>
-        <Type>array</Type>
-      </Member>
-      <Member>
-        <Name>input</Name>
-        <Type>object</Type>
-      </Member>
-      <Member>
-        <Name>fps</Name>
-        <Type>number</Type>
-      </Member>
-      <Member>
-        <Name>height</Name>
-        <Type>number</Type>
-      </Member>
-      <Member>
-        <Name>load</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>preload</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>pushScene</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>removeScene</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>replaceScene</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>rootScene</Name>
-        <Type>Scene</Type>
-      </Member>
-      <Member>
-        <Name>start</Name>
-        <Type>function</Type>
-      </Member>
-      <Member>
-        <Name>width</Name>
-        <Type>number</Type>
-      </Member>
-    </Members>
+    <Super>Core</Super>
   </Class>
   <Class>
     <Name>Group</Name>
@@ -381,6 +427,11 @@
     <Name>Node</Name>
     <Super>EventTarget</Super>
     <Members>
+      <Member>
+        <Name>age</Name>
+        <Type>Number</Type>
+        <Hint>Nodeが画面に表示されてから経過したフレーム数.</Hint>
+      </Member>
       <Member>
         <Name>moveBy</Name>
         <Type>function</Type>
@@ -588,7 +639,7 @@
         <Hint>fillRect(x :Number, y:Number, width: Number, height: Number)&#xA;矩形領域を塗りつぶします。</Hint>
       </Member>
       <Member>
-        <Name>fillstyle</Name>
+        <Name>fillStyle</Name>
         <Type>String</Type>
         <Hint>塗りつぶす色、グラデーション、パターンを取得または設定します。</Hint>
       </Member>
@@ -665,6 +716,60 @@
     </Members>
   </Class>
   <Class>
+    <Name>Input</Name>
+    <Members>
+      <Member>
+        <Name>up</Name>
+        <Type>bool</Type>
+      </Member>
+      <Member>
+        <Name>right</Name>
+        <Type>bool</Type>
+      </Member>
+      <Member>
+        <Name>left</Name>
+        <Type>bool</Type>
+      </Member>
+      <Member>
+        <Name>down</Name>
+        <Type>bool</Type>
+      </Member>
+    </Members>
+  </Class>
+  <Class>
+    <Name>Date</Name>
+    <Members>
+      <Member>
+        <Name>setTime</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getTime</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getFullYear</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getMonth</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getDate</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getHours</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>getMinutes</Name>
+        <Type>function</Type>
+      </Member>
+    </Members>
+  </Class>
+  <Class>
     <Name>String</Name>
     <Members>
       <Member>
@@ -681,6 +786,15 @@
       </Member>
       <Member>
         <Name>substring</Name>
+        <Type>function</Type>
+      </Member>
+    </Members>
+  </Class>
+  <Class>
+    <Name>window</Name>
+    <Members>
+      <Member>
+        <Name>alert</Name>
         <Type>function</Type>
       </Member>
     </Members>
