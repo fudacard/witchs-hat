@@ -1348,6 +1348,19 @@ namespace WitchsHat
             }
             RunOnBrowser(path, browser);
         }
+
+        private void OpenProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "プロジェクト ファイル (*.whprj)|*.whprj|すべてのファイル(*.*)|*.*";
+            if (Directory.Exists(settings.ProjectsPath)) {
+                ofd.InitialDirectory = settings.ProjectsPath;
+            }
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                OpenFile(ofd.FileName);
+            }
+        }
     }
 
 }

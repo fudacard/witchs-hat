@@ -68,6 +68,10 @@
             this.ProjectPropertyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunOnBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.internetExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chromeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.firefoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.operaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.オプションToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.オプションOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -132,10 +136,7 @@
             this.CutAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PasteAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.internetExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chromeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.firefoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.operaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -169,6 +170,7 @@
             // 
             this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewProjectToolStripMenuItem,
+            this.OpenProjectToolStripMenuItem,
             this.OpenProjectOrFileToolStripMenuItem,
             this.toolStripSeparator2,
             this.SaveToolStripMenuItem,
@@ -219,7 +221,7 @@
             // 
             this.OpenProjectOrFileToolStripMenuItem.Name = "OpenProjectOrFileToolStripMenuItem";
             this.OpenProjectOrFileToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
-            this.OpenProjectOrFileToolStripMenuItem.Text = "開く";
+            this.OpenProjectOrFileToolStripMenuItem.Text = "ファイルを開く";
             this.OpenProjectOrFileToolStripMenuItem.Click += new System.EventHandler(this.OpenProjectOrFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
@@ -449,9 +451,37 @@
             this.firefoxToolStripMenuItem,
             this.operaToolStripMenuItem});
             this.RunOnBrowserToolStripMenuItem.Name = "RunOnBrowserToolStripMenuItem";
-            this.RunOnBrowserToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.RunOnBrowserToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.RunOnBrowserToolStripMenuItem.Text = "ブラウザで実行";
             this.RunOnBrowserToolStripMenuItem.Click += new System.EventHandler(this.RunOnBrowserToolStripMenuItem_Click);
+            // 
+            // internetExplorerToolStripMenuItem
+            // 
+            this.internetExplorerToolStripMenuItem.Name = "internetExplorerToolStripMenuItem";
+            this.internetExplorerToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.internetExplorerToolStripMenuItem.Text = "Internet Explorer";
+            this.internetExplorerToolStripMenuItem.Click += new System.EventHandler(this.internetExplorerToolStripMenuItem_Click);
+            // 
+            // chromeToolStripMenuItem
+            // 
+            this.chromeToolStripMenuItem.Name = "chromeToolStripMenuItem";
+            this.chromeToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.chromeToolStripMenuItem.Text = "Chrome";
+            this.chromeToolStripMenuItem.Click += new System.EventHandler(this.chromeToolStripMenuItem_Click);
+            // 
+            // firefoxToolStripMenuItem
+            // 
+            this.firefoxToolStripMenuItem.Name = "firefoxToolStripMenuItem";
+            this.firefoxToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.firefoxToolStripMenuItem.Text = "Firefox";
+            this.firefoxToolStripMenuItem.Click += new System.EventHandler(this.firefoxToolStripMenuItem_Click);
+            // 
+            // operaToolStripMenuItem
+            // 
+            this.operaToolStripMenuItem.Name = "operaToolStripMenuItem";
+            this.operaToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.operaToolStripMenuItem.Text = "Opera";
+            this.operaToolStripMenuItem.Click += new System.EventHandler(this.operaToolStripMenuItem_Click);
             // 
             // オプションToolStripMenuItem
             // 
@@ -1004,33 +1034,12 @@
             this.PasteAzukiToolStripMenuItem.Text = "貼り付け";
             this.PasteAzukiToolStripMenuItem.Click += new System.EventHandler(this.PasteAzukiToolStripMenuItem_Click);
             // 
-            // internetExplorerToolStripMenuItem
+            // OpenProjectToolStripMenuItem
             // 
-            this.internetExplorerToolStripMenuItem.Name = "internetExplorerToolStripMenuItem";
-            this.internetExplorerToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.internetExplorerToolStripMenuItem.Text = "Internet Explorer";
-            this.internetExplorerToolStripMenuItem.Click += new System.EventHandler(this.internetExplorerToolStripMenuItem_Click);
-            // 
-            // chromeToolStripMenuItem
-            // 
-            this.chromeToolStripMenuItem.Name = "chromeToolStripMenuItem";
-            this.chromeToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.chromeToolStripMenuItem.Text = "Chrome";
-            this.chromeToolStripMenuItem.Click += new System.EventHandler(this.chromeToolStripMenuItem_Click);
-            // 
-            // firefoxToolStripMenuItem
-            // 
-            this.firefoxToolStripMenuItem.Name = "firefoxToolStripMenuItem";
-            this.firefoxToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.firefoxToolStripMenuItem.Text = "Firefox";
-            this.firefoxToolStripMenuItem.Click += new System.EventHandler(this.firefoxToolStripMenuItem_Click);
-            // 
-            // operaToolStripMenuItem
-            // 
-            this.operaToolStripMenuItem.Name = "operaToolStripMenuItem";
-            this.operaToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
-            this.operaToolStripMenuItem.Text = "Opera";
-            this.operaToolStripMenuItem.Click += new System.EventHandler(this.operaToolStripMenuItem_Click);
+            this.OpenProjectToolStripMenuItem.Name = "OpenProjectToolStripMenuItem";
+            this.OpenProjectToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.OpenProjectToolStripMenuItem.Text = "プロジェクトを開く";
+            this.OpenProjectToolStripMenuItem.Click += new System.EventHandler(this.OpenProjectToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -1177,6 +1186,7 @@
         private System.Windows.Forms.ToolStripMenuItem chromeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem firefoxToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem operaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenProjectToolStripMenuItem;
     }
 }
 
