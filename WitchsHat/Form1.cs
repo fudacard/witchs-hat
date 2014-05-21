@@ -33,6 +33,7 @@ namespace WitchsHat
         PopupWindow popupWindow;
         TaskScheduler taskScheduler;
         ProjectManager projectManager;
+        public TabPage CurrentTab;
 
         private delegate void StartupNextInstanceDelegate(params object[] parameters);
 
@@ -1222,6 +1223,7 @@ namespace WitchsHat
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            CurrentTab = tabControl1.SelectedTab;
         }
 
         private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1297,6 +1299,16 @@ namespace WitchsHat
         private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("http://fudacard.github.io/witchs-hat/help.html");
+        }
+
+        private void tabControl1_ControlAdded(object sender, ControlEventArgs e)
+        {
+            CurrentTab = tabControl1.SelectedTab;
+        }
+
+        private void tabControl1_ControlRemoved(object sender, ControlEventArgs e)
+        {
+            CurrentTab = tabControl1.SelectedTab;
         }
     }
 

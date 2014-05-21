@@ -448,6 +448,10 @@
         <Hint>Nodeが属しているScene.</Hint>
       </Member>
       <Member>
+        <Name>tl</Name>
+        <Type>Timeline</Type>
+      </Member>
+      <Member>
         <Name>x</Name>
         <Type>number</Type>
         <Hint>Nodeのx座標.</Hint>
@@ -591,6 +595,11 @@
     <Name>Timeline</Name>
     <Super>EventTarget</Super>
     <Members>
+      <Member>
+        <Name>moveTo</Name>
+        <Type>function</Type>
+        <Hint>moveTo(x: Number, y: Number, time: Number, easing: Function)&#xA;Entityの位置をなめらかに移動させるアクションを追加します。</Hint>
+      </Member>
     </Members>
   </Class>
   <Class>
@@ -765,6 +774,27 @@
       </Member>
       <Member>
         <Name>getMinutes</Name>
+        <Type>function</Type>
+      </Member>
+    </Members>
+  </Class>
+  <Class>
+    <Name>Math</Name>
+    <Members>
+      <Member>
+        <Name>PI</Name>
+        <Type>Number</Type>
+      </Member>
+      <Member>
+        <Name>floor</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>random</Name>
+        <Type>function</Type>
+      </Member>
+      <Member>
+        <Name>sqrt</Name>
         <Type>function</Type>
       </Member>
     </Members>

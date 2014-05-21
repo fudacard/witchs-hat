@@ -192,6 +192,7 @@
     <Compile Include="TabInfo.cs" />
     <Compile Include="TabManager.cs" />
     <Compile Include="Token.cs" />
+    <Compile Include="WHAnalyzer.cs" />
     <Compile Include="WHServer.cs" />
     <Compile Include="WHTemplate.cs" />
     <EmbeddedResource Include="AbouteForm.resx">

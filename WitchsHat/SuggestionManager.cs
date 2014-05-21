@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
@@ -36,6 +37,9 @@ namespace WitchsHat
         Dictionary<string, Word> wordList;
         List<string> keywords;
         bool firstMark = true;
+        TaskScheduler taskScheduler;
+        volatile bool running;
+        WHAnalyzer analyzer;
 
         public bool Enable { get; set; }
 
@@ -46,6 +50,9 @@ namespace WitchsHat
             this.listBox = listBox;
             this.form = form;
             this.popup = popup;
+
+            analyzer = new WHAnalyzer();
+            taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
 
             types = new Dictionary<string, JSType>();
             ReadXml(Path.Combine(Application.StartupPath, @"Data\Classes\core.xml"));
@@ -98,6 +105,13 @@ namespace WitchsHat
 
             };
             azuki.TextChanged += azuki_TextChanged;
+            azuki.Disposed += delegate
+            {
+            };
+            form.FormClosed += delegate
+            {
+                running = false;
+            };
             listBox.MouseDoubleClick += delegate
             {
                 if (listBox.SelectedIndex >= 0)
@@ -125,15 +139,35 @@ namespace WitchsHat
                     }
                 }
             }
+
+            Thread thread = new Thread(new ThreadStart(Check));
+            thread.Start();
+        }
+
+        private void Check()
+        {
+            running = true;
+            Thread.Sleep(3000);
+            while (running)
+            {
+                if (form.CurrentTab == tabPage)
+                {
+                    Analyze();
+                }
+
+                for (int i = 0; i < 3 && running; i++)
+                {
+                    Thread.Sleep(1000);
+                }
+            }
         }
 
         void azuki_TextChanged(object sender, EventArgs e)
         {
             Task.Factory.StartNew(() =>
             {
-                Analyze();
+                //    Analyze();
             });
-
         }
 
         public void Azuki_KeyPress(object sender, KeyPressEventArgs e)
@@ -525,13 +559,13 @@ namespace WitchsHat
 
         public void Analyze()
         {
-            if (azuki.Text.Length > MaxSize)
+            if (!running || azuki.Text.Length > MaxSize)
             {
                 return;
             }
             Console.WriteLine("Analyze");
             string src = azuki.Text;
-            tokens = Tokenize(src);
+            tokens = WHAnalyzer.Tokenize(src);
             localVarTypes = new Dictionary<string, JSType>();
 
             for (int j = 0; j < tokens.Count - 4; j++)
@@ -540,13 +574,6 @@ namespace WitchsHat
                 if (tokens[j + 1].body == "=" && tokens[j + 2].body == "new" && (className = GetClassName(j + 3)) != null)
                 {
                     localVarTypes[tokens[j].body] = types[className];
-                }
-                else if (tokens[j + 1].body == "=" && tokens[j + 2].body == "Class" && tokens[j + 3].body == "." && tokens[j + 4].body == "create")
-                {
-                    if (!types.ContainsKey(tokens[j].body))
-                    {
-                        types[tokens[j].body] = new JSType(tokens[j].body);
-                    }
                 }
             }
 
@@ -575,109 +602,31 @@ namespace WitchsHat
                 }
             }
             CheckOneWord();
-        }
 
-        public static List<Token> Tokenize(string src)
-        {
-            Match m;
-            List<Token> tokens = new List<Token>();
-            int count = 0;
-            int i = 0;
-            while (i < src.Length)
+            analyzer.Analyze(src);
+            foreach (var whclass in analyzer.classes)
             {
-                if (src[i] == '/' && i + 1 < src.Length && src[i + 1] == '*')
+                if (!types.ContainsKey(whclass.Value.Name))
                 {
-                    while (!(src[i] == '*' && i + 1 < src.Length && src[i + 1] == '/'))
+                    types[whclass.Value.Name] = new JSType(whclass.Value.Name);
+                }
+                if (whclass.Value.SuperClass != null)
+                {
+                    if (types.ContainsKey(whclass.Value.SuperClass))
                     {
-                        i++;
+                        types[whclass.Value.Name].Super = types[whclass.Value.SuperClass];
                     }
-                    i += 2;
                 }
-                else if (src[i] == '/' && i + 1 < src.Length && src[i + 1] == '/')
+                types[whclass.Value.Name].Members = new Dictionary<string, JSMember>();
+                foreach (WHFunction function in whclass.Value.Functions)
                 {
-                    while (i < src.Length && src[i] != '\n')
-                    {
-                        i++;
-                    }
-                    i++;
-                }
-                else if ((m = Regex.Match(src.Substring(i), @"^'.*?'")).Success)
-                {
-                    //Console.WriteLine("[" + m.Value + "]");
-                    Token token = new Token();
-                    token.body = m.Value;
-                    token.Position = i;
-                    tokens.Add(token);
-                    i += m.Value.Length;
-                }
-                else if ((m = Regex.Match(src.Substring(i), "^\".*?\"")).Success)
-                {
-                    //Console.WriteLine("[" + m.Value + "]");
-                    Token token = new Token();
-                    token.body = m.Value;
-                    token.Position = i;
-                    tokens.Add(token);
-                    i += m.Value.Length;
-                }
-                else if ((m = Regex.Match(src.Substring(i), @"^=+")).Success)
-                {
-                    //Console.WriteLine("[" + m.Value + "]");
-                    Token token = new Token();
-                    token.body = m.Value;
-                    token.Position = i;
-                    tokens.Add(token);
-                    i += m.Value.Length;
-                }
-                else if ((m = Regex.Match(src.Substring(i), @"^\s+")).Success)
-                {
-                    i += m.Value.Length;
-                }
-                else if ((m = Regex.Match(src.Substring(i), @"^!==")).Success)
-                {
-                    // Console.WriteLine("[" + m.Value + "]");
-                    Token token = new Token();
-                    token.body = m.Value;
-                    token.Position = i;
-                    tokens.Add(token);
-                    i += m.Value.Length;
-                }
-                else if ((m = Regex.Match(src.Substring(i), @"^[(){},.\!']")).Success)
-                {
-                    //Console.WriteLine("[" + m.Value + "]");
-                    Token token = new Token();
-                    token.body = m.Value;
-                    token.Position = i;
-                    tokens.Add(token);
-                    i += m.Value.Length;
-                }
-                else if ((m = Regex.Match(src.Substring(i), @"^\w+")).Success)
-                {
-                    //Console.WriteLine("[" + m.Value + "]");
-                    Token token = new Token();
-                    token.body = m.Value;
-                    token.Position = i;
-                    tokens.Add(token);
-                    i += m.Value.Length;
-                    count++;
-                }
-                else if ((m = Regex.Match(src.Substring(i), @";")).Success)
-                {
-                    //Console.WriteLine("[" + m.Value + "]");
-                    Token token = new Token();
-                    token.body = m.Value;
-                    token.Position = i;
-                    tokens.Add(token);
-                    i += m.Value.Length;
-                }
-                else
-                {
-                    Console.WriteLine(src[i]);
-                    i++;
+                    types[whclass.Value.Name].Members[function.Name] = new JSMember();
+                    types[whclass.Value.Name].Members[function.Name].Name = function.Name;
+                    types[whclass.Value.Name].Members[function.Name].Type = types["function"];
                 }
             }
-
-            return tokens;
         }
+
 
         private string GetClassName(int index)
         {
@@ -788,7 +737,12 @@ namespace WitchsHat
 
         private string GetClass(string src, string Name)
         {
-            List<Token> tokens = Tokenize(src);
+            List<Token> tokens = WHAnalyzer.Tokenize(src);
+
+            if (Name == "this")
+            {
+                return analyzer.GetThisClass(src.Length);
+            }
 
             for (int j = 0; j < tokens.Count - 3; j++)
             {
@@ -808,7 +762,7 @@ namespace WitchsHat
         private List<string> GetLocalWords(string halfSrc)
         {
 
-            List<Token> tokens = Tokenize(halfSrc);
+            List<Token> tokens = WHAnalyzer.Tokenize(halfSrc);
             List<string> words = new List<string>();
 
             for (int j = 0; j < tokens.Count - 1; j++)
@@ -878,11 +832,14 @@ namespace WitchsHat
             {
                 if (pair.Value.Count == 1)
                 {
-
                     azuki.ColorScheme.SetMarkingDecoration(0, new UnderlineTextDecoration(LineStyle.Waved, Color.Red));
                     azuki.Document.Mark(pair.Value.FirstPosition, pair.Value.FirstPosition + pair.Value.Body.Length, 0);
                 }
             }
+            Task.Factory.StartNew(() =>
+            {
+                azuki.Invalidate();
+            }, System.Threading.CancellationToken.None, TaskCreationOptions.None, taskScheduler);
         }
 
         private void ReadKeywords(string path)
