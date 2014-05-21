@@ -78,6 +78,7 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.VersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.treeView1 = new WitchsHat.FileTreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -131,7 +132,10 @@
             this.CutAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PasteAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.treeView1 = new WitchsHat.FileTreeView();
+            this.internetExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chromeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.firefoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.operaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -439,8 +443,13 @@
             // 
             // RunOnBrowserToolStripMenuItem
             // 
+            this.RunOnBrowserToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.internetExplorerToolStripMenuItem,
+            this.chromeToolStripMenuItem,
+            this.firefoxToolStripMenuItem,
+            this.operaToolStripMenuItem});
             this.RunOnBrowserToolStripMenuItem.Name = "RunOnBrowserToolStripMenuItem";
-            this.RunOnBrowserToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
+            this.RunOnBrowserToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.RunOnBrowserToolStripMenuItem.Text = "ブラウザで実行";
             this.RunOnBrowserToolStripMenuItem.Click += new System.EventHandler(this.RunOnBrowserToolStripMenuItem_Click);
             // 
@@ -527,6 +536,26 @@
             this.splitContainer1.Size = new System.Drawing.Size(934, 612);
             this.splitContainer1.SplitterDistance = 175;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.treeView1.form1 = null;
+            this.treeView1.FullRowSelect = true;
+            this.treeView1.HideSelection = false;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.imageList1;
+            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.ProjectDir = null;
+            this.treeView1.ProjectName = null;
+            this.treeView1.SelectedImageIndex = 0;
+            this.treeView1.ShowLines = false;
+            this.treeView1.Size = new System.Drawing.Size(175, 612);
+            this.treeView1.TabIndex = 2;
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
             // 
             // imageList1
             // 
@@ -975,25 +1004,33 @@
             this.PasteAzukiToolStripMenuItem.Text = "貼り付け";
             this.PasteAzukiToolStripMenuItem.Click += new System.EventHandler(this.PasteAzukiToolStripMenuItem_Click);
             // 
-            // treeView1
+            // internetExplorerToolStripMenuItem
             // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.treeView1.form1 = null;
-            this.treeView1.FullRowSelect = true;
-            this.treeView1.HideSelection = false;
-            this.treeView1.ImageIndex = 0;
-            this.treeView1.ImageList = this.imageList1;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.ProjectDir = null;
-            this.treeView1.ProjectName = null;
-            this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(175, 612);
-            this.treeView1.TabIndex = 2;
-            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
+            this.internetExplorerToolStripMenuItem.Name = "internetExplorerToolStripMenuItem";
+            this.internetExplorerToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.internetExplorerToolStripMenuItem.Text = "Internet Explorer";
+            this.internetExplorerToolStripMenuItem.Click += new System.EventHandler(this.internetExplorerToolStripMenuItem_Click);
+            // 
+            // chromeToolStripMenuItem
+            // 
+            this.chromeToolStripMenuItem.Name = "chromeToolStripMenuItem";
+            this.chromeToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.chromeToolStripMenuItem.Text = "Chrome";
+            this.chromeToolStripMenuItem.Click += new System.EventHandler(this.chromeToolStripMenuItem_Click);
+            // 
+            // firefoxToolStripMenuItem
+            // 
+            this.firefoxToolStripMenuItem.Name = "firefoxToolStripMenuItem";
+            this.firefoxToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.firefoxToolStripMenuItem.Text = "Firefox";
+            this.firefoxToolStripMenuItem.Click += new System.EventHandler(this.firefoxToolStripMenuItem_Click);
+            // 
+            // operaToolStripMenuItem
+            // 
+            this.operaToolStripMenuItem.Name = "operaToolStripMenuItem";
+            this.operaToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.operaToolStripMenuItem.Text = "Opera";
+            this.operaToolStripMenuItem.Click += new System.EventHandler(this.operaToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -1136,6 +1173,10 @@
         private System.Windows.Forms.ToolStripMenuItem SpecialImportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem DocumentImportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EnchantjsImportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem internetExplorerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem chromeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem firefoxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem operaToolStripMenuItem;
     }
 }
 
