@@ -33,6 +33,7 @@ namespace WitchsHat
         PopupWindow popupWindow;
         TaskScheduler taskScheduler;
         ProjectManager projectManager;
+        public TabPage CurrentTab;
 
         private delegate void StartupNextInstanceDelegate(params object[] parameters);
 
@@ -191,10 +192,14 @@ namespace WitchsHat
             RunOnBrowser(path);
         }
 
-        private void RunOnBrowser(string path)
+        private void RunOnBrowser(string path, string browser = null)
         {
             if (File.Exists(path))
             {
+                if (browser == null)
+                {
+                    browser = settings.RunBrowser;
+                }
                 // 開いているファイルを保存する
                 tabManager.SaveAllFiles();
 
@@ -208,17 +213,17 @@ namespace WitchsHat
                 {
                     if (settings.ServerEnable && useServer)
                     {
-                        Process.Start(settings.RunBrowser, "http://localhost:" + settings.ServerPort + "/" + projectManager.CurrentProject.HtmlPath);
+                        Process.Start(browser, "http://localhost:" + settings.ServerPort + "/" + projectManager.CurrentProject.HtmlPath);
                         //OpenWebBrowserTab("http://localhost:" + settings.ServerPort + "/"+ CurrentProject.HtmlPath);
                     }
                     else
                     {
-                        Process.Start(settings.RunBrowser, "\"" + path + "\"");
+                        Process.Start(browser, "\"" + path + "\"");
                     }
                 }
                 catch (Exception e1)
                 {
-                    MessageBox.Show("ブラウザ " + settings.RunBrowser + " を開く際にエラーが発生しました。\r\n" + e1.Message);
+                    MessageBox.Show("ブラウザ " + browser + " を開く際にエラーが発生しました。\r\n" + e1.Message);
                 }
             }
         }
@@ -1222,6 +1227,7 @@ namespace WitchsHat
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            CurrentTab = tabControl1.SelectedTab;
         }
 
         private void VersionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1297,6 +1303,72 @@ namespace WitchsHat
         private void HelpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Process.Start("http://fudacard.github.io/witchs-hat/help.html");
+        }
+
+        private void tabControl1_ControlAdded(object sender, ControlEventArgs e)
+        {
+            CurrentTab = tabControl1.SelectedTab;
+        }
+
+        private void tabControl1_ControlRemoved(object sender, ControlEventArgs e)
+        {
+            CurrentTab = tabControl1.SelectedTab;
+        }
+
+        private void internetExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RunOnBrowserCurrent("iexplore");
+        }
+
+        private void chromeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RunOnBrowserCurrent( "chrome");
+        }
+
+        private void firefoxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RunOnBrowserCurrent("firefox");
+        }
+
+        private void operaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RunOnBrowserCurrent("opera");
+        }
+
+        private void RunOnBrowserCurrent(string browser = null)
+        {
+            string path;
+            if (tabControl1.SelectedTab != null && (tabInfos[tabControl1.SelectedTab].Uri.EndsWith(".html") || tabInfos[tabControl1.SelectedTab].Uri.EndsWith(".htm")))
+            {
+                path = tabInfos[tabControl1.SelectedTab].Uri;
+            }
+            else
+            {
+                path = Path.Combine(projectManager.CurrentProject.Dir, projectManager.CurrentProject.HtmlPath);
+            }
+            RunOnBrowser(path, browser);
+        }
+
+        private void OpenProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "プロジェクト ファイル (*.whprj)|*.whprj|すべてのファイル(*.*)|*.*";
+            if (Directory.Exists(settings.ProjectsPath)) {
+                ofd.InitialDirectory = settings.ProjectsPath;
+            }
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                OpenFile(ofd.FileName);
+            }
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            Sgry.Azuki.WinForms.AzukiControl azuki = GetActiveAzuki();
+            if (azuki != null)
+            {
+                SaveToolStripMenuItem_Click(null, null);
+            }
         }
     }
 

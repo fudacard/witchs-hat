@@ -36,6 +36,7 @@
             this.CreateProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreateFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CreateFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OpenProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.OpenProjectOrFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.SaveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,6 +69,10 @@
             this.ProjectPropertyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RunOnBrowserToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.internetExplorerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chromeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.firefoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.operaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.オプションToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.オプションOToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ヘルプHToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -78,7 +83,6 @@
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.VersionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new WitchsHat.FileTreeView();
             this.imageList1 = new System.Windows.Forms.ImageList(this.components);
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -132,6 +136,7 @@
             this.CutAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CopyAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PasteAzukiToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.treeView1 = new WitchsHat.FileTreeView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -165,6 +170,7 @@
             // 
             this.FileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.NewProjectToolStripMenuItem,
+            this.OpenProjectToolStripMenuItem,
             this.OpenProjectOrFileToolStripMenuItem,
             this.toolStripSeparator2,
             this.SaveToolStripMenuItem,
@@ -211,11 +217,18 @@
             this.CreateFolderToolStripMenuItem.Text = "フォルダ";
             this.CreateFolderToolStripMenuItem.Click += new System.EventHandler(this.CreateFolderToolStripMenuItem_Click);
             // 
+            // OpenProjectToolStripMenuItem
+            // 
+            this.OpenProjectToolStripMenuItem.Name = "OpenProjectToolStripMenuItem";
+            this.OpenProjectToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.OpenProjectToolStripMenuItem.Text = "プロジェクトを開く";
+            this.OpenProjectToolStripMenuItem.Click += new System.EventHandler(this.OpenProjectToolStripMenuItem_Click);
+            // 
             // OpenProjectOrFileToolStripMenuItem
             // 
             this.OpenProjectOrFileToolStripMenuItem.Name = "OpenProjectOrFileToolStripMenuItem";
             this.OpenProjectOrFileToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
-            this.OpenProjectOrFileToolStripMenuItem.Text = "開く";
+            this.OpenProjectOrFileToolStripMenuItem.Text = "ファイルを開く";
             this.OpenProjectOrFileToolStripMenuItem.Click += new System.EventHandler(this.OpenProjectOrFileToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
@@ -439,10 +452,43 @@
             // 
             // RunOnBrowserToolStripMenuItem
             // 
+            this.RunOnBrowserToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.internetExplorerToolStripMenuItem,
+            this.chromeToolStripMenuItem,
+            this.firefoxToolStripMenuItem,
+            this.operaToolStripMenuItem});
             this.RunOnBrowserToolStripMenuItem.Name = "RunOnBrowserToolStripMenuItem";
             this.RunOnBrowserToolStripMenuItem.Size = new System.Drawing.Size(144, 22);
             this.RunOnBrowserToolStripMenuItem.Text = "ブラウザで実行";
             this.RunOnBrowserToolStripMenuItem.Click += new System.EventHandler(this.RunOnBrowserToolStripMenuItem_Click);
+            // 
+            // internetExplorerToolStripMenuItem
+            // 
+            this.internetExplorerToolStripMenuItem.Name = "internetExplorerToolStripMenuItem";
+            this.internetExplorerToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.internetExplorerToolStripMenuItem.Text = "Internet Explorer";
+            this.internetExplorerToolStripMenuItem.Click += new System.EventHandler(this.internetExplorerToolStripMenuItem_Click);
+            // 
+            // chromeToolStripMenuItem
+            // 
+            this.chromeToolStripMenuItem.Name = "chromeToolStripMenuItem";
+            this.chromeToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.chromeToolStripMenuItem.Text = "Chrome";
+            this.chromeToolStripMenuItem.Click += new System.EventHandler(this.chromeToolStripMenuItem_Click);
+            // 
+            // firefoxToolStripMenuItem
+            // 
+            this.firefoxToolStripMenuItem.Name = "firefoxToolStripMenuItem";
+            this.firefoxToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.firefoxToolStripMenuItem.Text = "Firefox";
+            this.firefoxToolStripMenuItem.Click += new System.EventHandler(this.firefoxToolStripMenuItem_Click);
+            // 
+            // operaToolStripMenuItem
+            // 
+            this.operaToolStripMenuItem.Name = "operaToolStripMenuItem";
+            this.operaToolStripMenuItem.Size = new System.Drawing.Size(174, 22);
+            this.operaToolStripMenuItem.Text = "Opera";
+            this.operaToolStripMenuItem.Click += new System.EventHandler(this.operaToolStripMenuItem_Click);
             // 
             // オプションToolStripMenuItem
             // 
@@ -528,26 +574,6 @@
             this.splitContainer1.SplitterDistance = 175;
             this.splitContainer1.TabIndex = 2;
             // 
-            // treeView1
-            // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-            this.treeView1.form1 = null;
-            this.treeView1.FullRowSelect = true;
-            this.treeView1.HideSelection = false;
-            this.treeView1.ImageIndex = 0;
-            this.treeView1.ImageList = this.imageList1;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.ProjectDir = null;
-            this.treeView1.ProjectName = null;
-            this.treeView1.SelectedImageIndex = 0;
-            this.treeView1.ShowLines = false;
-            this.treeView1.Size = new System.Drawing.Size(175, 612);
-            this.treeView1.TabIndex = 2;
-            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
-            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
-            // 
             // imageList1
             // 
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
@@ -582,6 +608,8 @@
             this.tabControl1.Size = new System.Drawing.Size(755, 612);
             this.tabControl1.TabIndex = 2;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
+            this.tabControl1.ControlAdded += new System.Windows.Forms.ControlEventHandler(this.tabControl1_ControlAdded);
+            this.tabControl1.ControlRemoved += new System.Windows.Forms.ControlEventHandler(this.tabControl1_ControlRemoved);
             // 
             // toolStrip1
             // 
@@ -662,6 +690,7 @@
             this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton2.Text = "toolStripButton2";
             this.toolStripButton2.ToolTipText = "保存";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
             // 
             // toolStripSeparator15
             // 
@@ -993,6 +1022,26 @@
             this.PasteAzukiToolStripMenuItem.Text = "貼り付け";
             this.PasteAzukiToolStripMenuItem.Click += new System.EventHandler(this.PasteAzukiToolStripMenuItem_Click);
             // 
+            // treeView1
+            // 
+            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeView1.Font = new System.Drawing.Font("Meiryo UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.treeView1.form1 = null;
+            this.treeView1.FullRowSelect = true;
+            this.treeView1.HideSelection = false;
+            this.treeView1.ImageIndex = 0;
+            this.treeView1.ImageList = this.imageList1;
+            this.treeView1.Location = new System.Drawing.Point(0, 0);
+            this.treeView1.Name = "treeView1";
+            this.treeView1.ProjectDir = null;
+            this.treeView1.ProjectName = null;
+            this.treeView1.SelectedImageIndex = 0;
+            this.treeView1.ShowLines = false;
+            this.treeView1.Size = new System.Drawing.Size(175, 612);
+            this.treeView1.TabIndex = 2;
+            this.treeView1.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseClick);
+            this.treeView1.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView1_NodeMouseDoubleClick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1134,6 +1183,11 @@
         private System.Windows.Forms.ToolStripMenuItem SpecialImportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem DocumentImportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem EnchantjsImportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem internetExplorerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem chromeToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem firefoxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem operaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem OpenProjectToolStripMenuItem;
     }
 }
 
