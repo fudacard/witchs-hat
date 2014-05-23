@@ -1361,6 +1361,15 @@ namespace WitchsHat
                 OpenFile(ofd.FileName);
             }
         }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            Sgry.Azuki.WinForms.AzukiControl azuki = GetActiveAzuki();
+            if (azuki != null)
+            {
+                SaveToolStripMenuItem_Click(null, null);
+            }
+        }
     }
 
 }

@@ -45,7 +45,12 @@ namespace WitchsHat
                             i += 2;
                         }
                         //Console.WriteLine("super: " + tokens[i].body);
-                        whclass.SuperClass = tokens[i].body;
+                        // ネームスペースを考慮していないので同名のクラスは自分自身を継承する形になってしまうので
+                        // 同名の場合は除外する
+                        if (whclass.Name != tokens[i].body)
+                        {
+                            whclass.SuperClass = tokens[i].body;
+                        }
                     }
                     nest++;
                 }
@@ -101,7 +106,7 @@ namespace WitchsHat
             {
                 if (src[i] == '/' && i + 1 < src.Length && src[i + 1] == '*')
                 {
-                    while (!(src[i] == '*' && i + 1 < src.Length && src[i + 1] == '/'))
+                    while (i + 1 < src.Length && !(src[i] == '*' && src[i + 1] == '/'))
                     {
                         i++;
                     }
