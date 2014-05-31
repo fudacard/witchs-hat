@@ -52,10 +52,21 @@ namespace WitchsHat
             this.popup = popup;
 
             analyzer = new WHAnalyzer();
-            taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
+
+            SetEvents();
 
             types = new Dictionary<string, JSType>();
-            ReadXml(Path.Combine(Application.StartupPath, @"Data\Classes\core.xml"));
+            keywords = new List<string>();
+
+            ReadTypes(Path.Combine(Application.StartupPath, @"Data\Classes\core.xml"));
+
+            ReadKeywords(Path.Combine(Application.StartupPath, @"Data\keywords.txt"));
+
+            Start();
+        }
+
+        public void SetEvents()
+        {
             azuki.KeyPress += this.Azuki_KeyPress;
             azuki.KeyDown += delegate(object sender, KeyEventArgs e)
             {
@@ -122,24 +133,11 @@ namespace WitchsHat
                 }
             };
             listBox.SelectedIndexChanged += this.listBox_SelectedIndexChanged;
+        }
 
-            keywords = new List<string>();
-            ReadKeywords(Path.Combine(Application.StartupPath, @"Data\keywords.txt"));
-            foreach (var pair in types)
-            {
-                if (!keywords.Contains(pair.Key))
-                {
-                    keywords.Add(pair.Key);
-                }
-                foreach (var pair2 in pair.Value.Members)
-                {
-                    if (!keywords.Contains(pair2.Key))
-                    {
-                        keywords.Add(pair2.Key);
-                    }
-                }
-            }
-
+        public void Start()
+        {
+            taskScheduler = TaskScheduler.FromCurrentSynchronizationContext();
             Thread thread = new Thread(new ThreadStart(Check));
             thread.Start();
         }
@@ -486,7 +484,7 @@ namespace WitchsHat
 
         }
 
-        private void ReadXml(string path)
+        private void ReadTypes(string path)
         {
             string currentClass = "";
             string currentMember = "";
@@ -555,6 +553,21 @@ namespace WitchsHat
                     }
                 }
             }
+            // 型名とメソッド名をキーワードに追加する
+            foreach (var pair in types)
+            {
+                if (!keywords.Contains(pair.Key))
+                {
+                    keywords.Add(pair.Key);
+                }
+                foreach (var pair2 in pair.Value.Members)
+                {
+                    if (!keywords.Contains(pair2.Key))
+                    {
+                        keywords.Add(pair2.Key);
+                    }
+                }
+            }
         }
 
         public void Analyze()
@@ -566,16 +579,6 @@ namespace WitchsHat
             Console.WriteLine("Analyze");
             string src = azuki.Text;
             tokens = WHAnalyzer.Tokenize(src);
-            localVarTypes = new Dictionary<string, JSType>();
-
-            for (int j = 0; j < tokens.Count - 4; j++)
-            {
-                string className;
-                if (tokens[j + 1].body == "=" && tokens[j + 2].body == "new" && (className = GetClassName(j + 3)) != null)
-                {
-                    localVarTypes[tokens[j].body] = types[className];
-                }
-            }
 
             wordList = new Dictionary<string, Word>();
             foreach (Token token in tokens)
@@ -623,6 +626,15 @@ namespace WitchsHat
                     types[whclass.Value.Name].Members[function.Name] = new JSMember();
                     types[whclass.Value.Name].Members[function.Name].Name = function.Name;
                     types[whclass.Value.Name].Members[function.Name].Type = types["function"];
+                }
+            }
+
+            localVarTypes = new Dictionary<string, JSType>();
+            foreach (var pair in analyzer.localVars)
+            {
+                if (types.ContainsKey(pair.Value))
+                {
+                    localVarTypes[pair.Key] = types[pair.Value];
                 }
             }
         }

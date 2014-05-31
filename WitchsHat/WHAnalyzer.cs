@@ -7,14 +7,16 @@ using System.Threading.Tasks;
 
 namespace WitchsHat
 {
-    class WHAnalyzer
+    public class WHAnalyzer
     {
         List<Token> tokens;
         public Dictionary<string, WHClass> classes;
+        public Dictionary<string, string> localVars;
 
         public void Analyze(string src)
         {
             classes = new Dictionary<string, WHClass>();
+            localVars = new Dictionary<string, string>();
             tokens = Tokenize(src);
             string currentClass = null;
             int nest = 0;
@@ -76,6 +78,10 @@ namespace WitchsHat
                     {
                         classes[currentClass].Functions.Add(whfunction);
                     }
+                }
+                else if (i + 3 < tokens.Count && MatchToken(tokens, i + 1, "=", "new"))
+                {
+                    localVars[tokens[i].body] = tokens[i + 3].body;
                 }
             }
         }
@@ -216,7 +222,7 @@ namespace WitchsHat
         }
     }
 
-    class WHClass
+    public class WHClass
     {
         public string Name { get; set; }
         public int Position { get; set; }
@@ -231,7 +237,7 @@ namespace WitchsHat
 
     }
 
-    class WHFunction
+    public class WHFunction
     {
         public string Name { get; set; }
         public int Position { get; set; }
