@@ -151,19 +151,7 @@ namespace WitchsHat
                 open = projectManager.NewProjectCheck();
                 if (open)
                 {
-                    if (projectManager.CurrentProject != null)
-                    {
-                        this.Text = "Witch's Hat";
-                        treeView1.Nodes.Clear();
-                        projectManager.CloseProject();
-                    }
-
-                    tabManager.CloseAllTab();
-
-                    // プロジェクト設定ファイル読み込み
-                    projectManager.CurrentProject = ProjectProperty.ReadProjectProperty(filePath);
-
-                    ResetProject();
+                    OpenProject(filePath);
                 }
             }
             else
@@ -171,6 +159,23 @@ namespace WitchsHat
                 OpenTab(filePath);
                 this.tabControl1.SelectedTab = tabInfos.FirstOrDefault(x => x.Value.Uri == filePath).Key;
             }
+        }
+
+        private void OpenProject(string filePath)
+        {
+            if (projectManager.CurrentProject != null)
+            {
+                this.Text = "Witch's Hat";
+                treeView1.Nodes.Clear();
+                projectManager.CloseProject();
+            }
+
+            tabManager.CloseAllTab();
+
+            // プロジェクト設定ファイル読み込み
+            projectManager.CurrentProject = ProjectProperty.ReadProjectProperty(filePath);
+
+            ResetProject();
         }
 
         /// <summary>
@@ -1322,7 +1327,7 @@ namespace WitchsHat
 
         private void chromeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            RunOnBrowserCurrent( "chrome");
+            RunOnBrowserCurrent("chrome");
         }
 
         private void firefoxToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1351,14 +1356,20 @@ namespace WitchsHat
 
         private void OpenProjectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "プロジェクト ファイル (*.whprj)|*.whprj|すべてのファイル(*.*)|*.*";
-            if (Directory.Exists(settings.ProjectsPath)) {
-                ofd.InitialDirectory = settings.ProjectsPath;
-            }
-            if (ofd.ShowDialog() == DialogResult.OK)
+            bool open = true;
+            open = projectManager.NewProjectCheck();
+            if (open)
             {
-                OpenFile(ofd.FileName);
+                OpenFileDialog ofd = new OpenFileDialog();
+                ofd.Filter = "プロジェクト ファイル (*.whprj)|*.whprj|すべてのファイル(*.*)|*.*";
+                if (Directory.Exists(settings.ProjectsPath))
+                {
+                    ofd.InitialDirectory = settings.ProjectsPath;
+                }
+                if (ofd.ShowDialog() == DialogResult.OK)
+                {
+                    OpenProject(ofd.FileName);
+                }
             }
         }
 
