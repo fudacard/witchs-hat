@@ -57,7 +57,8 @@ namespace WitchsHat
             FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\build\plugins"));
             FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images"));
             FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\images\monster"));
-
+            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\examples\plugins\widget\Alert_Confirm"));
+            FileImportDirs.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"Witchs Hat\enchant.js\libs"));
 
             settings = new EnvironmentSettings();
             // 設定ファイル読み込み
@@ -785,12 +786,14 @@ namespace WitchsHat
             {
                 ImportFileToolStripMenuItem.Enabled = true;
                 SpecialImportToolStripMenuItem.Enabled = true;
+                ImportingPluginToolStripMenuItem.Enabled = true;
                 ProjectPropertyToolStripMenuItem.Enabled = true;
             }
             else
             {
                 ImportFileToolStripMenuItem.Enabled = false;
                 SpecialImportToolStripMenuItem.Enabled = false;
+                ImportingPluginToolStripMenuItem.Enabled = false;
                 ProjectPropertyToolStripMenuItem.Enabled = false;
             }
         }
@@ -1380,6 +1383,25 @@ namespace WitchsHat
             {
                 SaveToolStripMenuItem_Click(null, null);
             }
+        }
+
+        private void ImportingPluginToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ImportingPluginForm f = new ImportingPluginForm(this);
+            f.OkClicked = delegate(Plugin plugin)
+            {
+                foreach (WHFile file in plugin.Files)
+                {
+                    string destFile = Path.Combine(projectManager.CurrentProject.Dir, file.Src);
+                    if (!File.Exists(destFile))
+                    {
+                        File.Copy(file.FullSrc, destFile);
+                    }
+                }
+                treeView1.UpdateFileTree();
+                projectManager.tempprojectModify = true;
+            };
+            f.ShowDialog(this);
         }
     }
 
