@@ -140,9 +140,16 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImportingPluginForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ImportingPluginForm.Designer.cs">
+      <DependentUpon>ImportingPluginForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="IRemoteObject.cs" />
     <Compile Include="JSMember.cs" />
     <Compile Include="JSType.cs" />
+    <Compile Include="PluginImporter.cs" />
     <Compile Include="PopupWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,6 +228,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ImportingPluginForm.resx">
+      <DependentUpon>ImportingPluginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PopupWindow.resx">
       <DependentUpon>PopupWindow.cs</DependentUpon>

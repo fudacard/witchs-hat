@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Template>
+  <Name>widget.enchant.js</Name>
+  <Description>リストビューやダイアログなどのUI部品を追加するプラグインです。</Description>
+  <Files>
+    <File>
+      <Src>widget.enchant.js</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>listItemBg.png</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>iconMenuBg.png</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>button.png</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>buttonPushed.png</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>dialog.png</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>navigationBar.png</Src>
+      <Dest />
+    </File>
+  </Files>
+</Template>

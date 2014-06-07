@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Template>
+  <Name>ui.enchant.js</Name>
+  <Description>ボタンなどのUI部品やバーチャルパッドを追加するプラグインです。</Description>
+  <Files>
+    <File>
+      <Src>ui.enchant.js</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>apad.png</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>pad.png</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>icon0.png</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>font0.png</Src>
+      <Dest />
+    </File>
+  </Files>
+</Template>

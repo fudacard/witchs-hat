@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Template>
+  <Name>box2d.enchant.js</Name>
+  <Description>2D物理エンジンを利用するためのプラグインです。</Description>
+  <Files>
+    <File>
+      <Src>box2d.enchant.js</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>Box2dWeb-2.1.a.3.js</Src>
+      <Dest />
+    </File>
+  </Files>
+</Template>
