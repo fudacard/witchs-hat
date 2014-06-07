@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Template>
+  <Name>nineleap.enchant.js</Name>
+  <Description>9leapでゲームで公開する際に役立つ機能を追加するプラグインです。</Description>
+  <Files>
+    <File>
+      <Src>nineleap.enchant.js</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>end.png</Src>
+      <Dest />
+    </File>
+    <File>
+      <Src>start.png</Src>
+      <Dest />
+    </File>
+  </Files>
+</Template>
